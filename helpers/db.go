@@ -6,14 +6,14 @@ import (
 	"log"
 	"os"
 
-	_ "github.com/mattn/go-sqlite3"
+	_ "modernc.org/sqlite" 
 )
 
-var db *sql.DB 
+var db *sql.DB
 
 func Db() {
 	var err error
-	db, err = sql.Open("sqlite3", "./db/db.db") 
+	db, err = sql.Open("sqlite", "./db/db.db")  
 	if err != nil {
 		log.Fatal("open error:", err)
 	}

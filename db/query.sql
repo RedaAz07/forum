@@ -28,3 +28,11 @@ CREATE TABLE IF NOT EXISTS comments (
     time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (postID) REFERENCES posts(id)
 );
+
+CREATE TABLE IF NOT EXISTS likes (
+    userID INTEGER,
+    postID INTEGER,
+    PRIMARY KEY (userID, postID),
+    FOREIGN KEY (userID) REFERENCES users(id),
+    FOREIGN KEY (postID) REFERENCES posts(id)
+);
