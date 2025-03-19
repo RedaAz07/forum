@@ -5,16 +5,20 @@ import (
 	"forum/handlers"
 	"forum/utils"
 	"net/http"
+	"text/template"
 )
 
 func Route() {
-	utils.Tp, utils.Error = utils.Tp.ParseGlob("templates/*.html")
-	if utils.Error != nil {
-		fmt.Println("Error parsing templates", utils.Error)
+	var err error
+
+	utils.Tp, err = template.ParseGlob("template/*.html")
+	if err != nil {
+		fmt.Println("err parsing templates", err)
 		return
 	}
 	http.HandleFunc("/login", handlers.LoginHandler)
 	http.HandleFunc("/", handlers.HomeHandler)
 	http.HandleFunc("/register", handlers.RegisterHandler)
+	http.HandleFunc("/statuspage", handlers.StatusPage)
 
 }

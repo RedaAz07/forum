@@ -23,7 +23,6 @@ func RanderTemplate(w http.ResponseWriter, template string, statusCode int, data
 
 		}
 
-		return
 	}
 	w.WriteHeader(statusCode)
 	w.Write(buffer.Bytes())
