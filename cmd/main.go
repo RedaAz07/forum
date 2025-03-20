@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	helpers.Db()
+	helpers.DataBase()
 	fmt.Println("Starting server on port 8080")
 	route.Route()
 

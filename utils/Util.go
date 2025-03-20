@@ -1,17 +1,33 @@
 package utils
 
 import (
+	"database/sql"
 	"net/http"
 	"text/template"
 )
 
 var (
 	Tp *template.Template
+	Db *sql.DB
 )
 
 type ErrorPage struct {
 	Code         int
 	ErrorMessage string
+}
+type Users struct {
+	Username string
+	Email    string
+	Password string
+}
+type Categories struct {
+	name []string
+}
+type Posts struct {
+	Username    string
+	Title       string
+	Description string
+	Time        string
 }
 
 var (

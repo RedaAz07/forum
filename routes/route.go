@@ -24,5 +24,8 @@ func Route() {
 	http.HandleFunc("/Registerreq", handlers.RegisterHandler)
 
 	http.HandleFunc("/statuspage", handlers.StatusPage)
+	http.HandleFunc("/static/", handlers.StyleHandler)
+
+
 
 }
