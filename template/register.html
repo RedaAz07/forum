@@ -3,10 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>register </title>
 </head>
-<body>
+<body style="background-color: black;  color: white;">
+
+    {{if . }}
+<p  style="color: red;">{{.}}</p>
+    {{end}}
     
+    <form action="/Registerreq"   method="post">
+
+        <input type="text" name="username" placeholder="username">
+        <input type="email" name="email" placeholder="email">
+
+        <input type="password" name="firstpassword" placeholder="password">
+
+        <input type="password" name="password" placeholder="password">
+        <button type="submit">Login</button>
+        <a href="/register">Register</a>
+        <a href="/Home">Home</a>
+    </form>
     
 </body>
 </html>

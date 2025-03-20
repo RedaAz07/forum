@@ -5,7 +5,8 @@ import (
 	"forum/helpers"
 	"forum/utils"
 	"net/http"
-	"regexp"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
@@ -15,56 +16,32 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	passowrd := r.FormValue("password")
-	email := r.FormValue("email")
 	username := r.FormValue("username")
-	firstpassword := r.FormValue("firstpassword")
+	passowrd := r.FormValue("password")
 
-	var ErrorMessage string
-
-	emailregex := `^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`
-	//	passregex := `^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$`
-
-	if passowrd == "" || email == "" || username == "" || firstpassword == "" {
-		ErrorMessage = "all the  inputs  is requared"
-
-	} else if match, _ := regexp.MatchString(emailregex, email); !match {
-		ErrorMessage = "invalide email"
-	} else if firstpassword != passowrd {
-		ErrorMessage = "the  password must be the same "
-	} else if len(passowrd) < 8 {
-		ErrorMessage = "invalide password "
-	} else if len(username) < 8 {
-		ErrorMessage = "username must be more than 8 chars  "
+	if username == "" || passowrd == "" {
+		helpers.RanderTemplate(w, "login.html", http.StatusBadRequest, " empy data")
+		return	
 	}
+	stmt := `SELECT password FROM users WHERE  username  =  ? OR   email  = ? `
+	row := utils.Db.QueryRow(stmt, username, username)
+	var hashPass string
+	err := row.Scan(&hashPass)
 
-	stmt := "SELECT  id FROM users where username = ?  "
+	if err == sql.ErrNoRows {
+		helpers.RanderTemplate(w, "login.html", http.StatusBadRequest, "invalide username ")
+		return	
+	}
+	Err := bcrypt.CompareHashAndPassword([]byte(hashPass), []byte(passowrd))
+	if Err != nil {
+		helpers.RanderTemplate(w, "login.html", http.StatusBadRequest, "invalide password ")
+		return	
+	} else {
 
-	row := utils.Db.QueryRow(stmt, username)
-	var id string
-	err := row.Scan(&id)
-
-	if err != sql.ErrNoRows {
-		ErrorMessage = "the username is already used  "
+		helpers.RanderTemplate(w, "home.html", http.StatusOK, nil)
+		return
 
 	}
-
 	
-
-	if ErrorMessage != "" {
-
-		helpers.RanderTemplate(w, "login.html", http.StatusBadGateway, ErrorMessage)
-		return
-	}
-
-	stmt2 := `INSERT INTO users (username, email, password) VALUES (?, ?, ?);`
-
-	_, err = utils.Db.Exec(stmt2, username, email, passowrd)
-	if err != nil {
-		helpers.RanderTemplate(w, "login.html", 200, " try again ")
-		return
-	}
-
-	helpers.RanderTemplate(w, "home.html", 200, nil)
 
 }

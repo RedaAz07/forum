@@ -13,7 +13,7 @@ func RegisterShowHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if r.Method != "GET" {
-		helpers.RanderTemplate(w, "statusPage.html", http.StatusMethodNotAllowed, utils.ErrorBadReq)
+		helpers.RanderTemplate(w, "statusPage.html", http.StatusMethodNotAllowed, utils.ErrorMethodnotAll)
 	}
 
 	helpers.RanderTemplate(w, "register.html", http.StatusOK, nil)
