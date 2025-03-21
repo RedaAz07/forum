@@ -3,6 +3,7 @@ package route
 import (
 	"fmt"
 	"forum/handlers"
+	"forum/helpers"
 	"forum/utils"
 	"net/http"
 	"text/template"
@@ -16,16 +17,15 @@ func Route() {
 		fmt.Println("err parsing templates", err)
 		return
 	}
-	http.HandleFunc("/", handlers.HomeHandler)
+	http.HandleFunc("/", helpers.Auth(handlers.HomeHandler))
+	http.HandleFunc("/logout", helpers.Auth(handlers.LogOutHandler))
+
 	http.HandleFunc("/login", handlers.LoginShowHandler)
 	http.HandleFunc("/register", handlers.RegisterShowHandler)
 
 	http.HandleFunc("/Loginreq", handlers.LoginHandler)
 	http.HandleFunc("/Registerreq", handlers.RegisterHandler)
 
-	http.HandleFunc("/statuspage", handlers.StatusPage)
 	http.HandleFunc("/static/", handlers.StyleHandler)
-
-
 
 }

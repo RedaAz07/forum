@@ -1,10 +1,11 @@
 package handlers
 
 import (
-	"fmt"
+	"forum/helpers"
 	"net/http"
 )
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("HomeHandler")
+	
+	helpers.RanderTemplate(w, "home.html", 200, nil)
 }

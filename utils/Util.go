@@ -30,6 +30,9 @@ type Posts struct {
 	Time        string
 }
 
+
+
+
 var (
 	ErrorBadReq = ErrorPage{
 		Code:         http.StatusBadRequest,
