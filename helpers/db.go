@@ -24,18 +24,18 @@ func DataBase() {
 
 	_, err = utils.Db.Exec(string(sqlfile))
 	if err != nil {
-		log.Fatal("exec error:", err)
+		log.Fatal("exec error: ", err)
 	}
 
 
 
 
-	stmt := `INSERT INTO users (username, email, password) VALUES (?, ?, ?);`
+/*	stmt := `INSERT INTO users (username, email, password) VALUES (?, ?, ?);`
 
 	_, err = utils.Db.Exec(stmt, "redaanniz", "reda@gmail.com", "123456789")
 	if err != nil {
 		log.Fatal(err)
-	}
+	}*/
 
 	fmt.Println("Queries executed successfully!")
 }
