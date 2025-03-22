@@ -24,7 +24,7 @@ func Route() {
 	http.HandleFunc("/register", handlers.RegisterShowHandler)
 
 	http.HandleFunc("/loginAuth", handlers.LoginHandler)
-	http.HandleFunc("/RegisterAuth", handlers.RegisterHandler)
+	http.HandleFunc("/registerAuth", handlers.RegisterHandler)
 
 	http.HandleFunc("/static/", handlers.StyleHandler)
 

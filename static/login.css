@@ -19,7 +19,7 @@ background-image: url(back.jpg);}
 
 .main-container {
     min-height: 100vh;
-    min-width: 450px;
+    height: 400px;
     font-family: 'calibri';
 }
 
@@ -62,13 +62,13 @@ background-image: url(back.jpg);}
 form {
     flex-direction: column;
     padding: 25px 25px 10px;
-    height: 440px;
     border-radius: 30px;
     background: rgba(19, 19, 19, 0.736);
     border: 1px solid rgba(255, 255, 255, 0.097);
     position: absolute;
     width: 100%;
     bottom: 0;
+    height: 100%;
 }
 
 .title {
