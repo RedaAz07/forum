@@ -6,18 +6,18 @@ import (
 	"forum/utils"
 	"net/http"
 
-	"golang.org/x/crypto/bcrypt"
 	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
-		helpers.RanderTemplate(w, "StatusPage.html", http.StatusMethodNotAllowed, utils.ErrorMethodnotAll)
+		helpers.RanderTemplate(w, "statuspage.html", http.StatusMethodNotAllowed, utils.ErrorMethodnotAll)
 		return
 	}
 
 	username := r.FormValue("username")
-	password := r.FormValue("password") 
+	password := r.FormValue("password")
 
 	if username == "" || password == "" {
 		helpers.RanderTemplate(w, "login.html", http.StatusBadRequest, "Empty data")
@@ -43,7 +43,6 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	sessionID := uuid.New().String()
-
 	stmt2 := `UPDATE users SET session = ? WHERE username = ?`
 	_, err = utils.Db.Exec(stmt2, sessionID, username)
 	if err != nil {
@@ -56,8 +55,8 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		Value:    sessionID,
 		HttpOnly: true,
 		Path:     "/",
-		MaxAge:   3600, 
+		MaxAge:   3600,
 	})
 
-	helpers.RanderTemplate(w, "home.html", http.StatusOK, nil)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }

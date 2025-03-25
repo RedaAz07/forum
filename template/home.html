@@ -4,12 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/static/home.css">
 </head>
 <body>
-<form action="/logout"  method="post">
-<input type="submit" name="submit" value="logout ">
-</form>
 
+
+{{if .}}
+<div class="container">
+    <div class="item" id="one">
+      <a href="/" > <h1>forum</h1></a> 
+        <form action="/logout"  method="post">
+            <input type="submit" name="submit" value="logout ">
+            </form>
+            
+    </div>
+
+    {{end}}
+    <div class="item">Sidebar</div>
+    <div class="item">Content</div>
+    <div class="item">Footer</div>
+  </div>
 
 
 </body>

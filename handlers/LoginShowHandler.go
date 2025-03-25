@@ -8,6 +8,12 @@ import (
 
 func LoginShowHandler(w http.ResponseWriter, r *http.Request) {
 
+if exists , _ :=helpers.SessionChecked(w,r) ; exists{
+	http.Redirect(w,r,"/", http.StatusBadRequest)
+	return
+}
+
+
 if r.URL.Path != "/login" {
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusNotFound, utils.ErrorNotFound)
 		return
