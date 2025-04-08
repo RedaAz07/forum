@@ -20,10 +20,27 @@
     </div>
 
     {{end}}
-    <div class="item">Sidebar</div>
-    <div class="item">Content</div>
-    <div class="item">Footer</div>
-  </div>
+ 
+
+{{if . }} 
+
+<div class="post">
+<form action="/createPost" method="post" >
+  <input type="text" name="title" placeholder="Title" required><br>
+  <textarea name="description " placeholder="Content" required></textarea><br>
+<select name="categoryID" id="">
+  <option value="1">GYM</option>
+  <option value="2">Football</option>
+
+</select><br>
+
+  <input type="submit" value="Create Post"><br>
+
+
+</form>
+</div>
+{{end}}
+
 
 
 </body>

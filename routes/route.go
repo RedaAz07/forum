@@ -28,4 +28,6 @@ func Route() {
 
 	http.HandleFunc("/static/", handlers.StyleHandler)
 
+	http.HandleFunc("/createPost", helpers.Auth(handlers.CreatePost))
+
 }

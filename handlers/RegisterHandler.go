@@ -14,7 +14,7 @@ import (
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 	if exists , _ :=helpers.SessionChecked(w,r) ; exists {
-		http.Redirect(w, r, "/", http.StatusBadRequest)
+		http.Redirect(w, r, "/", 302)
 		return
 	}
 

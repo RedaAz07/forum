@@ -11,6 +11,11 @@ func LogOutHandler(w http.ResponseWriter, r *http.Request) {
 
 
 	
+	if exists , _ :=helpers.SessionChecked(w,r) ; !exists{
+		http.Redirect(w,r,"/", 302)
+		return
+	}
+	
 	cookie, err := r.Cookie("session")
 	if err != nil {
 helpers.RanderTemplate(w,"login.html", 200, nil)
@@ -33,5 +38,5 @@ helpers.RanderTemplate(w,"login.html", 200, nil)
 	http.SetCookie(w, &expiredCookie)
 
 
-http.Redirect(w,r,"/login", 200)
+http.Redirect(w,r,"/login", 302)
 }

@@ -15,7 +15,12 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		helpers.RanderTemplate(w, "statuspage.html", http.StatusMethodNotAllowed, utils.ErrorMethodnotAll)
 		return
 	}
-
+	
+	if exists , _ :=helpers.SessionChecked(w,r) ; exists{
+		http.Redirect(w,r,"/", 302)
+		return
+	}
+	
 	username := r.FormValue("username")
 	password := r.FormValue("password")
 
