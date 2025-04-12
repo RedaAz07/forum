@@ -12,6 +12,15 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 
+
+
+
+
+
+
+
+
+
 CREATE TABLE IF NOT EXISTS posts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username VARCHAR(30),
@@ -21,6 +30,15 @@ CREATE TABLE IF NOT EXISTS posts (
     categoryID INTEGER,
     FOREIGN KEY (categoryID) REFERENCES categories(id)
 );
+
+
+
+
+
+
+
+
+
 
 CREATE TABLE IF NOT EXISTS comments (
     id INTEGER PRIMARY KEY AUTOINCREMENT,

@@ -1,47 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="/static/home.css">
-</head>
-<body>
+    <link rel="stylesheet" href="/static/home.css" />
+  </head>
 
+  <body>
+    <header class="header">
+      <h1 class="title">Forum</h1>
+      {{if .Session }}
 
-{{if .}}
-<div class="container">
-    <div class="item" id="one">
-      <a href="/" > <h1>forum</h1></a> 
-        <form action="/logout"  method="post">
-            <input type="submit" name="submit" value="logout ">
-            </form>
-            
+      <h1>name</h1>
+      {{end}}
+      <div>
+        {{if .Session}}
+        <form action="/logout" method="post" id="logout">
+          <input type="submit" name="submit" value="Logout" />
+        </form>
+        {{else}}
+
+        <a href="/login"> login </a>
+        <a href="/register"> register </a>
+
+        {{end}}
+      </div>
+    </header>
+
+    <div style="border: 0 black">
+      {{range .Posts}}
+
+      <div class="post">
+        <h2>{{.Title}}</h2>
+        <p>{{.Description}}</p>
+        <p id="time">Created at: {{.Time}}</p>
+
+        <div>
+
+          {{if $.Session}}
+          <form action="/reaction" method="post">
+            like <input type="radio" name="reaction" value="like" onchange="this.form.submit()" />
+            dislike <input type="radio" name="reaction" value="dislike" onchange="this.form.submit()" />
+          </form>
+          {{end}}
+
+        </div>
+      </div>
+
+      {{end}}
     </div>
 
+    {{if .Session }}
+
+    <div class="postform">
+      <form action="/createPost" method="post">
+        <input type="text" name="title" placeholder="Title" required /><br />
+        <textarea name="description" placeholder="Content" required></textarea
+        ><br />
+        <select name="categoryID" id="">
+          <option value="1">GYM</option>
+          <option value="2">Football</option></select
+        ><br />
+
+        <input type="submit" value="Create Post" /><br />
+      </form>
+    </div>
     {{end}}
- 
-
-{{if . }} 
-
-<div class="post">
-<form action="/createPost" method="post" >
-  <input type="text" name="title" placeholder="Title" required><br>
-  <textarea name="description " placeholder="Content" required></textarea><br>
-<select name="categoryID" id="">
-  <option value="1">GYM</option>
-  <option value="2">Football</option>
-
-</select><br>
-
-  <input type="submit" value="Create Post"><br>
-
-
-</form>
-</div>
-{{end}}
-
-
-
-</body>
+  </body>
 </html>

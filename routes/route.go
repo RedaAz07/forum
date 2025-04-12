@@ -30,4 +30,10 @@ func Route() {
 
 	http.HandleFunc("/createPost", helpers.Auth(handlers.CreatePost))
 
+	http.HandleFunc("/reaction", helpers.Auth(handlers.ReactionHandler))
+
+
+
+
+
 }

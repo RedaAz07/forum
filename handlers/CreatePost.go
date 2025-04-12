@@ -26,12 +26,8 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 	title := r.FormValue("title")
 	description := r.FormValue("description")
 	category := r.FormValue("categoryID")
+fmt.Println("description =>" , description)
 
-	//	time :=  time.Now().Format("2006-01-02 15:04:05")
-	/* 	if title == "" || description == "" || category == "" {
-		helpers.RanderTemplate(w, "home.html", http.StatusBadRequest, utils.ErrorBadReq)
-		return
-	} */
 	categoryID, _ := strconv.Atoi(category)
 
 	stmt2 := `select  username from users where session = ?`
@@ -50,3 +46,7 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 	}
 	http.Redirect(w, r, "/", 302)
 }
+
+
+
+

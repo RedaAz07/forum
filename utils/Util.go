@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"net/http"
 	"text/template"
+	"time"
 )
 
 var (
@@ -27,7 +28,7 @@ type Posts struct {
 	Username    string
 	Title       string
 	Description string
-	Time        string
+	Time        time.Time
 }
 
 
