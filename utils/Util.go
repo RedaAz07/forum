@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"net/http"
 	"text/template"
-	"time"
 )
 
 var (
@@ -25,15 +24,14 @@ type Categories struct {
 	name []string
 }
 type Posts struct {
-	Id int  
-	Username    string
-	Title       string
-	Description string
-	Time        time.Time
+	Id            int
+	Username      string
+	Title         string
+	Description   string
+	Time          string
+	TotalLikes    int
+	TotalDislikes int
 }
-
-
-
 
 var (
 	ErrorBadReq = ErrorPage{

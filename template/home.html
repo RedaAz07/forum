@@ -40,8 +40,8 @@
 
           {{if $.Session}}
           <form action="/reaction" method="post">
-            like <input type="radio" name="reaction" value="1" onchange="this.form.submit()" />
-            dislike <input type="radio" name="reaction" value="-1" onchange="this.form.submit()" />
+            like [{{.TotalLikes}}]<input type="radio" name="reaction" value="1" onchange="this.form.submit()" />
+            dislike  [{{.TotalDislikes}}] <input type="radio" name="reaction" value="-1" onchange="this.form.submit()" />
             <input type="text" name="postID" value="{{.Id}}" hidden />
           </form>
           {{end}}
