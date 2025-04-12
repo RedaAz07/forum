@@ -14,7 +14,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		Posts   []utils.Posts
 	}
 
-	stmt := `select username, title, description, time from posts`
+	stmt := `select id ,  username, title, description, time from posts`
 	rows, err := utils.Db.Query(stmt)
 	if err != nil {
 		fmt.Println("DB Query error:", err)
@@ -25,7 +25,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 	for rows.Next() {
 		var post utils.Posts
-		err = rows.Scan(&post.Username, &post.Title, &post.Description, &post.Time)
+		err = rows.Scan(&post.Id,   &post.Username, &post.Title, &post.Description, &post.Time)
 		if err != nil {
 			fmt.Println("Scan error:", err)
 			helpers.RanderTemplate(w, "home.html", http.StatusInternalServerError, nil)

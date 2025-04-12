@@ -25,6 +25,7 @@ type Categories struct {
 	name []string
 }
 type Posts struct {
+	Id int  
 	Username    string
 	Title       string
 	Description string

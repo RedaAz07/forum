@@ -52,6 +52,7 @@ CREATE TABLE IF NOT EXISTS comments (
 CREATE TABLE IF NOT EXISTS likes (
     userID INTEGER,
     postID INTEGER,
+    value INTEGER,
     PRIMARY KEY (userID, postID),
     FOREIGN KEY (userID) REFERENCES users(id),
     FOREIGN KEY (postID) REFERENCES posts(id)
