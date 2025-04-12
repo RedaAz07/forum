@@ -31,6 +31,13 @@ type Posts struct {
 	Time          string
 	TotalLikes    int
 	TotalDislikes int
+	Comments []Comments
+}
+type Comments struct {
+
+	Username string
+	Comment  string
+	Time     string
 }
 
 var (

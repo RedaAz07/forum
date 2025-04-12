@@ -90,5 +90,5 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		MaxAge:   3600,
 	})
 
-http.Redirect(w,r,"/", http.StatusOK)
+http.Redirect(w,r,"/", 302)
 }

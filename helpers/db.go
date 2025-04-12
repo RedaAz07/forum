@@ -3,9 +3,10 @@ package helpers
 import (
 	"database/sql"
 	"fmt"
-	"forum/utils"
 	"log"
 	"os"
+
+	"forum/utils"
 
 	_ "modernc.org/sqlite"
 )
@@ -16,6 +17,7 @@ func DataBase() {
 	if err != nil {
 		log.Fatal("open error:", err)
 	}
+	//	defer utils.Db.Close()
 
 	sqlfile, err := os.ReadFile("./db/query.sql")
 	if err != nil {
@@ -26,9 +28,6 @@ func DataBase() {
 	if err != nil {
 		log.Fatal("exec error: ", err)
 	}
-
-
-
 
 
 	fmt.Println("Queries executed successfully!")

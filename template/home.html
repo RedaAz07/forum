@@ -46,7 +46,37 @@
           </form>
           {{end}}
 
+
+<div class="commentshow">
+          <h3>Comments</h3>
+          {{range .Comments}}
+          <div class="comment">
+            <p>{{.Comment}}</p>
+            <p id="time">Created at: {{.Time}}</p>
+            <p>{{.Username }}</p>
+          
+          </div>
+          {{end}}
+
+</div>
+
+
+
+
+
+
         </div>
+        {{if $.Session}}
+              <div class="comment">
+        
+                <form action="/comment"  method="post">
+                  <input type="text" name="comment" placeholder="Comment" required /><br />
+                  <input type="text" name="postID" value="{{.Id}}" hidden />
+                  <input type="submit" value="Comment" /><br />
+                </form>
+              </div>
+        
+              {{end}}
       </div>
 
       {{end}}

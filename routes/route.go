@@ -32,6 +32,9 @@ func Route() {
 
 	http.HandleFunc("/reaction", helpers.Auth(handlers.ReactionHandler))
 
+	http.HandleFunc("/comment", helpers.Auth(handlers.CommentHandler))
+
+
 
 
 

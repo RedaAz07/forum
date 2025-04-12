@@ -13,14 +13,14 @@ func RanderTemplate(w http.ResponseWriter, template string, statusCode int, data
 
 	err := utils.Tp.ExecuteTemplate(&buffer, template, data)
 	if err != nil {
-		fmt.Println("Template Error (main template):", err) // 👈 مهم
+		fmt.Println("Template Error (main template):", err)
 
 		buffer.Reset()
 		statusCode = http.StatusInternalServerError
 
 		err := utils.Tp.ExecuteTemplate(&buffer, "statusPage.html", data)
 		if err != nil {
-			fmt.Println("Template Error (statusPage):", err) // 👈 مهم
+			fmt.Println("Template Error (statusPage):", err) 
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte("Internal Server Error"))
 			return
