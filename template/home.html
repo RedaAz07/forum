@@ -38,13 +38,13 @@
 
         <div>
 
-          {{if $.Session}}
+
           <form action="/reaction" method="post">
-            like [{{.TotalLikes}}]<input type="radio" name="reaction" value="1" onchange="this.form.submit()" />
+            like [ {{.TotalLikes}} ]<input type="radio" name="reaction" value="1" onchange="this.form.submit()" />
             dislike  [{{.TotalDislikes}}] <input type="radio" name="reaction" value="-1" onchange="this.form.submit()" />
             <input type="text" name="postID" value="{{.Id}}" hidden />
           </form>
-          {{end}}
+
 
 
 <div class="commentshow">
@@ -90,10 +90,15 @@
         <textarea name="description" placeholder="Content" required></textarea
         ><br />
         <select name="categoryID" id="">
-          <option value="1">GYM</option>
-          <option value="2">Football</option></select
+          <option value="">select a categorie</option>
+          {{range .Categories}}
+          <option value="{{.Id}}">{{.Name}}</option>
+          {{end}}
+          </select
         ><br />
+<br><br><br><br><br><br>
 
+<input type="text" name=categories placeholder="create new categorie "  /><br />
         <input type="submit" value="Create Post" /><br />
       </form>
     </div>

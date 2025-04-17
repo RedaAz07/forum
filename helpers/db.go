@@ -23,6 +23,10 @@ func DataBase() {
 	if err != nil {
 		log.Fatal("read error:", err)
 	}
+ 
+// i should to use     status ENUM('depend', 'refus', 'success') NOT NULL look chatgpt
+
+
 
 	_, err = utils.Db.Exec(string(sqlfile))
 	if err != nil {

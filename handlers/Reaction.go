@@ -15,7 +15,6 @@ func ReactionHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	_, session := helpers.SessionChecked(w, r)
 
-	fmt.Println("session exists", session)
 
 	postID := r.FormValue("postID")
 	reaction := r.FormValue("reaction")

@@ -21,7 +21,8 @@ type Users struct {
 	Password string
 }
 type Categories struct {
-	name []string
+	Name string
+	Id   int
 }
 type Posts struct {
 	Id            int
@@ -34,6 +35,7 @@ type Posts struct {
 	Comments []Comments
 }
 type Comments struct {
+	PostID   int
 
 	Username string
 	Comment  string
