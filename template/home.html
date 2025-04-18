@@ -3,49 +3,103 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Forum</title>
+    <link rel="shortcut icon" href="/static/meta.png" type="image/x-icon" />
     <link rel="stylesheet" href="/static/home.css" />
+    <link rel="stylesheet" href="/static/navbar.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity="sha512-uWFS2SyMlXU1P9Uv9Z4q1XLh3QjsoZ4SB8QoX0OQH5m6goZQyA5DFmuH2gOdf5U3GVabkUqZbJKnSSCBaEVz2w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
   </head>
 
   <body>
-    <header class="header">
-      <h1 class="title">Forum</h1>
-      {{if .Session }}
-
-      <h1>name</h1>
-      {{end}}
+    <header>
+      <a href="/" class="title">Forum</a>
       <div>
         {{if .Session}}
-        <form action="/logout" method="post" id="logout">
-          <input type="submit" name="submit" value="Logout" />
-        </form>
-        {{else}}
+        <div class="gap">
+          <input type="button" value="Create post" />
+          <input type="checkbox" id="toggle-menu" class="hidd" />
+          <label for="toggle-menu" class="avatar-label">
+            <img src="https://robohash.org/{{.Username}}.png?size=50x50" />
+          </label>
 
-        <a href="/login"> login </a>
-        <a href="/register"> register </a>
+          <div class="dropdown">
+            <strong>Mr {{.Username}}</strong>
+            <hr />
+            <form action="/logout" method="post">
+              <button class="Btn" type="submit">
+  
+                <div class="sign"><svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg></div>
+                
+                <div class="text">Logout</div>
+              </button>
+            </form>
+          </div>
+        </div>
+        {{else}}
+        <div class="gap">
+          <a href="/register" class="register"> register </a>
+          <a href="/login" class="login"> login </a>
+        </div>
 
         {{end}}
       </div>
     </header>
 
-    <div style="border: 0 black">
+    <div class="allPost">
       {{range .Posts}}
 
-      <div class="post">
-        <h2>{{.Title}}</h2>
-        <p>{{.Description}}</p>
-        <p id="time">Created at: {{.Time}}</p>
+      <div class="post-card">
+        <div class="post-header">
+          <div class="user-info">
+            <img
+              src="https://robohash.org/{{.Username}}.png?size=50x50"
+              class="avatar"
+            />
+            <span class="username">{{.Username}}</span>
+          </div>
+          <span class="post-time">{{.TimeFormatted}}</span>
+        </div>
 
-        <div>
+        <h2 class="post-title">{{.Title}}</h2>
 
+        <div class="post-tags">
+          <span class="tag">Sport</span>
+          <span class="tag">Education</span>
+          <span class="tag">GYM</span>
+          <span class="tag">Food</span>
+        </div>
+
+        <p class="post-description">{{.Description}}</p>
+
+        <div class="post-reactions">
           {{if $.Session}}
           <form action="/reaction" method="post">
-            like [{{.TotalLikes}}]<input type="radio" name="reaction" value="1" onchange="this.form.submit()" />
-            dislike  [{{.TotalDislikes}}] <input type="radio" name="reaction" value="-1" onchange="this.form.submit()" />
-            <input type="text" name="postID" value="{{.Id}}" hidden />
+            <div class="reaction">
+              <span>like [{{.TotalLikes}}]</span>
+              <button name="reaction" value="1" class="like-btn" type="submit">
+                👍
+              </button>
+            </div>
+            <div class="reaction">
+              <span>dislike [{{.TotalDislikes}}] </span>
+              <button
+                name="reaction"
+                value="-1"
+                class="dislike-btn"
+                type="submit"
+              >
+                👎
+              </button>
+            </div>
+            <input type="hidden" name="postID" value="{{.Id}}" />
           </form>
           {{end}}
-
         </div>
       </div>
 
@@ -69,4 +123,15 @@
     </div>
     {{end}}
   </body>
+  <script>
+    const avatars = document.querySelectorAll("[data-random-avatar]");
+
+    avatars.forEach((avatar) => {
+      const randomId = Math.floor(Math.random() * 1000) + 1;
+
+      const url = `https://picsum.photos/id/${randomId}/200/300`;
+
+      avatar.src = url;
+    });
+  </script>
 </html>

@@ -2,18 +2,18 @@ package handlers
 
 import (
 	"database/sql"
-	"forum/helpers"
-	"forum/utils"
 	"net/http"
 	"regexp"
+
+	"forum/helpers"
+	"forum/utils"
 
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
-
-	if exists , _ :=helpers.SessionChecked(w,r) ; exists {
+	if exists, _ := helpers.SessionChecked(w, r); exists {
 		http.Redirect(w, r, "/", 302)
 		return
 	}
@@ -31,7 +31,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	var ErrorMessage string
 	// regex of email
 	emailregex := `^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`
-	//passregex := `^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$`
+	// passregex := `^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$`
 	// all possible error messages
 	if password == "" || email == "" || username == "" || firstpassword == "" {
 		ErrorMessage = "All inputs are required"
@@ -90,5 +90,5 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		MaxAge:   3600,
 	})
 
-http.Redirect(w,r,"/", http.StatusOK)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }

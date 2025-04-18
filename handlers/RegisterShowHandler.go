@@ -1,14 +1,15 @@
 package handlers
 
 import (
+	"net/http"
+
 	"forum/helpers"
 	"forum/utils"
-	"net/http"
 )
 
 func RegisterShowHandler(w http.ResponseWriter, r *http.Request) {
-	if exists , _ :=helpers.SessionChecked(w,r) ; exists {
-http.Redirect(w,r,"/", 302)
+	if exists, _ := helpers.SessionChecked(w, r); exists {
+		http.Redirect(w, r, "/", 302)
 		return
 	}
 	if r.URL.Path != "/register" {
@@ -20,5 +21,4 @@ http.Redirect(w,r,"/", 302)
 	}
 
 	helpers.RanderTemplate(w, "register.html", http.StatusOK, nil)
-
 }
