@@ -36,56 +36,58 @@ body{
 }
 
 .user-info {
+  margin-bottom: 15px;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 8px;
 }
 
 .username {
   font-weight: bold;
-  font-size: 16px;
+  font-size: 17px;
 }
 
 .post-time {
+  margin-bottom: 15px;
   color: #4b5aff;
-  font-size: 0.85rem;
+  font-size: 15px;
 }
 
 .post-title {
   font-size: 1.2rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 30px;
 }
 
 .post-tags {
   display: flex;
   gap: 0.5rem;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .tag {
   background-color: #4b5aff;
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.85rem;
+  padding: 8px 15px;
+  border-radius: 15px;
+  font-size: 16px;
   color: white;
 }
 
 .post-description {
-  font-size: 0.95rem;
+  font-size: 17px;
   margin-bottom: 16px;
   color: #d0d0d0;
 }
 
-.post-reactions {
+.post-reactions  form{
+  margin-top: 23px;
   display: flex;
-  gap: 16px;
+  gap: 10px;
   align-items: center;
 }
 
 .reaction {
   display: flex;
   align-items: center;
-  gap: 0.3rem;
 }
 
 .like-btn, .dislike-btn {

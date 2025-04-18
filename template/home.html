@@ -81,13 +81,13 @@
           {{if $.Session}}
           <form action="/reaction" method="post">
             <div class="reaction">
-              <span>like [{{.TotalLikes}}]</span>
+              <span>{{.TotalLikes}}</span>
               <button name="reaction" value="1" class="like-btn" type="submit">
                 👍
               </button>
             </div>
             <div class="reaction">
-              <span>dislike [{{.TotalDislikes}}] </span>
+              <span>{{.TotalDislikes}}</span>
               <button
                 name="reaction"
                 value="-1"
