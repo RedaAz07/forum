@@ -1,16 +1,16 @@
-*{
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
   font-family: Poppins, "Open Sans", sans-serif;
 }
-body::-webkit-scrollbar{
+body::-webkit-scrollbar {
   display: none;
 }
-body{
+body {
   background-color: #0a0a0a;
 }
-.allPost{
+.allPost {
   width: 80%;
   margin: auto;
   display: flex;
@@ -79,7 +79,7 @@ body{
   color: #d0d0d0;
 }
 
-.post-reactions  form{
+.post-reactions form {
   margin-top: 23px;
   display: flex;
   gap: 10px;
@@ -91,7 +91,8 @@ body{
   align-items: center;
 }
 
-.like-btn, .dislike-btn {
+.like-btn,
+.dislike-btn {
   background: transparent;
   border: none;
   cursor: pointer;
@@ -99,42 +100,94 @@ body{
   color: #ccc;
 }
 
-.postform{
+.postform {
+  animation: 1.5s postAn ease-in-out ;
   width: 500px;
   height: 400px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   top: 50%;
-  left  : 50%;
-  transform: translate(-50%,-50%);
-  border:2px solid #0a0a0a;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid #0a0a0a;
   position: fixed;
-  display: flex;
+  display: none;
   flex-direction: column;
   background-color: wheat;
   text-align: center;
   border-radius: 15px;
 }
-.postform form input{
-  padding: 0 0 0 100px;
-  width: 80%;
-  height: 30px;
+.postform h2 {
+  margin-top: 15px;
+}
+.postform form input {
+  padding: 0 0 0 10px;
+  width: 90%;
+  height: 50px;
+  border-radius: 10px;
+  border: 1px solid gray;
+  margin-bottom: 10px;
+  margin-top: 30px;
+}
+.postform form input:focus {
+  border: 2px solid black;
+}
+.postform form textarea {
+  resize: none;
+  padding: 25px 0 0 10px;
+  width: 90%;
+  height: 70px;
   border-radius: 10px;
   border: 1px solid gray;
   margin-bottom: 30px;
-  margin-top: 10px;
 }
-.postform form input:focus{
-  border:  2px solid black;
+.postform form textarea:focus {
+  border: 2px solid black;
 }
-.postform form textarea{
-  padding: 0 0 0 100px;
-    width: 80%;
-    height: 60px;
-    border-radius: 10px;
-    border: 1px solid gray;
-    margin-bottom: 30px;
-    margin-top: 10px;
+.postform form .btnform {
+  font-weight: bold;
+  cursor: pointer;
+  width: 90%;
+  height: 40px;
+  color: white;
+  background-color: #4b5aff;
 }
-.postform form textarea:focus{
-  border:  2px solid black;
+.postform form .categorie {
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto;
+  width: 90%;
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+.tagC {
+  border: 2px solid #4b5aff;
+  padding: 5px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.5s;
+  user-select: none;
+}
+
+.tag-check:checked + .tagC {
+  background-color: #4b5aff;
+  color: white;
+}
+header:has(#post:checked) .postform {
+  display: flex;
+}
+body:has(#post:checked) .allPost {
+  filter: blur(2px);
+}
+
+@keyframes post {
+  0% {
+    opacity: 0;
+    transform: translateY(-500px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
