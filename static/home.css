@@ -43,6 +43,7 @@ body{
 }
 
 .username {
+  cursor: pointer;
   font-weight: bold;
   font-size: 17px;
 }
@@ -98,10 +99,42 @@ body{
   color: #ccc;
 }
 
-.like-btn:hover {
-  color: #4bff87;
+.postform{
+  width: 500px;
+  height: 400px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  top: 50%;
+  left  : 50%;
+  transform: translate(-50%,-50%);
+  border:2px solid #0a0a0a;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  background-color: wheat;
+  text-align: center;
+  border-radius: 15px;
 }
-
-.dislike-btn:hover {
-  color: #ff4b4b;
+.postform form input{
+  padding: 0 0 0 100px;
+  width: 80%;
+  height: 30px;
+  border-radius: 10px;
+  border: 1px solid gray;
+  margin-bottom: 30px;
+  margin-top: 10px;
+}
+.postform form input:focus{
+  border:  2px solid black;
+}
+.postform form textarea{
+  padding: 0 0 0 100px;
+    width: 80%;
+    height: 60px;
+    border-radius: 10px;
+    border: 1px solid gray;
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+.postform form textarea:focus{
+  border:  2px solid black;
 }
