@@ -13,78 +13,50 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
-  <body>
-    <header>
-      <a href="/" class="title">Forum</a>
-      <div>
-        {{if .Session}}
-        <div class="gap">
-          <input type="checkbox" id="post-toggle" class="hidd">
-          <label for="post-toggle" class="postbtn">Create post</label>
-          <div class="postform">
-            <h2>Create Post</h2>
-            <form action="/createPost" method="post">
-              <input type="text" name="title" placeholder="Title" required /><br />
-              <textarea name="description" placeholder="Content" required></textarea>
-              <br />
-              <div class="categorie" name="categoryID">
-                <input type="checkbox" id="tag1" class="tag-check" hidden>
-                <label for="tag1" class="tagC">Sport</label>
-              
-                <input type="checkbox" id="tag2" class="tag-check" hidden>
-                <label for="tag2" class="tagC">Education</label>
-              
-                <input type="checkbox" id="tag3" class="tag-check" hidden>
-                <label for="tag3" class="tagC">GYM</label>
-              
-                <input type="checkbox" id="tag4" class="tag-check" hidden>
-                <label for="tag4" class="tagC">Food</label>
-              
-                <input type="checkbox" id="tag5" class="tag-check" hidden>
-                <label for="tag5" class="tagC">Music</label>
-      
-                <input type="checkbox" id="tag6" class="tag-check" hidden>
-                <label for="tag6" class="tagC">Coding</label>
-              </div>
-              <br />
-              <input type="submit" value="Create Post" class="btnform" /><br />
-            </form>
-          </div>
-          <input type="checkbox" id="toggle-menu" class="hidd" />
-          <label for="toggle-menu" class="avatar-label">
-            <img src="https://robohash.org/{{.Username}}.png?size=50x50" />
-          </label>
-          <div class="dropdown">
-            <strong>Mr {{.Username}}</strong>
-            <hr />
-            <form action="/logout" method="post" class="formlog">
-              <button class="Btn" type="submit">
-                <div class="sign">
-                  <svg viewBox="0 0 512 512">
-                    <path
-                      d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"
-                    ></path>
-                  </svg>
-                </div>
 <body>
   <header>
     <a href="/" class="title">Forum</a>
     <div>
       {{if .Session}}
       <div class="gap">
-        <input type="checkbox" name="" id="post" class="hidd">
-        <label for="post">
-          <input type="button" value="Create post" />
-        </label>
+        <input type="checkbox" id="post-toggle" class="hidd">
+        <label for="post-toggle" class="postbtn">Create post</label>
+        <div class="postform">
+          <h2>Create Post</h2>
+          <form action="/createPost" method="post">
+            <input type="text" name="title" placeholder="Title" required /><br />
+            <textarea name="description" placeholder="Content" required></textarea><br />
+            <div class="categorie" name="categoryID">
+              <input type="checkbox" id="tag1" name="tags" value="Sport" hidden>
+              <label for="tag1" class="tagC">Sport</label>
+
+              <input type="checkbox" id="tag2" name="tags" value="Education" hidden>
+              <label for="tag2" class="tagC">Education</label>
+
+              <input type="checkbox" id="tag3" name="tags" value="GYM" hidden>
+              <label for="tag3" class="tagC">GYM</label>
+
+              <input type="checkbox" id="tag4" name="tags" value="Food" hidden>
+              <label for="tag4" class="tagC">Food</label>
+
+              <input type="checkbox" id="tag5" name="tags" value="Music" hidden>
+              <label for="tag5" class="tagC">Music</label>
+
+              <input type="checkbox" id="tag6" name="tags" value="Coding" hidden>
+              <label for="tag6" class="tagC">Coding</label>
+            </div><br />
+            <input type="submit" value="Create Post" class="btnform" /><br />
+          </form>
+        </div>
+
         <input type="checkbox" id="toggle-menu" class="hidd" />
         <label for="toggle-menu" class="avatar-label">
           <img src="https://robohash.org/{{.Username}}.png?size=50x50" />
         </label>
-
         <div class="dropdown">
           <strong>Mr {{.Username}}</strong>
           <hr />
-          <form action="/logout" method="post">
+          <form action="/logout" method="post" class="formlog">
             <button class="Btn" type="submit">
               <div class="sign">
                 <svg viewBox="0 0 512 512">
@@ -93,20 +65,22 @@
                   </path>
                 </svg>
               </div>
-
-              <div class="text">Logout</div>Posts
-      <div class="gap">
-        <a href="/register" class="register"> register </a>
-        <a href="/login" class="login"> login </a>
+              <div class="text">Logout</div>
+            </button>
+          </form>
+        </div>
       </div>
-
+      {{else}}
+      <div class="gap">
+        <a href="/register" class="register">Register</a>
+        <a href="/login" class="login">Login</a>
+      </div>
       {{end}}
     </div>
   </header>
 
   <div class="allPost">
     {{range .Posts}}
-
     <div class="post-card">
       <div class="post-header">
         <div class="user-info">
@@ -119,10 +93,9 @@
       <h2 class="post-title">{{.Title}}</h2>
 
       <div class="post-tags">
-        <span class="tag">Sport</span>
-        <span class="tag">Education</span>
-        <span class="tag">GYM</span>
-        <span class="tag">Food</span>
+        {{range .Tags}}
+        <span class="tag">{{.}}</span>
+        {{end}}
       </div>
 
       <p class="post-description">{{.Description}}</p>
@@ -132,48 +105,42 @@
         <form action="/reaction" method="post">
           <div class="reaction">
             <span>{{.TotalLikes}}</span>
-            <button name="reaction" value="1" class="like-btn" type="submit">
-              👍
-            </button>
+            <button name="reaction" value="1" class="like-btn" type="submit">👍</button>
           </div>
           <div class="reaction">
             <span>{{.TotalDislikes}}</span>
-            <button name="reaction" value="-1" class="dislike-btn" type="submit">
-              👎
-            </button>
+            <button name="reaction" value="-1" class="dislike-btn" type="submit">👎</button>
           </div>
           <input type="hidden" name="postID" value="{{.Id}}" />
         </form>
-
-
-
-        <div class="commentshow">
-          <h3>Comments</h3>
-          {{range .Comments}}
-          <div class="comment">
-            <p>{{.Comment}}</p>
-            <p id="time">Created at: {{.Time}}</p>
-            <p>{{.Username }}</p>
-
-          </div>
-          {{end}}
-        </div>
-        {{if $.Session}}
-        <div class="comment">
-
-          <form action="/comment" method="post">
-            <input type="text" name="comment" placeholder="Comment" required /><br />
-            <input type="text" name="postID" value="{{.Id}}" hidden />
-            <input type="submit" value="Comment" /><br />
-          </form>
-        </div>
-
         {{end}}
       </div>
 
+      <div class="commentshow">
+        <h3>Comments</h3>
+        {{range .Comments}}
+        <div class="comment">
+          <p>{{.Comment}}</p>
+          <p id="time">Created at: {{.Time}}</p>
+          <p><strong>{{.Username}}</strong></p>
+        </div>
+        {{end}}
+      </div>
+
+      {{if $.Session}}
+      <div class="comment">
+        <form action="/comment" method="post">
+          <input type="hidden" name="postID" value="{{.Id}}" />
+          <input type="text" name="comment" placeholder="Comment" required /><br />
+          <input type="submit" value="Add Comment" />
+        </form>
+      </div>
       {{end}}
+
     </div>
+    {{end}}
+  </div>
 
+</body>
 
-  </body>
 </html>

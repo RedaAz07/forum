@@ -9,7 +9,6 @@ import (
 )
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
-
 	//!  get comments
 	stmtcommnts := `
 	SELECT 
@@ -39,10 +38,10 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		comments = append(comments, comment)
 	}
-//  !  end get comments
-// !  add the communts to   map 
+	//  !  end get comments
+	// !  add the communts to   map
 
-commentMap := make(map[int][]utils.Comments)
+	commentMap := make(map[int][]utils.Comments)
 	for _, c := range comments {
 		commentMap[c.PostID] = append(commentMap[c.PostID], c)
 	}
@@ -83,27 +82,20 @@ commentMap := make(map[int][]utils.Comments)
 		posts = append(posts, post)
 	}
 
+	// !  end get posts
 
-	
-// !  end get posts
+	// ! get categories
+	var categories []utils.Categories
 
-
-
-
-
-// ! get categories
-var categories []utils.Categories
-
-stmtcategpries := `SELECT name, id FROM categories`
+	stmtcategpries := `SELECT name, id FROM categories`
 	rows3, err3 := utils.Db.Query(stmtcategpries)
 	if err3 != nil {
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
-		return	
-		
+		return
+
 	}
 
-
-	for rows3.Next(){
+	for rows3.Next() {
 		var category utils.Categories
 		err3 = rows3.Scan(&category.Name, &category.Id)
 		if err3 != nil {
@@ -111,10 +103,8 @@ stmtcategpries := `SELECT name, id FROM categories`
 			return
 		}
 		categories = append(categories, category)
-		
+
 	}
-
-
 
 	session, err := r.Cookie("session")
 	var sessValue string
@@ -127,17 +117,16 @@ stmtcategpries := `SELECT name, id FROM categories`
 	}
 
 	variables := struct {
-		Session  string
-		Username string
-		Posts    []utils.Posts
+		Session    string
+		Username   string
+		Posts      []utils.Posts
 		Categories []utils.Categories
 	}{
-		Session:  sessValue,
-		Username: helpers.GetUsernameFromSession(sessValue), // une fonction pour récupérer le nom
-		Posts:    posts,
+		Session:    sessValue,
+		Username:   helpers.GetUsernameFromSession(sessValue), // une fonction pour récupérer le nom
+		Posts:      posts,
 		Categories: categories,
 	}
-	
 
 	helpers.RanderTemplate(w, "home.html", 200, variables)
 }
