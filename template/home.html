@@ -26,24 +26,15 @@
           <form action="/createPost" method="post">
             <input type="text" name="title" placeholder="Title" required /><br />
             <textarea name="description" placeholder="Content" required></textarea><br />
-            <div class="categorie" name="categoryID">
-              <input type="checkbox" id="tag1" name="tags" value="Sport" hidden>
-              <label for="tag1" class="tagC">Sport</label>
+            <div class="categorie">
 
-              <input type="checkbox" id="tag2" name="tags" value="Education" hidden>
-              <label for="tag2" class="tagC">Education</label>
+              {{ range .Categories}}
 
-              <input type="checkbox" id="tag3" name="tags" value="GYM" hidden>
-              <label for="tag3" class="tagC">GYM</label>
+              <input type="checkbox" id="tag1" name="tags" value="{{.Id}}" hidden>
+              <label for="tag1" class="tagC">{{.Name}}</label>
+              {{end}}
 
-              <input type="checkbox" id="tag4" name="tags" value="Food" hidden>
-              <label for="tag4" class="tagC">Food</label>
-
-              <input type="checkbox" id="tag5" name="tags" value="Music" hidden>
-              <label for="tag5" class="tagC">Music</label>
-
-              <input type="checkbox" id="tag6" name="tags" value="Coding" hidden>
-              <label for="tag6" class="tagC">Coding</label>
+      
             </div><br />
             <input type="submit" value="Create Post" class="btnform" /><br />
           </form>
