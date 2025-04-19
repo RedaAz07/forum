@@ -14,6 +14,7 @@ func CommentHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	_, session := helpers.SessionChecked(w, r)
+	
 
 
 	stmt2 :=`select username from users where session = ?`
