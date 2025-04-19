@@ -30,7 +30,7 @@ body {
   padding: 24px;
   margin: 16px auto;
   border-radius: 12px;
-  width: 470px;
+  width: 700px;
   height: 350px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
@@ -186,7 +186,7 @@ header:has(#post-toggle:checked) .postform {
 }
 
 body:has(#post-toggle:checked) .allPost {
-  filter: blur(2px);
+  opacity: 0.8;
 }
 
 @keyframes postAn {

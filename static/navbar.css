@@ -21,7 +21,7 @@ header {
 }
 header img {
   filter: brightness(150%);
-  background: url("/static/img2.jpg");
+  background: url("/static/images/img2.jpg");
   border: 1px solid #1e1e1e6e;
   width: 33px;
   height: 33px;
@@ -30,7 +30,7 @@ header img {
 }
 .avatar {
   filter: brightness(150%);
-  background: url("/static/img1.jpg");
+  background: url("/static/images/img1.jpg");
   border: 1px solid #1e1e1e6e;
   width: 32px;
   height: 32px;
