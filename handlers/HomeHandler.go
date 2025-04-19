@@ -3,6 +3,7 @@ package handlers
 import (
 	"fmt"
 	"net/http"
+	"time"
 
 	"forum/helpers"
 	"forum/utils"
@@ -78,7 +79,11 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		post.Comments = commentMap[post.Id]
 		post.TotalLikes = totalLikes
 		post.TotalDislikes = totalDislikes
-		post.TimeFormatted = post.Time.Format("2006-01-02 15:04:05")
+
+		now := time.Now()
+		diff := now.Sub(post.Time)
+		seconds := int(diff.Seconds())
+		post.TimeFormatted = helpers.FormatDuration((seconds))
 		posts = append(posts, post)
 	}
 
@@ -110,12 +115,10 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	var sessValue string
 	if err != nil {
 		// fmt.Println("Session cookie error:", err)
-		fmt.Println("Session cookie error:", err)
 		sessValue = ""
 	} else {
 		sessValue = session.Value
 	}
-
 	variables := struct {
 		Session    string
 		Username   string
