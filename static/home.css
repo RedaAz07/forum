@@ -67,6 +67,7 @@ body {
 }
 
 .post-tags {
+  flex-wrap: wrap;
   display: flex;
   gap: 0.5rem;
   margin-bottom: 20px;
