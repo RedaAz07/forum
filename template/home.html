@@ -1,114 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Forum</title>
-    <link rel="shortcut icon" href="/static/meta.png" type="image/x-icon" />
-    <link rel="stylesheet" href="/static/home.css" />
-    <link rel="stylesheet" href="/static/navbar.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-      integrity="sha512-uWFS2SyMlXU1P9Uv9Z4q1XLh3QjsoZ4SB8QoX0OQH5m6goZQyA5DFmuH2gOdf5U3GVabkUqZbJKnSSCBaEVz2w=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-  </head>
 
-  <body>
-    <header>
-      <a href="/" class="title">Forum</a>
-      <div>
-        {{if .Session}}
-        <div class="gap">
-          <input type="checkbox" name="" id="post" class="hidd">
-          <label for="post">
-            <input type="button" value="Create post" />
-          </label>
-          <input type="checkbox" id="toggle-menu" class="hidd" />
-          <label for="toggle-menu" class="avatar-label">
-            <img src="https://robohash.org/{{.Username}}.png?size=50x50" />
-          </label>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forum</title>
+  <link rel="shortcut icon" href="/static/meta.png" type="image/x-icon" />
+  <link rel="stylesheet" href="/static/home.css" />
+  <link rel="stylesheet" href="/static/navbar.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    integrity="sha512-uWFS2SyMlXU1P9Uv9Z4q1XLh3QjsoZ4SB8QoX0OQH5m6goZQyA5DFmuH2gOdf5U3GVabkUqZbJKnSSCBaEVz2w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
 
-          <div class="dropdown">
-            <strong>Mr {{.Username}}</strong>
-            <hr />
-            <form action="/logout" method="post">
-              <button class="Btn" type="submit">
-                <div class="sign">
-                  <svg viewBox="0 0 512 512">
-                    <path
-                      d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"
-                    ></path>
-                  </svg>
-                </div>
+<body>
+  <header>
+    <a href="/" class="title">Forum</a>
+    <div>
+      {{if .Session}}
+      <div class="gap">
+        <input type="checkbox" name="" id="post" class="hidd">
+        <label for="post">
+          <input type="button" value="Create post" />
+        </label>
+        <input type="checkbox" id="toggle-menu" class="hidd" />
+        <label for="toggle-menu" class="avatar-label">
+          <img src="https://robohash.org/{{.Username}}.png?size=50x50" />
+        </label>
 
-                <div class="text">Logout</div>
-              </button>
-            </form>
-          </div>
+        <div class="dropdown">
+          <strong>Mr {{.Username}}</strong>
+          <hr />
+          <form action="/logout" method="post">
+            <button class="Btn" type="submit">
+              <div class="sign">
+                <svg viewBox="0 0 512 512">
+                  <path
+                    d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z">
+                  </path>
+                </svg>
+              </div>
+
+              <div class="text">Logout</div>Posts
+      <div class="gap">
+        <a href="/register" class="register"> register </a>
+        <a href="/login" class="login"> login </a>
+      </div>
+
+      {{end}}
+    </div>
+  </header>
+
+  <div class="allPost">
+    {{range .Posts}}
+
+    <div class="post-card">
+      <div class="post-header">
+        <div class="user-info">
+          <img src="https://robohash.org/{{.Username}}.png?size=50x50" class="avatar" />
+          <span class="username">{{.Username}}</span>
         </div>
-        {{else}}
-        <div class="gap">
-          <a href="/register" class="register"> register </a>
-          <a href="/login" class="login"> login </a>
+        <span class="post-time">{{.TimeFormatted}}</span>
+      </div>
+
+      <h2 class="post-title">{{.Title}}</h2>
+
+      <div class="post-tags">
+        <span class="tag">Sport</span>
+        <span class="tag">Education</span>
+        <span class="tag">GYM</span>
+        <span class="tag">Food</span>
+      </div>
+
+      <p class="post-description">{{.Description}}</p>
+
+      <div class="post-reactions">
+        {{if $.Session}}
+        <form action="/reaction" method="post">
+          <div class="reaction">
+            <span>{{.TotalLikes}}</span>
+            <button name="reaction" value="1" class="like-btn" type="submit">
+              👍
+            </button>
+          </div>
+          <div class="reaction">
+            <span>{{.TotalDislikes}}</span>
+            <button name="reaction" value="-1" class="dislike-btn" type="submit">
+              👎
+            </button>
+          </div>
+          <input type="hidden" name="postID" value="{{.Id}}" />
+        </form>
+
+
+
+        <div class="commentshow">
+          <h3>Comments</h3>
+          {{range .Comments}}
+          <div class="comment">
+            <p>{{.Comment}}</p>
+            <p id="time">Created at: {{.Time}}</p>
+            <p>{{.Username }}</p>
+
+          </div>
+          {{end}}
+        </div>
+        {{if $.Session}}
+        <div class="comment">
+
+          <form action="/comment" method="post">
+            <input type="text" name="comment" placeholder="Comment" required /><br />
+            <input type="text" name="postID" value="{{.Id}}" hidden />
+            <input type="submit" value="Comment" /><br />
+          </form>
         </div>
 
         {{end}}
-      </div>
-    </header>
-
-    <div class="allPost">
-      {{range .Posts}}
-
-      <div class="post-card">
-        <div class="post-header">
-          <div class="user-info">
-            <img
-              src="https://robohash.org/{{.Username}}.png?size=50x50"
-              class="avatar"
-            />
-            <span class="username">{{.Username}}</span>
-          </div>
-          <span class="post-time">{{.TimeFormatted}}</span>
-        </div>
-
-        <h2 class="post-title">{{.Title}}</h2>
-
-        <div class="post-tags">
-          <span class="tag">Sport</span>
-          <span class="tag">Education</span>
-          <span class="tag">GYM</span>
-          <span class="tag">Food</span>
-        </div>
-
-        <p class="post-description">{{.Description}}</p>
-
-        <div class="post-reactions">
-          {{if $.Session}}
-          <form action="/reaction" method="post">
-            <div class="reaction">
-              <span>{{.TotalLikes}}</span>
-              <button name="reaction" value="1" class="like-btn" type="submit">
-                👍
-              </button>
-            </div>
-            <div class="reaction">
-              <span>{{.TotalDislikes}}</span>
-              <button
-                name="reaction"
-                value="-1"
-                class="dislike-btn"
-                type="submit"
-              >
-                👎
-              </button>
-            </div>
-            <input type="hidden" name="postID" value="{{.Id}}" />
-          </form>
-          {{end}}
-        </div>
       </div>
 
       {{end}}
@@ -125,16 +132,16 @@
         <div class="categorie" name="categoryID">
           <input type="checkbox" id="tag1" class="tag-check" hidden>
           <label for="tag1" class="tagC">Sport</label>
-        
+
           <input type="checkbox" id="tag2" class="tag-check" hidden>
           <label for="tag2" class="tagC">Education</label>
-        
+
           <input type="checkbox" id="tag3" class="tag-check" hidden>
           <label for="tag3" class="tagC">GYM</label>
-        
+
           <input type="checkbox" id="tag4" class="tag-check" hidden>
           <label for="tag4" class="tagC">Food</label>
-        
+
           <input type="checkbox" id="tag5" class="tag-check" hidden>
           <label for="tag5" class="tagC">Music</label>
 
@@ -146,16 +153,7 @@
       </form>
     </div>
     {{end}}
-  </body>
-  <script>
-    const avatars = document.querySelectorAll("[data-random-avatar]");
+    {{end}}
+</body>
 
-    avatars.forEach((avatar) => {
-      const randomId = Math.floor(Math.random() * 1000) + 1;
-
-      const url = `https://picsum.photos/id/${randomId}/200/300`;
-
-      avatar.src = url;
-    });
-  </script>
 </html>

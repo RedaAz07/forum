@@ -14,7 +14,6 @@ func SessionChecked(w http.ResponseWriter, r *http.Request) (bool, string ) {
 	var userID int
 	stmt := "SELECT id FROM users WHERE session = ?"
 	err = utils.Db.QueryRow(stmt, sessionCookie.Value).Scan(&userID)
-
 	if err != nil {
 		return false, ""
 	}

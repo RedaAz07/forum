@@ -10,7 +10,7 @@ func Auth(HandlerFunc http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		cookie, err := r.Cookie("session")
 		if err != nil || cookie.Value == "" {
-			RanderTemplate(w, "home.html", http.StatusUnauthorized, nil)
+			http.Redirect(w, r, "/login", 302)
 			return
 		} else {
 
@@ -19,7 +19,7 @@ func Auth(HandlerFunc http.HandlerFunc) http.HandlerFunc {
 			var userID int
 			err = utils.Db.QueryRow(stmt, cookie.Value).Scan(&userID)
 			if err != nil {
-				RanderTemplate(w, "home.html", http.StatusUnauthorized, nil)
+				http.Redirect(w, r, "/login", 302)
 				return
 			}
 		}
