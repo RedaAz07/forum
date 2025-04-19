@@ -13,6 +13,59 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
+  <body>
+    <header>
+      <a href="/" class="title">Forum</a>
+      <div>
+        {{if .Session}}
+        <div class="gap">
+          <input type="checkbox" id="post-toggle" class="hidd">
+          <label for="post-toggle" class="postbtn">Create post</label>
+          <div class="postform">
+            <h2>Create Post</h2>
+            <form action="/createPost" method="post">
+              <input type="text" name="title" placeholder="Title" required /><br />
+              <textarea name="description" placeholder="Content" required></textarea>
+              <br />
+              <div class="categorie" name="categoryID">
+                <input type="checkbox" id="tag1" class="tag-check" hidden>
+                <label for="tag1" class="tagC">Sport</label>
+              
+                <input type="checkbox" id="tag2" class="tag-check" hidden>
+                <label for="tag2" class="tagC">Education</label>
+              
+                <input type="checkbox" id="tag3" class="tag-check" hidden>
+                <label for="tag3" class="tagC">GYM</label>
+              
+                <input type="checkbox" id="tag4" class="tag-check" hidden>
+                <label for="tag4" class="tagC">Food</label>
+              
+                <input type="checkbox" id="tag5" class="tag-check" hidden>
+                <label for="tag5" class="tagC">Music</label>
+      
+                <input type="checkbox" id="tag6" class="tag-check" hidden>
+                <label for="tag6" class="tagC">Coding</label>
+              </div>
+              <br />
+              <input type="submit" value="Create Post" class="btnform" /><br />
+            </form>
+          </div>
+          <input type="checkbox" id="toggle-menu" class="hidd" />
+          <label for="toggle-menu" class="avatar-label">
+            <img src="https://robohash.org/{{.Username}}.png?size=50x50" />
+          </label>
+          <div class="dropdown">
+            <strong>Mr {{.Username}}</strong>
+            <hr />
+            <form action="/logout" method="post" class="formlog">
+              <button class="Btn" type="submit">
+                <div class="sign">
+                  <svg viewBox="0 0 512 512">
+                    <path
+                      d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"
+                    ></path>
+                  </svg>
+                </div>
 <body>
   <header>
     <a href="/" class="title">Forum</a>
@@ -121,39 +174,6 @@
       {{end}}
     </div>
 
-    {{if .Session }}
 
-    <div class="postform">
-      <h2>Create Post</h2>
-      <form action="/createPost" method="post">
-        <input type="text" name="title" placeholder="Title" required /><br />
-        <textarea name="description" placeholder="Content" required></textarea>
-        <br />
-        <div class="categorie" name="categoryID">
-          <input type="checkbox" id="tag1" class="tag-check" hidden>
-          <label for="tag1" class="tagC">Sport</label>
-
-          <input type="checkbox" id="tag2" class="tag-check" hidden>
-          <label for="tag2" class="tagC">Education</label>
-
-          <input type="checkbox" id="tag3" class="tag-check" hidden>
-          <label for="tag3" class="tagC">GYM</label>
-
-          <input type="checkbox" id="tag4" class="tag-check" hidden>
-          <label for="tag4" class="tagC">Food</label>
-
-          <input type="checkbox" id="tag5" class="tag-check" hidden>
-          <label for="tag5" class="tagC">Music</label>
-
-          <input type="checkbox" id="tag6" class="tag-check" hidden>
-          <label for="tag6" class="tagC">Coding</label>
-        </div>
-        <br />
-        <input type="submit" value="Create Post" class="btnform" /><br />
-      </form>
-    </div>
-    {{end}}
-    {{end}}
-</body>
-
+  </body>
 </html>

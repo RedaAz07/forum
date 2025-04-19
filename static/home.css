@@ -1,3 +1,10 @@
+:root {
+  --wahd: #6537e0;
+  --joj: #090114;
+  --tlata:#6A2FC7;
+  --bg:#0a0a0a;
+  --bg2:var(--wahd);
+}
 * {
   padding: 0;
   margin: 0;
@@ -8,7 +15,7 @@ body::-webkit-scrollbar {
   display: none;
 }
 body {
-  background-color: #0a0a0a;
+  background-color: var(--joj);
 }
 .allPost {
   width: 80%;
@@ -50,7 +57,7 @@ body {
 
 .post-time {
   margin-bottom: 15px;
-  color: #4b5aff;
+  color: var(--wahd);
   font-size: 15px;
 }
 
@@ -66,7 +73,7 @@ body {
 }
 
 .tag {
-  background-color: #4b5aff;
+  background-color: var(--wahd);
   padding: 8px 15px;
   border-radius: 15px;
   font-size: 16px;
@@ -101,16 +108,16 @@ body {
 }
 
 .postform {
-  animation: 1.5s postAn ease-in-out ;
+  animation: 0.5s postAn ease-in-out;
+  display: none;
   width: 500px;
   height: 400px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border: 2px solid #0a0a0a;
   position: fixed;
-  display: none;
+  border: 2px solid #0a0a0a;
   flex-direction: column;
   background-color: wheat;
   text-align: center;
@@ -149,7 +156,7 @@ body {
   width: 90%;
   height: 40px;
   color: white;
-  background-color: #4b5aff;
+  background-color: var(--wahd);
 }
 .postform form .categorie {
   display: flex;
@@ -161,7 +168,7 @@ body {
 }
 
 .tagC {
-  border: 2px solid #4b5aff;
+  border: 2px solid var(--wahd);
   padding: 5px 10px;
   border-radius: 8px;
   cursor: pointer;
@@ -170,17 +177,19 @@ body {
 }
 
 .tag-check:checked + .tagC {
-  background-color: #4b5aff;
+  background-color: var(--wahd);
   color: white;
 }
-header:has(#post:checked) .postform {
-  display: flex;
+
+header:has(#post-toggle:checked) .postform {
+  display: block;
 }
-body:has(#post:checked) .allPost {
+
+body:has(#post-toggle:checked) .allPost {
   filter: blur(2px);
 }
 
-@keyframes post {
+@keyframes postAn {
   0% {
     opacity: 0;
     transform: translateY(-500px);
