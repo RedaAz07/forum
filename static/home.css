@@ -3,7 +3,7 @@
   --joj: #090114;
   --tlata:#6A2FC7;
   --bg:#0a0a0a;
-  --bg2:var(--wahd);
+  --bg2:#4285F4;
 }
 * {
   padding: 0;
@@ -109,7 +109,7 @@ body {
 }
 
 .postform {
-  animation: 0.5s postAn ease-in-out;
+  animation: 0.8s postAn ease-in-out;
   display: none;
   width: 500px;
   height: 400px;
@@ -134,7 +134,7 @@ body {
   border-radius: 10px;
   border: 1px solid gray;
   margin-bottom: 10px;
-  margin-top: 30px;
+  margin-top: 15px;
 }
 .postform form input:focus {
   border: 2px solid black;
@@ -152,6 +152,16 @@ body {
   border: 2px solid black;
 }
 .postform form .btnform {
+  background: linear-gradient(
+    135deg,
+    #4285F4,   /* Blue Google style */
+    #6A2FC7,   /* Purple intense */
+    #6537e0,   /* Soft purple */
+    #9B59B6,   /* Amethyst */
+    #8E44AD,   /* Deep violet */
+    #5C6BC0,   /* Indigo */
+    #3F51B5    /* Classic Blue */
+  );
   font-weight: bold;
   cursor: pointer;
   width: 90%;
@@ -164,16 +174,17 @@ body {
   flex-wrap: wrap;
   margin: auto;
   width: 90%;
-  gap: 5px;
-  margin-bottom: 20px;
+  gap: 15px;
 }
 
 .tagC {
   border: 2px solid var(--wahd);
-  padding: 5px 10px;
+  padding: 5px 0;
+  width: 100px;
   border-radius: 8px;
+  color: black;
   cursor: pointer;
-  transition: 0.5s;
+  transition: 0.3s;
   user-select: none;
 }
 
@@ -187,17 +198,19 @@ header:has(#post-toggle:checked) .postform {
 }
 
 body:has(#post-toggle:checked) .allPost {
-  opacity: 0.8;
+  opacity: 0.5;
 }
 
 @keyframes postAn {
   0% {
     opacity: 0;
-    transform: translateY(-500px);
+    top: -100%;
+    transform: translate(-50%, 0);
   }
 
   100% {
     opacity: 1;
-    transform: translateY(0);
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 }

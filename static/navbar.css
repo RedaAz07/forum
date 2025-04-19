@@ -122,7 +122,7 @@ header:has(#toggle-menu:checked) .dropdown {
   display: block;
 }
 body:has(#toggle-menu:checked) .allPost {
-  filter: blur(2px);
+  opacity: 0.5;
 }
 .allPost{
   opacity: 1;
