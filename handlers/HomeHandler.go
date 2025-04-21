@@ -98,6 +98,7 @@ ORDER BY c.time DESC;
 
 		comments = append(comments, comment)
 	}
+	fmt.Println(len(comments))
 	//  !  end get comments
 	// !  add the communts to   map
 
@@ -107,14 +108,21 @@ ORDER BY c.time DESC;
 	}
 
 	// !  get posts
-	stmt := `SELECT p.id, p.username, p.title, p.description, p.time, 
-                COUNT(CASE WHEN l.value = 1 THEN 1 END) AS total_likes, 
-                COUNT(CASE WHEN l.value = -1 THEN 1 END) AS total_dislikes
-         FROM posts p
-         LEFT JOIN likes l ON p.id = l.postID
-         GROUP BY p.id
-         ORDER BY p.time DESC`
-
+	stmt := `SELECT 
+  p.id, 
+  p.username, 
+  p.title, 
+  p.description, 
+  p.time, 
+  COUNT(CASE WHEN l.value = 1 THEN 1 END) AS total_likes, 
+  COUNT(CASE WHEN l.value = -1 THEN 1 END) AS total_dislikes,
+  COUNT(c.comment) AS total_comments
+FROM posts p
+LEFT JOIN likes l ON p.id = l.postID
+LEFT JOIN comments c ON p.id = c.postID
+GROUP BY p.id
+ORDER BY p.time DESC
+`
 	rows, err := utils.Db.Query(stmt)
 	if err != nil {
 		fmt.Println("DB Query error:", err)
@@ -124,11 +132,11 @@ ORDER BY c.time DESC;
 
 	var posts []utils.Posts
 	var catgs []string
+	var post utils.Posts
+	var totalLikes, totalDislikes, totalComments int
 	for rows.Next() {
-		var post utils.Posts
-		var totalLikes, totalDislikes int
 
-		err = rows.Scan(&post.Id, &post.Username, &post.Title, &post.Description, &post.Time, &totalLikes, &totalDislikes)
+		err = rows.Scan(&post.Id, &post.Username, &post.Title, &post.Description, &post.Time, &totalLikes, &totalDislikes,&totalComments )
 		if err != nil {
 			fmt.Println("Scan error:", err)
 			helpers.RanderTemplate(w, "home.html", http.StatusInternalServerError, nil)
@@ -138,6 +146,8 @@ ORDER BY c.time DESC;
 		post.Comments = commentMap[post.Id]
 		post.TotalLikes = totalLikes
 		post.TotalDislikes = totalDislikes
+		post.TotalComments = totalComments
+		
 
 		now := time.Now()
 		diff := now.Sub(post.Time)
@@ -182,13 +192,13 @@ ORDER BY c.time DESC;
 	}
 	variables := struct {
 		Session    string
-		UserActive   string
+		UserActive string
 		Posts      []utils.Posts
 		Categories []utils.Categories
 		PostCatgs  []string
 	}{
 		Session:    sessValue,
-		UserActive:   helpers.GetUsernameFromSession(sessValue),
+		UserActive: helpers.GetUsernameFromSession(sessValue),
 		Posts:      posts,
 		Categories: categories,
 	}
