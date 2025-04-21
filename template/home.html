@@ -46,29 +46,13 @@
               ></textarea
               ><br />
               <div class="categorie">
-                <input type="checkbox" id="tag1" class="tag-check" hidden />
-                <label for="tag1" class="tagC">Sport</label>
 
-                <input type="checkbox" id="tag2" class="tag-check" hidden />
-                <label for="tag2" class="tagC">Music</label>
+                {{ range .Categories}}
 
-                <input type="checkbox" id="tag3" class="tag-check" hidden />
-                <label for="tag3" class="tagC">GYM</label>
+                <input type="checkbox" id="tag{{.Id}}"  class="tag-check" name="tags" value="{{.Id}}" hidden>
+                <label for="tag{{.Id}}" class="tagC">{{.Name}}</label>
+                {{end}}
 
-                <input type="checkbox" id="tag4" class="tag-check" hidden />
-                <label for="tag4" class="tagC">Movies</label>
-
-                <input type="checkbox" id="tag5" class="tag-check" hidden />
-                <label for="tag5" class="tagC">Science</label>
-
-                <input type="checkbox" id="tag6" class="tag-check" hidden />
-                <label for="tag6" class="tagC">Politics</label>
-
-                <input type="checkbox" id="tag7" class="tag-check" hidden />
-                <label for="tag7" class="tagC">Culture</label>
-
-                <input type="checkbox" id="tag8" class="tag-check" hidden />
-                <label for="tag8" class="tagC">Technology</label>
               </div>
               <br />
               <input type="submit" value="Create Post" class="btnform" /><br />
@@ -107,6 +91,8 @@
 
     <div class="allPost">
       {{range .Posts}}
+
+      {{$userId := .Id}}
       <div class="post-card" id="post-{{.Id}}">
         <div class="first-part">
           <div class="post-header">
@@ -124,7 +110,8 @@
           <h2 class="post-title">{{.Title}}</h2>
 
           <div class="post-tags">
-            {{range $.Categories}}
+            
+            {{range .Categories}}
             <span class="tag">{{.Name}}</span>
             {{end}}
           </div>
@@ -207,6 +194,20 @@
                   
 
                   
+                </div>
+                <div class="post-reactions">
+                  <form action="/CommentsLike " method="post">
+                    <div class="reaction">
+                      <span> {{.TotalLikes}}</span>
+                      <button name="reaction" value="1" class="like-btn" type="submit">👍</button>
+                    </div>
+                    <div class="reaction">
+                      <span>{{.TotalDislikes}}</span>
+                      <button name="reaction" value="-1" class="dislike-btn" type="submit">👎</button>
+                    </div>
+                    <input type="hidden" name="userId" value="{{$userId}}" />
+                    <input type="hidden" name="commentID" value="{{.Id}}" />
+                  </form>
                 </div>
               </div>
             </div>

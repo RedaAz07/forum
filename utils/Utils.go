@@ -22,8 +22,9 @@ type Users struct {
 	Password string
 }
 type Categories struct {
-	Name string
-	Id   int
+	Name   string
+	Id     int
+	PostID int
 }
 type Posts struct {
 	Id            int
@@ -34,14 +35,22 @@ type Posts struct {
 	TimeFormatted string
 	TotalLikes    int
 	TotalDislikes int
-	Comments []Comments
+	Comments      []Comments
+	Categories    []Categories
+}
+type Catgs struct {
+	Catgs []string
 }
 type Comments struct {
 	PostID   int
+	Id       int
 	Username string
 	Comment  string
 	Time     time.Time
 	TimeFormattedComment string
+	TotalLikes    int
+	TotalDislikes int
+	
 }
 
 var (
