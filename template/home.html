@@ -1,201 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Forum</title>
-    <link
-      rel="shortcut icon"
-      href="/static/images/meta.png"
-      type="image/x-icon"
-    />
-    <link rel="stylesheet" href="/static/home.css" />
-    <link rel="stylesheet" href="/static/navbar.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-      integrity="sha512-uWFS2SyMlXU1P9Uv9Z4q1XLh3QjsoZ4SB8QoX0OQH5m6goZQyA5DFmuH2gOdf5U3GVabkUqZbJKnSSCBaEVz2w=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-  </head>
 
-  
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forum</title>
+  <link rel="shortcut icon" href="/static/images/meta.png" type="image/x-icon" />
+  <link rel="stylesheet" href="/static/home.css" />
+  <link rel="stylesheet" href="/static/navbar.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    integrity="sha512-uWFS2SyMlXU1P9Uv9Z4q1XLh3QjsoZ4SB8QoX0OQH5m6goZQyA5DFmuH2gOdf5U3GVabkUqZbJKnSSCBaEVz2w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
 
-  <body>
-    <header>
-      <a href="/" class="title">Forum</a>
-      <div>
-        {{if .Session}}
-        <div class="gap">
-          <input type="checkbox" id="post-toggle" class="hidd" />
-          <label for="post-toggle" class="postbtn">Create post</label>
-          <div class="postform">
-            <h2>Create Post</h2>
-            <form action="/createPost" method="post">
-              <input
-                type="text"
-                name="title"
-                placeholder="Title"
-                required
-              /><br />
-              <textarea
-                name="description"
-                placeholder="Content"
-                required
-              ></textarea
-              ><br />
-              <div class="categorie">
 
-                {{ range .Categories}}
 
-                <input type="checkbox" id="tag{{.Id}}"  class="tag-check" name="tags" value="{{.Id}}" hidden>
-                <label for="tag{{.Id}}" class="tagC">{{.Name}}</label>
-                {{end}}
+<body>
+  <header>
+    <a href="/" class="title">Forum</a>
+    <div>
+      {{if .Session}}
+      <div class="gap">
+        <input type="checkbox" id="post-toggle" class="hidd" />
+        <label for="post-toggle" class="postbtn">Create post</label>
+        <div class="postform">
+          <h2>Create Post</h2>
+          <form action="/createPost" method="post">
+            <input type="text" name="title" placeholder="Title" required /><br />
+            <textarea name="description" placeholder="Content" required></textarea><br />
+            <div class="categorie">
 
-              </div>
-              <br />
-              <input type="submit" value="Create Post" class="btnform" /><br />
-            </form>
-          </div>
+              {{ range .Categories}}
 
-          <input type="checkbox" id="toggle-menu" class="hidd" />
-          <label for="toggle-menu" class="avatar-label">
-            <img src="https://robohash.org/{{.Username}}.png?size=50x50" />
-          </label>
-          <div class="dropdown">
-            <strong>Mr {{.Username}}</strong>
-            <hr />
-            <form action="/logout" method="post" class="formlog">
-              <button class="Btn" type="submit">
-                <div class="sign">
-                  <svg viewBox="0 0 512 512">
-                    <path
-                      d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"
-                    ></path>
-                  </svg>
-                </div>
-                <div class="text">Logout</div>
-              </button>
-            </form>
-          </div>
-        </div>
-        {{else}}
-        <div class="gap">
-          <a href="/register" class="register">Register</a>
-          <a href="/login" class="login">Login</a>
-        </div>
-        {{end}}
-      </div>
-    </header>
+              <input type="checkbox" id="tag{{.Id}}" class="tag-check" name="tags" value="{{.Id}}" hidden>
+              <label for="tag{{.Id}}" class="tagC">{{.Name}}</label>
+              {{end}}
 
-    <div class="allPost">
-      {{range .Posts}}
-
-      {{$userId := .Id}}
-      <div class="post-card" id="post-{{.Id}}">
-        <div class="first-part">
-          <div class="post-header">
-            <div class="user-info">
-              <img
-                src="https://robohash.org/{{.Username}}.png?size=50x50"
-                class="avatar"
-              />
-              <span class="username">{{.Username}}</span>
-              <span class="hdah">{{.TimeFormatted}}</span>
             </div>
-            <span class="post-time">{{.TimeFormatted}}</span>
-          </div>
-
-          <h2 class="post-title">{{.Title}}</h2>
-
-          <div class="post-tags">
-            
-            {{range .Categories}}
-            <span class="tag">{{.Name}}</span>
-            {{end}}
-          </div>
-
-          <p class="post-description">{{.Description}}</p>
-
-          <div class="post-reactions">
-            {{if $.Session}}
-            <form action="/reaction" method="post">
-              <div class="reaction">
-                <span>{{.TotalLikes}}</span>
-                <button
-                  name="reaction"
-                  value="1"
-                  class="like-btn"
-                  type="submit"
-                >
-                  👍
-                </button>
-              </div>
-              <div class="reaction">
-                <span>{{.TotalDislikes}}</span>
-                <button
-                  name="reaction"
-                  value="-1"
-                  class="dislike-btn"
-                  type="submit"
-                >
-                  👎
-                </button>
-              </div>
-              <div class="reaction">
-                <span>12</span>
-                <input type="checkbox" class="hidd" id="commentshow-{{.Id}}" />
-                <label for="commentshow-{{.Id}}" class="comment">💬</label>
-                <style>
-                  #post-{{.Id}}:has(#commentshow-{{.Id}}:checked) .second-part {
-                    display: flex;
-                  }
-                  #post-{{.Id}}:has(#commentshow-{{.Id}}:checked) .post-time {
-                    display: none;
-                  }
-                  #post-{{.Id}}:has(#commentshow-{{.Id}}:checked) .hdah {
-                    display: block;
-                  }
-                </style>
-              </div>
-              <input type="hidden" name="postID" value="{{.Id}}" />
-            </form>
-            {{end}}
-          </div>
+            <br />
+            <input type="submit" value="Create Post" class="btnform" /><br />
+          </form>
         </div>
-        <div class="second-part" id="post-{{.Id}}">
-          {{if $.Session}}
-          <div class="comment">
-            <form action="/comment" method="post">
-              <input type="hidden" name="postID" value="{{.Id}}" />
-              <img src="https://robohash.org/{{.Username}}.png?size=50x50" />
-              <input
-                type="text"
-                name="comment"
-                placeholder="Add Comment"
-                required
-              /><br />
-              <button type="submit">Add</button>
-            </form>
-            <hr />
-          </div>
-          {{end}} {{if gt (len .Comments) 0}}
-          <div class="commentaires">
-            <h3>Comments</h3>
-            {{range .Comments}}
-            <div class="comments">
-              <img src="https://robohash.org/{{.Username}}.png?size=50x50" />
-              <div class="comment-content">
-                <p><strong>{{.Username}}</strong></p>
-                <p class="comm">{{.Comment}}</p>
-                <div class="comment-actions">
-                  <span class="time">{{.TimeFormattedComment}}</span>
-                  
 
-                  
-                </div>
-                <div class="post-reactions">
+        <input type="checkbox" id="toggle-menu" class="hidd" />
+        <label for="toggle-menu" class="avatar-label">
+          <img src="https://robohash.org/{{.UserActive}}.png?size=50x50" />
+        </label>
+        <div class="dropdown">
+          <strong>Mr {{.UserActive}}</strong>
+          <hr />
+          <form action="/logout" method="post" class="formlog">
+            <button class="Btn" type="submit">
+              <div class="sign">
+                <svg viewBox="0 0 512 512">
+                  <path
+                    d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z">
+                  </path>
+                </svg>
+              </div>
+              <div class="text">Logout</div>
+            </button>
+          </form>
+        </div>
+      </div>
+      {{else}}
+      <div class="gap">
+        <a href="/register" class="register">Register</a>
+        <a href="/login" class="login">Login</a>
+      </div>
+      {{end}}
+    </div>
+  </header>
+
+  <div class="allPost">
+    {{range .Posts}}
+
+    {{$userId := .Id}}
+
+    <div class="post-card" id="post-{{.Id}}">
+      <div class="first-part">
+        <div class="post-header">
+          <div class="user-info">
+            <img src="https://robohash.org/{{.Username}}.png?size=50x50" class="avatar" />
+            <span class="username">{{.Username}}</span>
+            <span class="hdah">{{.TimeFormatted}}</span>
+          </div>
+          <span class="post-time">{{.TimeFormatted}}</span>
+        </div>
+
+        <h2 class="post-title">{{.Title}}</h2>
+
+        <div class="post-tags">
+
+          {{range .Categories}}
+          <span class="tag">{{.Name}}</span>
+          {{end}}
+        </div>
+
+        <p class="post-description">{{.Description}}</p>
+
+        <div class="post-reactions">
+          {{if $.Session}}
+          <form action="/reaction" method="post">
+            <div class="reaction">
+              <span>{{.TotalLikes}}</span>
+              <button name="reaction" value="1" class="like-btn" type="submit">
+                👍
+              </button>
+            </div>
+            <div class="reaction">
+              <span>{{.TotalDislikes}}</span>
+              <button name="reaction" value="-1" class="dislike-btn" type="submit">
+                👎
+              </button>
+            </div>
+            <div class="reaction">
+              <span>12</span>
+              <input type="checkbox" class="hidd" id="commentshow-{{.Id}}" />
+              <label for="commentshow-{{.Id}}" class="comment">💬</label>
+              <style>
+                #post-{{.Id}}:has(#commentshow-{{.Id}}:checked) .second-part {
+                  display: flex;
+                }
+                #post-{{.Id}}:has(#commentshow-{{.Id}}:checked) .post-time {
+                  display: none;
+                }
+                #post-{{.Id}}:has(#commentshow-{{.Id}}:checked) .hdah {
+                  display: block;
+                }
+              </style>
+            </div>
+            <input type="hidden" name="postID" value="{{.Id}}" />
+          </form>
+          {{end}}
+        </div>
+      </div>
+      <div class="second-part" id="post-{{.Id}}">
+        {{if $.Session}}
+        <div class="comment">
+          <form action="/comment" method="post">
+            <input type="hidden" name="postID" value="{{.Id}}" />
+            <img src="https://robohash.org/{{$.UserActive}}.png?size=50x50" />
+            <input type="text" name="comment" placeholder="Add Comment" required /><br />
+            <button type="submit">Add</button>
+          </form>
+          <hr />
+        </div>
+        {{end}} {{if gt (len .Comments) 0}}
+        <div class="commentaires">
+          <h3>Comments</h3>
+          {{range .Comments}}
+          <div class="comments">
+            <img src="https://robohash.org/{{.Username}}.png?size=50x50" />
+            <div class="comment-content">
+              <p class="user"><strong>{{.Username}}</strong></p>
+              <p class="comm">{{.Comment}}</p>
+              <div class="comment-actions">
+                <span class="time">{{.TimeFormattedComment}}</span>
+                <div class="comment-reactions">
                   <form action="/CommentsLike " method="post">
                     <div class="reaction">
                       <span> {{.TotalLikes}}</span>
@@ -211,33 +173,34 @@
                 </div>
               </div>
             </div>
-            {{end}}
           </div>
-          {{else}}
-          <h1 class="messageErr">No Commentaires 🤷‍♂️</h1>
           {{end}}
         </div>
+        {{else}}
+        <h1 class="messageErr">No Commentaires 🤷‍♂️</h1>
+        {{end}}
       </div>
-      {{end}}
     </div>
-  </body>
-  <script>
-    const toggleMenu = document.getElementById("toggle-menu");
-    const postToggle = document.getElementById("post-toggle");
+    {{end}}
+  </div>
+</body>
+<script>
+  const toggleMenu = document.getElementById("toggle-menu");
+  const postToggle = document.getElementById("post-toggle");
 
-    toggleMenu.addEventListener("change", function () {
-      if (this.checked) {
-        postToggle.checked = false;
-      }
-    });
+  toggleMenu.addEventListener("change", function () {
+    if (this.checked) {
+      postToggle.checked = false;
+    }
+  });
 
-    postToggle.addEventListener("change", function () {
-      if (this.checked) {
-        toggleMenu.checked = false;
-      }
-    });
-  </script>
-  <!-- <script>
+  postToggle.addEventListener("change", function () {
+    if (this.checked) {
+      toggleMenu.checked = false;
+    }
+  });
+</script>
+<!-- <script>
     document.addEventListener("click", function (e) {
       const menuToggle = document.getElementById("toggle-menu");
       const postToggle = document.getElementById("post-toggle");
@@ -259,4 +222,5 @@
       }
     });
   </script> -->
+
 </html>

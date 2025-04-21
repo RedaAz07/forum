@@ -50,7 +50,6 @@ type Comments struct {
 	TimeFormattedComment string
 	TotalLikes    int
 	TotalDislikes int
-	
 }
 
 var (
