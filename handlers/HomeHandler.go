@@ -10,19 +10,72 @@ import (
 )
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
+	//! get comments likes
+
+	/* stmtgetcommentslikes := `
+						COUNT(CASE WHEN cl.value = 1 THEN 1 END) AS total_likes,
+	                COUNT(CASE WHEN cl.value = -1 THEN 1 END) AS total_dislikes
+	from commentslikes cl
+	INNER JOIN comments c ON cl.commentID = c.id
+	INNER JOIN posts p ON c.postID = p.id
+	GROUP BY c.id` */
+
+	//! end get comments likes
+
+	//! get categories
+	stmtCategories := `
+	SELECT C.name, C.id ,  CP.postID  FROM categories C
+	INNER JOIN categories_post CP ON C.id = CP.categoryID
+	INNER JOIN posts P ON CP.postID = P.id
+	`
+
+	rowcat, errcat := utils.Db.Query(stmtCategories)
+	if errcat != nil {
+		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
+		return
+	}
+	var category []utils.Categories
+	for rowcat.Next() {
+		var categor utils.Categories
+		errcat = rowcat.Scan(&categor.Name, &categor.Id, &categor.PostID)
+		if errcat != nil {
+			helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
+			return
+		}
+		category = append(category, categor)
+	}
+
+	// !end get categories
+	// ! add the categories to the map
+
+	categorMap := make(map[int][]utils.Categories)
+	for _, d := range category {
+		categorMap[d.PostID] = append(categorMap[d.PostID], d)
+	}
+
+	//! example of the map
 	//!  get comments
+
 	stmtcommnts := `
 	SELECT 
-		COALESCE(comments.comment, '') AS comment,
-		COALESCE(comments.time, '') AS time,
-		COALESCE(comments.username, '') AS username,
-		comments.postID
-	FROM comments
-	INNER JOIN posts ON comments.postID = posts.id;
+    c.id,
+    COALESCE(c.comment, '') AS comment,
+    COALESCE(c.time, '') AS time,
+    COALESCE(c.username, '') AS username,
+    c.postID,
+    COUNT(CASE WHEN cl.value = '1' THEN 1 END) AS total_likes, 
+    COUNT(CASE WHEN cl.value = '-1' THEN 1 END) AS total_dislikes
+FROM comments c
+INNER JOIN posts p ON c.postID = p.id
+LEFT JOIN commentsLikes cl ON c.id = cl.commentID
+GROUP BY c.id
+ORDER BY c.time DESC;
+
 	`
 
 	rows2, err2 := utils.Db.Query(stmtcommnts)
 	if err2 != nil {
+		fmt.Println("DB Query error:", err2)
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
 		return
 	}
@@ -31,7 +84,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 	for rows2.Next() {
 		var comment utils.Comments
-		err2 = rows2.Scan(&comment.Comment, &comment.Time, &comment.Username, &comment.PostID)
+		err2 = rows2.Scan(&comment.Id, &comment.Comment, &comment.Time, &comment.Username, &comment.PostID, &comment.TotalLikes, &comment.TotalDislikes)
 		if err2 != nil {
 			fmt.Println("Scan error:", err2)
 			helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
@@ -49,12 +102,12 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 	// !  get posts
 	stmt := `SELECT p.id, p.username, p.title, p.description, p.time, 
-                    COUNT(CASE WHEN l.value = 1 THEN 1 END) AS total_likes, 
-                    COUNT(CASE WHEN l.value = -1 THEN 1 END) AS total_dislikes
-             FROM posts p
-             LEFT JOIN likes l ON p.id = l.postID
-             GROUP BY p.id
-             ORDER BY p.time DESC`
+                COUNT(CASE WHEN l.value = 1 THEN 1 END) AS total_likes, 
+                COUNT(CASE WHEN l.value = -1 THEN 1 END) AS total_dislikes
+         FROM posts p
+         LEFT JOIN likes l ON p.id = l.postID
+         GROUP BY p.id
+         ORDER BY p.time DESC`
 
 	rows, err := utils.Db.Query(stmt)
 	if err != nil {
@@ -64,7 +117,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var posts []utils.Posts
-
+	var catgs []string
 	for rows.Next() {
 		var post utils.Posts
 		var totalLikes, totalDislikes int
@@ -75,7 +128,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 			helpers.RanderTemplate(w, "home.html", http.StatusInternalServerError, nil)
 			return
 		}
-
+		post.Categories = categorMap[post.Id]
 		post.Comments = commentMap[post.Id]
 		post.TotalLikes = totalLikes
 		post.TotalDislikes = totalDislikes
@@ -85,6 +138,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		seconds := int(diff.Seconds())
 		post.TimeFormatted = helpers.FormatDuration((seconds))
 		posts = append(posts, post)
+
 	}
 
 	// !  end get posts
@@ -92,7 +146,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	// ! get categories
 	var categories []utils.Categories
 
-	stmtcategpries := `SELECT name, id FROM categories`
+	stmtcategpries := `SELECT name, id FROM categories `
 	rows3, err3 := utils.Db.Query(stmtcategpries)
 	if err3 != nil {
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
@@ -110,6 +164,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		categories = append(categories, category)
 
 	}
+	//! end get categories
 
 	session, err := r.Cookie("session")
 	var sessValue string
@@ -124,12 +179,20 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		Username   string
 		Posts      []utils.Posts
 		Categories []utils.Categories
+		PostCatgs  []string
 	}{
 		Session:    sessValue,
-		Username:   helpers.GetUsernameFromSession(sessValue), // une fonction pour récupérer le nom
+		Username:   helpers.GetUsernameFromSession(sessValue),
 		Posts:      posts,
 		Categories: categories,
 	}
+	fmt.Println("PostCatgs", catgs)
 
 	helpers.RanderTemplate(w, "home.html", 200, variables)
+
+	/* !  bnisba l ay relation many to many endi hna kaykhnsi njbdha bohdha 7it adir lya mochkil f posts f like w dislikes
+	so ghatl9ani jbedt l categories w l comments f bohdhom w7tithom fwa7d lmap bach key hya post id w value hya struct
+	mn b3d kan7thom fstruct post li fiha kolchi
+	*/
+	//!  i add the clike on comments + add table  +add the form in home html but its not working + handler without fixing
 }

@@ -50,3 +50,14 @@ CREATE TABLE
         FOREIGN KEY (categoryID) REFERENCES categories (id),
         FOREIGN KEY (postID) REFERENCES posts (id)
     );
+
+
+
+CREATE TABLE IF NOT EXISTS commentsLikes (
+    userID INTEGER,
+    commentID INTEGER,
+    value VARCHAR(2),
+    PRIMARY KEY (userID, commentID),
+    FOREIGN KEY (userID) REFERENCES users (id),
+    FOREIGN KEY (commentID) REFERENCES comments (id)
+);

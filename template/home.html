@@ -30,8 +30,8 @@
 
               {{ range .Categories}}
 
-              <input type="checkbox" id="tag1" name="tags" value="{{.Id}}" hidden>
-              <label for="tag1" class="tagC">{{.Name}}</label>
+              <input type="checkbox" id="tag{{.Id}}"  class="tag-check" name="tags" value="{{.Id}}" hidden>
+              <label for="tag{{.Id}}" class="tagC">{{.Name}}</label>
               {{end}}
 
       
@@ -72,6 +72,8 @@
 
   <div class="allPost">
     {{range .Posts}}
+
+    {{ $userId := .Id }}
     <div class="post-card">
       <div class="post-header">
         <div class="user-info">
@@ -84,7 +86,7 @@
       <h2 class="post-title">{{.Title}}</h2>
 
       <div class="post-tags">
-        {{range $.Categories}}
+        {{range .Categories}}
         <span class="tag">{{.Name}}</span>
         {{end}}
       </div>
@@ -114,6 +116,20 @@
           <p>{{.Comment}}</p>
           <p id="time">Created at: {{.Time}}</p>
           <p><strong>{{.Username}}</strong></p>
+        </div>
+        <div class="post-reactions">
+          <form action="/CommentsLike " method="post">
+            <div class="reaction">
+              <span> {{.TotalLikes}}</span>
+              <button name="reaction" value="1" class="like-btn" type="submit">👍</button>
+            </div>
+            <div class="reaction">
+              <span>{{.TotalDislikes}}</span>
+              <button name="reaction" value="-1" class="dislike-btn" type="submit">👎</button>
+            </div>
+            <input type="hidden" name="userId" value="{{$userId}}" />
+            <input type="hidden" name="commentID" value="{{.Id}}" />
+          </form>
         </div>
         {{end}}
       </div>

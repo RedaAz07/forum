@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 
 	"forum/helpers"
@@ -35,14 +36,7 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 
 	category := r.Form["tags"] //* if he just choose the category
 
-	fmt.Println("category", category)
 	// !  check if the user create a new category
-
-
-
-
-
-
 
 	// ! get the username
 	stmt2 := `select  username from users where session = ?`
@@ -52,7 +46,26 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 
 	stmt := `insert into posts (title, description, username) values(?, ?, ?)`
 
-	utils.Db.Exec(stmt, title, description, username)
+	res, _ := utils.Db.Exec(stmt, title, description, username)
+
+	postID, err := res.LastInsertId()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	//! create categories
+
+	stmtcat := `insert into categories_post (categoryID,postID) values (?,?)`
+
+	for _, v := range category {
+		_, err := utils.Db.Exec(stmtcat, v, postID)
+		if err != nil {
+			fmt.Println("error in inserting category", err)
+			helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
+			return
+		}
+
+	}
 
 	http.Redirect(w, r, "/", 302)
 }
