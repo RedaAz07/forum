@@ -38,10 +38,10 @@ type Posts struct {
 }
 type Comments struct {
 	PostID   int
-
 	Username string
 	Comment  string
-	Time     string
+	Time     time.Time
+	TimeFormattedComment string
 }
 
 var (

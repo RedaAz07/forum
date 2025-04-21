@@ -8,12 +8,12 @@
 header {
   animation: navbar 1.5s ease-in-out;
   background-color: var(--joj);
-  z-index: 3;
+  z-index: 15;
   position: fixed;
   top: 0;
   width: 100%;
   height: 70px;
-  padding: 15px 220px;
+  padding: 15px 170px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -21,22 +21,15 @@ header {
 }
 header img {
   filter: brightness(150%);
-  background: url("/static/images/img2.jpg");
+  /* background: url("/static/images/img2.jpg"); */
+  background-color: rgba(0, 128, 0, 0.877);
   border: 1px solid #1e1e1e6e;
   width: 33px;
   height: 33px;
   border-radius: 50%;
   cursor: pointer;
 }
-.avatar {
-  filter: brightness(150%);
-  background: url("/static/images/img1.jpg");
-  border: 1px solid #1e1e1e6e;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  cursor: pointer;
-}
+
 header .title {
   cursor: pointer;
   font-size: 45px;
@@ -97,7 +90,7 @@ header form .formlog {
   animation: anim 0.5s linear;
   display: none;
   position: absolute;
-  right: 214px;
+  right: 170px;
   top: 58px;
   margin-top: 10px;
   background-color: rgb(71, 70, 70);
@@ -118,12 +111,15 @@ header form .formlog {
   text-overflow: ellipsis;
   display: block;
 }
-header:has(#toggle-menu:checked) .dropdown {
+body:has(#toggle-menu:checked) .dropdown {
   display: block;
 }
 body:has(#toggle-menu:checked) .allPost {
   opacity: 0.5;
 }
+/* body:has(#toggle-menu:checked) .postform {
+  display: none;
+} */
 .allPost{
   opacity: 1;
 }

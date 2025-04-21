@@ -14,15 +14,17 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	stmtcommnts := `
 	SELECT 
 		COALESCE(comments.comment, '') AS comment,
-		COALESCE(comments.time, '') AS time,
+		comments.time,
 		COALESCE(comments.username, '') AS username,
 		comments.postID
 	FROM comments
-	INNER JOIN posts ON comments.postID = posts.id;
+	INNER JOIN posts ON comments.postID = posts.id
+	order by comments.id DESC;
 	`
 
 	rows2, err2 := utils.Db.Query(stmtcommnts)
 	if err2 != nil {
+		fmt.Println("errrrr", err2)
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
 		return
 	}
@@ -37,6 +39,12 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 			helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
 			return
 		}
+
+		now := time.Now()
+		diff := now.Sub(comment.Time)
+		seconds := int(diff.Seconds())
+		comment.TimeFormattedComment = helpers.FormatDuration((seconds))
+
 		comments = append(comments, comment)
 	}
 	//  !  end get comments
