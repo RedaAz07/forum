@@ -182,13 +182,13 @@ ORDER BY c.time DESC;
 	}
 	variables := struct {
 		Session    string
-		Username   string
+		UserActive   string
 		Posts      []utils.Posts
 		Categories []utils.Categories
 		PostCatgs  []string
 	}{
 		Session:    sessValue,
-		Username:   helpers.GetUsernameFromSession(sessValue),
+		UserActive:   helpers.GetUsernameFromSession(sessValue),
 		Posts:      posts,
 		Categories: categories,
 	}

@@ -4,11 +4,12 @@
   --tlata:#6A2FC7;
   --bg:#0a0a0a;
   --bg2:#4b5aff;
+  --akhdar:#0afb26;
 }
 header {
   animation: navbar 1.5s ease-in-out;
   background-color: var(--joj);
-  z-index: 15;
+  z-index: 3;
   position: fixed;
   top: 0;
   width: 100%;
@@ -21,7 +22,6 @@ header {
 }
 header img {
   filter: brightness(150%);
-  /* background: url("/static/images/img2.jpg"); */
   background-color: rgba(0, 128, 0, 0.877);
   border: 1px solid #1e1e1e6e;
   width: 33px;
