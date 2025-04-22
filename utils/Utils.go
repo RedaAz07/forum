@@ -37,6 +37,7 @@ type Posts struct {
 	TotalDislikes int
 	Comments      []Comments
 	Categories    []Categories
+	TotalComments int
 }
 type Catgs struct {
 	Catgs []string
