@@ -10,6 +10,14 @@
 </head>
 <body>
     <div class="container">
+        {{if . }}
+        <div class="error">
+            <span class="icon">🚫</span>
+            <span class="message">Error :{{.}}</span>
+            <span class="close-btn" onclick="this.parentElement.style.display='none';">✖</span>
+        </div>
+        
+        {{end}}
         <div class="form-box login">
             <form action="/loginAuth" method="post">
                 <h1>Login</h1>
