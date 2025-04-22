@@ -10,17 +10,45 @@ import (
 )
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	//! get comments likes
+	//! get total comments 
+stmtTotal :=  `
+select count(c.comment)  , p.id from  comments c  
+inner join posts p  on  p.id = c.postID
+GROUP BY c.postID
+`
 
-	/* stmtgetcommentslikes := `
-						COUNT(CASE WHEN cl.value = 1 THEN 1 END) AS total_likes,
-	                COUNT(CASE WHEN cl.value = -1 THEN 1 END) AS total_dislikes
-	from commentslikes cl
-	INNER JOIN comments c ON cl.commentID = c.id
-	INNER JOIN posts p ON c.postID = p.id
-	GROUP BY c.id` */
+rowt, errt   :=  utils.Db.Query(stmtTotal)
+if errt != nil {
+	fmt.Println("errt" , errt)
+	helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
+		return
+}
+var postes []utils.Posts
 
-	//! end get comments likes
+
+for rowt.Next(){
+var p utils.Posts
+
+	errt :=  rowt.Scan(&p.TotalComments,&p.Id)
+	if errt != nil {
+		fmt.Println("errt" , errt)
+
+		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
+			return
+	}
+postes = append(postes, p)
+
+}
+totalmap := make(map[int]int)
+
+for _, d := range postes {
+	totalmap[d.Id] = d.TotalComments
+}
+
+
+
+
+	// ! end total comments  
 
 	//! get categories
 	stmtCategories := `
@@ -115,11 +143,9 @@ ORDER BY c.time DESC;
   p.description, 
   p.time, 
   COUNT(CASE WHEN l.value = 1 THEN 1 END) AS total_likes, 
-  COUNT(CASE WHEN l.value = -1 THEN 1 END) AS total_dislikes,
-  COUNT(c.comment) AS total_comments
+  COUNT(CASE WHEN l.value = -1 THEN 1 END) AS total_dislikes
 FROM posts p
 LEFT JOIN likes l ON p.id = l.postID
-LEFT JOIN comments c ON p.id = c.postID
 GROUP BY p.id
 ORDER BY p.time DESC
 `
@@ -133,10 +159,10 @@ ORDER BY p.time DESC
 	var posts []utils.Posts
 	var catgs []string
 	var post utils.Posts
-	var totalLikes, totalDislikes, totalComments int
+	var totalLikes, totalDislikes int
 	for rows.Next() {
 
-		err = rows.Scan(&post.Id, &post.Username, &post.Title, &post.Description, &post.Time, &totalLikes, &totalDislikes,&totalComments )
+		err = rows.Scan(&post.Id, &post.Username, &post.Title, &post.Description, &post.Time, &totalLikes, &totalDislikes)
 		if err != nil {
 			fmt.Println("Scan error:", err)
 			helpers.RanderTemplate(w, "home.html", http.StatusInternalServerError, nil)
@@ -146,8 +172,7 @@ ORDER BY p.time DESC
 		post.Comments = commentMap[post.Id]
 		post.TotalLikes = totalLikes
 		post.TotalDislikes = totalDislikes
-		post.TotalComments = totalComments
-		
+		post.TotalComments=totalmap[post.Id]
 
 		now := time.Now()
 		diff := now.Sub(post.Time)
