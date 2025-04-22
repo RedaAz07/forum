@@ -5,10 +5,11 @@
   --bg:#0a0a0a;
   --bg2:#4b5aff;
   --akhdar:#0afb26;
+  --red: #EB4336;
 }
 header {
   animation: navbar 1.5s ease-in-out;
-  background-color: var(--joj);
+  background: #051b29;
   z-index: 3;
   position: fixed;
   top: 0;

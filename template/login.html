@@ -5,46 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="/static/images/meta.png" type="image/x-icon">
     <title>loginn</title>
-    <link rel="stylesheet" href="/static/login.css">
+    <link rel="stylesheet" href="/static/style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
-
-
-    <div class="main-container centered-flex">
-        <div class="form-container">
-            <div class="icon fa fa-user"></div>
-            <form class="centered-flex" action="/loginAuth" method="post">
-                <div class="title">LOGIN</div>
-                <div class="msg"></div>
-                <div class="field">
-                    <input type="text" placeholder="Username" id="uname" name="username">
-                    <span class="fa fa-user"></span>
+    <div class="container">
+        <div class="form-box login">
+            <form action="/loginAuth" method="post">
+                <h1>Login</h1>
+                <div class="input-box">
+                    <input type="text"  required name="username">
+                    <label >Username</label>
+                    <i class='bx bxs-user'></i>
                 </div>
-                <div class="field">
-                    <input type="password" placeholder="Password" id="pass" name="password">
-                    <span class="fa fa-lock"></span>
+                <div class="input-box">
+                    <input type="password"  required name="password">
+                    <label >Password</label>
+                    <i class='bx bxs-lock-alt'></i>
                 </div>
-                <div class="action centered-flex">
-                    <label for="remember" class="centered-flex">
-                        <input type="checkbox" id="remember"> Remember me
-                    </label>
-                </div>
-                {{if . }}
-                <div class="error">
-                  
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" height="24" fill="none"><path fill="#393a37" d="m13 13h-2v-6h2zm0 4h-2v-2h2zm-1-15c-1.3132 0-2.61358.25866-3.82683.7612-1.21326.50255-2.31565 1.23915-3.24424 2.16773-1.87536 1.87537-2.92893 4.41891-2.92893 7.07107 0 2.6522 1.05357 5.1957 2.92893 7.0711.92859.9286 2.03098 1.6651 3.24424 2.1677 1.21325.5025 2.51363.7612 3.82683.7612 2.6522 0 5.1957-1.0536 7.0711-2.9289 1.8753-1.8754 2.9289-4.4189 2.9289-7.0711 0-1.3132-.2587-2.61358-.7612-3.82683-.5026-1.21326-1.2391-2.31565-2.1677-3.24424-.9286-.92858-2.031-1.66518-3.2443-2.16773-1.2132-.50254-2.5136-.7612-3.8268-.7612z"></path></svg>
-                    <div class="error__title">{{.}}</div>
-                </div>
-                
-                {{end}}
-
-                <div class="btn-container">
-                    <input type="submit" id="login-btn" value="Login">
-                </div>
-                <div class="signup">Don't have an Account?<a href="/register"> Sign up</a></div>
+                <button type="submit" class="btn">Login</button>
             </form>
         </div>
-</div>
 
+        <div class="form-box register">
+            <form action="/registerAuth" method="post">
+                <h1>Register</h1>
+                <div class="input-box">
+                    <input type="text"required name="username">
+                    <label >Username</label>
+                    <i class='bx bxs-user'></i>
+                </div>
+                <div class="input-box">
+                    <input type="email" required name="email">
+                    <label >Email</label>
+                    <i class='bx bxs-envelope'></i>       
+                </div>
+                <div class="input-box">
+                    <input type="password"  required name="password">
+                    <label >Password</label>
+                    <i class='bx bxs-lock-alt'></i>
+                </div>
+                <div class="input-box">
+                    <input type="password"  required name="firstpassword">
+                    <label >Confirm Password</label>
+                    <i class='bx bxs-lock-alt'></i>
+                </div>
+                <button type="submit" class="btn">Register</button>
+            </form>
+        </div>
+        <div class="toggle-box">
+            <div class="toggle-panel toggle-left">
+                <h1>Hello, Welcome!</h1>
+                <p>Don't have an account</p>
+                <button class="btn register-btn">Register</button>
+            </div>
+            <div class="toggle-panel toggle-right">
+                <h1>Welcome Back!</h1>
+                <p>Already have an account</p>
+                <button class="btn login-btn">Login</button>
+            </div>
+        </div>
+    </div>
 </body>
+<script>
+    const container = document.querySelector('.container');
+    const registerBtn = document.querySelector('.register-btn');
+    const loginBtn = document.querySelector('.login-btn');
+    registerBtn.addEventListener('click',()=>{
+        container.classList.add('active');
+    });
+    loginBtn.addEventListener('click',()=>{
+        container.classList.remove('active');
+    });
+</script>
 </html>

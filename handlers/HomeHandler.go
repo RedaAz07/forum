@@ -10,45 +10,41 @@ import (
 )
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	//! get total comments 
-stmtTotal :=  `
+	//! get total comments
+	stmtTotal := `
 select count(c.comment)  , p.id from  comments c  
 inner join posts p  on  p.id = c.postID
 GROUP BY c.postID
 `
 
-rowt, errt   :=  utils.Db.Query(stmtTotal)
-if errt != nil {
-	fmt.Println("errt" , errt)
-	helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
-		return
-}
-var postes []utils.Posts
-
-
-for rowt.Next(){
-var p utils.Posts
-
-	errt :=  rowt.Scan(&p.TotalComments,&p.Id)
+	rowt, errt := utils.Db.Query(stmtTotal)
 	if errt != nil {
-		fmt.Println("errt" , errt)
-
+		fmt.Println("errt", errt)
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
-			return
+		return
 	}
-postes = append(postes, p)
+	var postes []utils.Posts
 
-}
-totalmap := make(map[int]int)
+	for rowt.Next() {
+		var p utils.Posts
 
-for _, d := range postes {
-	totalmap[d.Id] = d.TotalComments
-}
+		errt := rowt.Scan(&p.TotalComments, &p.Id)
+		if errt != nil {
+			fmt.Println("errt", errt)
 
+			helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
+			return
+		}
+		postes = append(postes, p)
 
+	}
+	totalmap := make(map[int]int)
 
+	for _, d := range postes {
+		totalmap[d.Id] = d.TotalComments
+	}
 
-	// ! end total comments  
+	// ! end total comments
 
 	//! get categories
 	stmtCategories := `
@@ -172,7 +168,7 @@ ORDER BY p.time DESC
 		post.Comments = commentMap[post.Id]
 		post.TotalLikes = totalLikes
 		post.TotalDislikes = totalDislikes
-		post.TotalComments=totalmap[post.Id]
+		post.TotalComments = totalmap[post.Id]
 
 		now := time.Now()
 		diff := now.Sub(post.Time)
