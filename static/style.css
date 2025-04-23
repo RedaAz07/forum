@@ -24,11 +24,11 @@
   position: fixed;
   top: 10px;
   right: 10px;
-  border: 2px solid #f5c6cb;
+  border: 2px solid #de747f;
   display: flex;
   align-items: center;
-  background-color: #f8d7da;
-  color: #721c24;
+  background-color: #f4838d;
+  color: #000000;
   border-radius: 5px;
   margin: 20px auto;
   font-family: sans-serif;
