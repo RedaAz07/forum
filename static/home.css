@@ -184,7 +184,7 @@ body {
 .avatar,
 .comment form img {
   filter: brightness(150%);
-  background-color: #48a6a71c;
+  background-color: #48a6a7b3;
   border: 1px solid #1e1e1e6e;
   width: 32px;
   height: 32px;
@@ -245,7 +245,7 @@ body:has(#commentshow:checked) .post-time {
 }
 
 .tag {
-  background-color: #006a7194;
+  background-color: #006a71;
   padding: 8px 8px;
   border-radius: 15px;
   font-size: 16px;
