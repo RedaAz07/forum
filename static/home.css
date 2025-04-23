@@ -110,7 +110,7 @@ body {
   background-color: #30b8c1;
   padding: 8px 20px;
   border-radius: 10px;
-  color: wheat;
+  color: white;
 }
 
 .comment form input {
@@ -121,7 +121,8 @@ body {
 }
 
 .commentaires h3 {
-  color: #04dbf1;
+  /* color: #04dbf1; */
+  color: white;
   text-align: center;
   margin-bottom: 15px;
 }
@@ -254,7 +255,7 @@ body:has(#commentshow:checked) .post-time {
 .post-description {
   font-size: 17px;
   margin-bottom: 16px;
-  color: #fff5f5c7;
+  color: #fff5f5fb;
 }
 
 .post-reactions form {
@@ -283,14 +284,16 @@ body:has(#commentshow:checked) .post-time {
   display: none;
   width: 500px;
   height: 400px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  box-shadow:0 4px 15px rgb(67 171 180 / 38%);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   position: fixed;
-  border: 2px solid #0a0a0a;
+  /* border: 2px solid #0a0a0a; */
+  color: white;
+ 
   flex-direction: column;
-  background-color: wheat;
+  background-color: #2d3039;
   text-align: center;
   border-radius: 15px;
 }
@@ -328,22 +331,6 @@ body:has(#commentshow:checked) .post-time {
 }
 
 .postform form .btnform {
-  background: linear-gradient(135deg,
-      #4285f4,
-      /* Blue Google style */
-      #6a2fc7,
-      /* Purple intense */
-      #6537e0,
-      /* Soft purple */
-      #9b59b6,
-      /* Amethyst */
-      #8e44ad,
-      /* Deep violet */
-      #5c6bc0,
-      /* Indigo */
-      #3f51b5
-      /* Classic Blue */
-    );
   font-weight: bold;
   cursor: pointer;
   width: 90%;
@@ -361,11 +348,12 @@ body:has(#commentshow:checked) .post-time {
 }
 
 .tagC {
+
   border: 2px solid var(--wahd);
   padding: 5px 0;
   width: 100px;
   border-radius: 8px;
-  color: black;
+  color: white;
   cursor: pointer;
   transition: 0.3s;
   user-select: none;
@@ -406,7 +394,7 @@ body:has(#post-toggle:checked) .allPost {
 .comment-actions {
   align-items: center;
   font-size: 12px;
-  color: gray;
+  color: rgb(248, 233, 233);
   display: flex;
   gap: 15px;
   margin-top: 5px;
