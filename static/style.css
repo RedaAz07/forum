@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
 :root {
   --wahd: #007585;
   --joj: #090114;
@@ -8,8 +9,27 @@
   --akhdar: #0afb26;
   --red: #0ef;
 }
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
 
+.input-box input:-webkit-autofill,
+.input-box input:-webkit-autofill:hover, 
+.input-box input:-webkit-autofill:focus,
+.input-box input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  -webkit-text-fill-color: white !important;
+  transition: background-color 5000s ease-in-out 0s;
+  caret-color: white;
+}
+
+
+
+/* .input-box:has(#show10:checked) i.fa-eye-slash {
+  display: block;
+}
+.hidd {
+  width: 0;
+  height: 0;
+  visibility: hidden;
+} */
 * {
   margin: 0;
   padding: 0;
@@ -19,7 +39,7 @@
 .error{
   animation: err .8s ease-in-out;
   padding: 0 10px;
-  width: 330px;
+  width: 350px;
   height: 50px;
   position: fixed;
   top: 10px;
@@ -109,13 +129,13 @@ form {
 }
 .input-box input {
   width: 100%;
-  padding: 13px 50px 13px 20px;
+  padding: 13px 50px 13px 0;
   background: transparent;
   border: none;
   outline: none;
   border-bottom: 2px solid #fff;
   font-size: 16px;
-  color: #333;
+  color: #fff;
   font-weight: 500;
   transition: .5s;
 }
@@ -133,18 +153,16 @@ form {
     pointer-events: none;
     transition: .5s;
 }
-.input-box input::placeholder {
-  color: #fff;
-  font-weight: 400;
-}
-.input-box i {
+.input-box i{
   position: absolute;
   top: 50%;
   right: 0;
   transform: translateY(-50%);
   font-size: 20px;
   color: #fff;
+  cursor: pointer;
 }
+
 .input-box input:focus~label,
 .input-box input:valid~label{
     top: -3px;

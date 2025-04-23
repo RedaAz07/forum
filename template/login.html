@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="/static/images/meta.png" type="image/x-icon">
+    <link rel="icon" href="/static/images/meta.png" type="image/png" sizes="128x128">
     <title>loginn</title>
     <link rel="stylesheet" href="/static/style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <div class="container">
         {{if . }}
         <div class="error">
             <span class="icon">🚫</span>
-            <span class="message">Error :{{.}}</span>
+            <span class="message">Error: {{.}}</span>
             <span class="close-btn" onclick="this.parentElement.style.display='none';">✖</span>
         </div>
         
@@ -27,10 +28,11 @@
                     <i class='bx bxs-user'></i>
                 </div>
                 <div class="input-box">
-                    <input type="password"  required name="password">
-                    <label >Password</label>
-                    <i class='bx bxs-lock-alt'></i>
-                </div>
+                    <input type="password" required name="password">
+                    <label>Password</label>
+                    <i class="fa-regular fa-eye-slash hidden"></i>
+                    <i class="fa-regular fa-eye showen" style="display: none;"></i>
+                </div>                                                    
                 <button type="submit" class="btn">Login</button>
             </form>
         </div>
@@ -49,15 +51,17 @@
                     <i class='bx bxs-envelope'></i>       
                 </div>
                 <div class="input-box">
-                    <input type="password"  required name="password">
-                    <label >Password</label>
-                    <i class='bx bxs-lock-alt'></i>
-                </div>
+                    <input type="password" required name="password">
+                    <label>Password</label>
+                    <i class="fa-regular fa-eye-slash hidden"></i>
+                    <i class="fa-regular fa-eye showen" style="display: none;"></i>
+                </div>  
                 <div class="input-box">
-                    <input type="password"  required name="firstpassword">
-                    <label >Confirm Password</label>
-                    <i class='bx bxs-lock-alt'></i>
-                </div>
+                    <input type="password" required name="firstpassword">
+                    <label>Password</label>
+                    <i class="fa-regular fa-eye-slash hidden"></i>
+                    <i class="fa-regular fa-eye showen" style="display: none;"></i>
+                </div>  
                 <button type="submit" class="btn">Register</button>
             </form>
         </div>
@@ -76,6 +80,7 @@
     </div>
 </body>
 <script>
+    // to make the form register or login active  (also make it desactive)
     const container = document.querySelector('.container');
     const registerBtn = document.querySelector('.register-btn');
     const loginBtn = document.querySelector('.login-btn');
@@ -85,5 +90,32 @@
     loginBtn.addEventListener('click',()=>{
         container.classList.remove('active');
     });
+
+
+    // show password and hide it
+    document.addEventListener("DOMContentLoaded", () => {
+    const inputBoxes = document.querySelectorAll('.input-box');
+
+    inputBoxes.forEach(box => {
+        const input = box.querySelector('input[type="password"]');
+        const eyeSlash = box.querySelector('.hidden');
+        const eye = box.querySelector('.showen');
+
+        if (input && eyeSlash && eye) {
+            eyeSlash.addEventListener('click', () => {
+                input.type = 'text';
+                eyeSlash.style.display = 'none';
+                eye.style.display = 'block';
+            });
+
+            eye.addEventListener('click', () => {
+                input.type = 'password';
+                eye.style.display = 'none';
+                eyeSlash.style.display = 'block';
+            });
+        }
+    });
+});
+
 </script>
 </html>
