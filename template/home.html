@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     integrity="sha512-uWFS2SyMlXU1P9Uv9Z4q1XLh3QjsoZ4SB8QoX0OQH5m6goZQyA5DFmuH2gOdf5U3GVabkUqZbJKnSSCBaEVz2w=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 
 
@@ -107,19 +108,19 @@
             <div class="reaction">
               <span>{{.TotalLikes}}</span>
               <button name="reaction" value="1" class="like-btn" type="submit">
-                👍
+                <i class="fa-light fa-thumbs-up"></i>
               </button>
             </div>
             <div class="reaction">
               <span>{{.TotalDislikes}}</span>
               <button name="reaction" value="-1" class="dislike-btn" type="submit">
-                👎
+                <i class="fa-solid fa-thumbs-down"></i>
               </button>
             </div>
             <div class="reaction">
               <span>{{.TotalComments}}</span>
               <input type="checkbox" class="hidd" id="commentshow-{{.Id}}" />
-              <label for="commentshow-{{.Id}}" class="comment">💬</label>
+              <label for="commentshow-{{.Id}}" class="comment"><i class="fa-regular fa-comment"></i></label>
               <style>
                 #post-{{.Id}}:has(#commentshow-{{.Id}}:checked) .second-part {
                   display: flex;
@@ -163,11 +164,11 @@
                   <form action="/CommentsLike " method="post">
                     <div class="reaction">
                       <span> {{.TotalLikes}}</span>
-                      <button name="reaction" value="1" class="like-btn" type="submit">👍</button>
+                      <button name="reaction" value="1" class="like-btn" type="submit"><i class="fa-light fa-thumbs-up"></i></button>
                     </div>
                     <div class="reaction">
                       <span>{{.TotalDislikes}}</span>
-                      <button name="reaction" value="-1" class="dislike-btn" type="submit">👎</button>
+                      <button name="reaction" value="-1" class="dislike-btn" type="submit"><i class="fa-light fa-thumbs-down"></i></button>
                     </div>
                     <input type="hidden" name="userId" value="{{$userId}}" />
                     <input type="hidden" name="commentID" value="{{.Id}}" />
