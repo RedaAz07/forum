@@ -50,11 +50,11 @@ header .title {
   padding: 8px 20px;
   text-decoration: none;
   background-color: var(--wahd);
+  border: 2px solid white;
   border-radius: 10px;
   color: white;
   font-size: 16px;
   outline: none;
-  border: none;
   cursor: pointer;
 }
 
