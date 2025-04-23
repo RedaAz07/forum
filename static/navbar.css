@@ -23,7 +23,7 @@ header {
 }
 header img {
   filter: brightness(150%);
-  background-color: rgba(0, 128, 0, 0.877);
+  background-color: #00ffff38;
   border: 1px solid #1e1e1e6e;
   width: 33px;
   height: 33px;
@@ -95,7 +95,7 @@ header form .formlog {
   right: 170px;
   top: 58px;
   margin-top: 10px;
-  background-color: rgb(71, 70, 70);
+  background-color: rgb(44 48 57);
   color: white;
   border-radius: 10px;
   padding: 15px;
@@ -137,13 +137,15 @@ body:has(#toggle-menu:checked) .allPost {
   border-radius: 10px;
   flex-direction: row-reverse;
   border: none;
-  background-color: red;
+  background-color: #43abb4;
 }
 .Btn svg {
   height: 17px;
   width: 17px;
 }
-
+.text{
+  color: white;
+}
 @keyframes anim {
   0% {
     opacity: 0;
