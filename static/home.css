@@ -1,25 +1,34 @@
 :root {
-  --wahd: #6537e0;
+  --wahd: #00ADB5;
   --joj: #090114;
   --tlata: #6a2fc7;
   --bg: #0a0a0a;
   --bg2: #4285f4;
-  --akhdar:#0afb26;
+  --akhdar: #0afb26;
 }
+
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
   font-family: Poppins, "Open Sans", sans-serif;
 }
-body::-webkit-scrollbar ,
+
+body::-webkit-scrollbar,
 .commentaires::-webkit-scrollbar,
 .comm::-webkit-scrollbar {
   display: none;
 }
+
 body {
-  background: #051b29;
+  background: linear-gradient(135deg, #222831, #393E46);
+  /* backdrop-filter: blur(10px);
+  background-color: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); */
 }
+
 .allPost {
   /* background-color: red; */
   width: 85%;
@@ -28,52 +37,62 @@ body {
   margin: 100px auto 0 auto;
   flex-wrap: wrap;
 }
+
 .post-card {
   display: flex;
-  background-color: #2a2a2a;
   color: #fff;
   padding: 24px;
   margin: 16px auto;
   border-radius: 12px;
   width: 760px;
   height: 400px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #43abb4, #5baab3c9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
+
 .first-part {
   width: 100%;
   /* background-color: blue; */
 }
+
 .second-part {
-  animation: 0.5s linear second-part ;
+  animation: 0.5s linear second-part;
   max-height: 100%;
   overflow: auto;
   border-radius: 10px;
-  box-shadow: 2px 2px 10px rgb(145, 143, 143);
+  box-shadow: 0px 0px 20px rgb(45 49 58);
   padding: 12px 0;
   height: 100%;
   display: flex;
   flex-direction: column;
   display: none;
   width: 70%;
-  /* background-color: green; */
+  background-color: #2e313ac9;
 }
 
-.comment{
+.comment {
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 18%;
   width: 100%;
 }
+
 .second-part hr {
   width: 90%;
   box-shadow: 2px 2px 5px rgb(145, 143, 143);
 }
-.commentaires{
+
+.commentaires {
   height: 82%;
   max-height: 80%;
   overflow: auto;
 }
+
 .comment form {
   gap: 5px;
   display: flex;
@@ -88,19 +107,21 @@ body {
   font-size: 18px;
   font-weight: bold;
   border: none;
-  background-color: var(--bg2);
-  padding: 10px 20px;
+  background-color: #30b8c1;
+  padding: 8px 20px;
   border-radius: 10px;
   color: wheat;
 }
+
 .comment form input {
   padding: 0 0 0 10px;
   height: 35px;
   width: 150px;
   border-radius: 10px;
 }
+
 .commentaires h3 {
-  color: var(--akhdar);
+  color: #04dbf1;
   text-align: center;
   margin-bottom: 15px;
 }
@@ -112,15 +133,17 @@ body {
   gap: 10px;
   margin-bottom: 15px;
 }
-.messageErr{
+
+.messageErr {
   text-align: center;
   font-size: 20px;
 }
+
 .commentaires .comments img {
   border-radius: 50%;
   object-fit: cover;
   filter: brightness(150%);
-  background-color: rgba(255, 68, 0, 0.801);
+  background-color: #48a6a71c;
   border: 1px solid #1e1e1e6e;
   width: 28px;
   height: 28px;
@@ -156,25 +179,28 @@ body {
   font-family: sans-serif;
   margin: 0;
 }
+
 .avatar,
 .comment form img {
   filter: brightness(150%);
-  background-color: rgba(0, 128, 0, 0.877);
+  background-color: #48a6a71c;
   border: 1px solid #1e1e1e6e;
   width: 32px;
   height: 32px;
   border-radius: 50%;
   cursor: pointer;
 }
-.hdah{
+
+.hdah {
   display: none;
-  color: gray;
+  color: #2d313a7d;
   font-size: 12px;
 }
 
 body:has(#commentshow:checked) .second-part {
   display: flex;
 }
+
 body:has(#commentshow:checked) .post-time {
   display: none;
 }
@@ -201,7 +227,7 @@ body:has(#commentshow:checked) .post-time {
 
 .post-time {
   margin-bottom: 15px;
-  color: var(--akhdar);
+  color: white;
   font-size: 15px;
 }
 
@@ -218,7 +244,7 @@ body:has(#commentshow:checked) .post-time {
 }
 
 .tag {
-  background-color: var(--wahd);
+  background-color: #006a7194;
   padding: 8px 8px;
   border-radius: 15px;
   font-size: 16px;
@@ -228,7 +254,7 @@ body:has(#commentshow:checked) .post-time {
 .post-description {
   font-size: 17px;
   margin-bottom: 16px;
-  color: #d0d0d0;
+  color: #fff5f5c7;
 }
 
 .post-reactions form {
@@ -268,9 +294,11 @@ body:has(#commentshow:checked) .post-time {
   text-align: center;
   border-radius: 15px;
 }
+
 .postform h2 {
   margin-top: 15px;
 }
+
 .postform form input {
   padding: 0 0 0 10px;
   width: 90%;
@@ -280,9 +308,11 @@ body:has(#commentshow:checked) .post-time {
   margin-bottom: 10px;
   margin-top: 15px;
 }
+
 .postform form input:focus {
   border: 2px solid black;
 }
+
 .postform form textarea {
   resize: none;
   padding: 25px 0 0 10px;
@@ -292,20 +322,28 @@ body:has(#commentshow:checked) .post-time {
   border: 1px solid gray;
   margin-bottom: 30px;
 }
+
 .postform form textarea:focus {
   border: 2px solid black;
 }
+
 .postform form .btnform {
-  background: linear-gradient(
-    135deg,
-    #4285f4,
-    /* Blue Google style */ #6a2fc7,
-    /* Purple intense */ #6537e0,
-    /* Soft purple */ #9b59b6,
-    /* Amethyst */ #8e44ad,
-    /* Deep violet */ #5c6bc0,
-    /* Indigo */ #3f51b5 /* Classic Blue */
-  );
+  background: linear-gradient(135deg,
+      #4285f4,
+      /* Blue Google style */
+      #6a2fc7,
+      /* Purple intense */
+      #6537e0,
+      /* Soft purple */
+      #9b59b6,
+      /* Amethyst */
+      #8e44ad,
+      /* Deep violet */
+      #5c6bc0,
+      /* Indigo */
+      #3f51b5
+      /* Classic Blue */
+    );
   font-weight: bold;
   cursor: pointer;
   width: 90%;
@@ -313,6 +351,7 @@ body:has(#commentshow:checked) .post-time {
   color: white;
   background-color: var(--wahd);
 }
+
 .postform form .categorie {
   display: flex;
   flex-wrap: wrap;
@@ -332,7 +371,7 @@ body:has(#commentshow:checked) .post-time {
   user-select: none;
 }
 
-.tag-check:checked + .tagC {
+.tag-check:checked+.tagC {
   background-color: var(--wahd);
   color: white;
 }
@@ -355,9 +394,10 @@ body:has(#post-toggle:checked) .allPost {
   max-width: 200px;
   max-height: 150px;
   overflow: auto;
-  word-wrap: break-word; 
+  word-wrap: break-word;
 }
-.comment-content .user{
+
+.comment-content .user {
   margin-bottom: 2px;
 }
 
@@ -381,6 +421,7 @@ body:has(#post-toggle:checked) .allPost {
   gap: 10px;
   align-items: center;
 }
+
 @keyframes postAn {
   0% {
     opacity: 0;
@@ -394,7 +435,8 @@ body:has(#post-toggle:checked) .allPost {
     transform: translate(-50%, -50%);
   }
 }
-@keyframes second-part  {
+
+@keyframes second-part {
   0% {
     opacity: 0;
     scale: 0;
