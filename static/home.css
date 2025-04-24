@@ -394,12 +394,18 @@ body:has(#commentshow:checked) .post-time {
 }
 
 .postform form .btnform {
+  font-size: 16px;
+  border: 1px solid;
   font-weight: bold;
   cursor: pointer;
   width: 90%;
   height: 40px;
   color: white;
   background-color: var(--wahd);
+  outline: none;
+  border: none;
+  box-shadow: 0 0 20px #00adb5;
+  border-radius: 10px;
 }
 
 .postform form .categorie  {
@@ -501,26 +507,17 @@ body:has(#post-toggle:checked) .allPost {
   color: red;
 }
 
-
-
-.filter .categorie{
-  display: flex;
-  flex-wrap: wrap;
-  margin: auto;
-  width: 90%;
-  gap: 15px;
+.filter form h2{
+  margin-top: 15px;
+  margin-bottom: 35px;
 }
 
-.filter .tag-check+.tagC{
-  background-color: var(--wahd);
-  color: white;
-}
 
 .filter{
-   animation: 0.8s postAn ease-in-out;
+  animation: 0.8s postAn ease-in-out;
   display: none;
   width: 500px;
-  height: 400px;
+  height: 270px;
   box-shadow:0 4px 15px rgb(67 171 180 / 38%);
   top: 50%;
   left: 50%;
@@ -539,55 +536,13 @@ body:has(#menu-toggle1:checked) .filter {
   display: block;
 }
 
+body:has(#menu-toggle1:checked) .allPost {
+  opacity: 0.3;
+}
+
 .tag-check:checked+.tagC {
   background-color: var(--wahd);
   color: white;
-}
-
-
-
-
-.filter form input {
-  outline: none;
-  background-color: transparent;
-  color: white;
-  padding: 0 0 0 10px;
-  width: 90%;
-  height: 50px;
-  border-radius: 10px;
-  border: 1px solid gray;
-  margin-bottom: 10px;
-  margin-top: 15px;
-}
-
-.filter form input:focus {
-  border: 2px solid var(--wahd);
-}
-
-.filter form textarea {
-  outline: none;
-  color: white;
-  background-color: transparent;
-  resize: none;
-  padding: 25px 0 0 10px;
-  width: 90%;
-  height: 70px;
-  border-radius: 10px;
-  border: 1px solid gray;
-  margin-bottom: 30px;
-}
-
-.filter form textarea:focus {
-  border: 2px solid var(--wahd);
-}
-
-.filter form .btnform {
-  font-weight: bold;
-  cursor: pointer;
-  width: 90%;
-  height: 40px;
-  color: white;
-  background-color: var(--wahd);
 }
 
 .filter form .categorie  {
@@ -597,3 +552,20 @@ body:has(#menu-toggle1:checked) .filter {
   width: 90%;
   gap: 15px;
 }
+
+.filter form .filterbtn {
+  font-size: 18px;
+  border: 1px solid;
+  margin-top: 50px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 90%;
+  height: 40px;
+  color: white;
+  background-color: var(--wahd);
+  outline: none;
+  border: none;
+  box-shadow: 0 0 20px #00adb5;
+  border-radius: 10px;
+}
+

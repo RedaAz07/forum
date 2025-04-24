@@ -50,17 +50,15 @@
         </div>
         {{ else }}
         <div  class="filter">
-          <form action="/filter"    method="post">
+          <form action="/filter" method="post">
+            <h2>Filter By Categorie</h2>
           <div class="categorie">
-
             {{ range .Categories}}
-
             <input type="checkbox" id="tag{{.Id}}" class="tag-check" name="tags" value="{{.Id}}" hidden>
             <label for="tag{{.Id}}" class="tagC">{{.Name}}</label>
             {{end}}
-
           </div>
-          <button type="submit"  class="postbtn"> filter</button>
+          <button type="submit"  class="filterbtn">filter</button>
         </form>
         </div>
 {{end}}
