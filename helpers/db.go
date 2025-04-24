@@ -29,6 +29,5 @@ func DataBase() {
 	if err != nil {
 		log.Fatal("exec error: ", err)
 	}
-
 	fmt.Println("Queries executed successfully!")
 }

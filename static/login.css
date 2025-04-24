@@ -15,21 +15,10 @@
 .input-box input:-webkit-autofill:focus,
 .input-box input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
-  -webkit-text-fill-color: white !important;
+  -webkit-text-fill-color: white ;
   transition: background-color 5000s ease-in-out 0s;
-  caret-color: white;
 }
 
-
-
-/* .input-box:has(#show10:checked) i.fa-eye-slash {
-  display: block;
-}
-.hidd {
-  width: 0;
-  height: 0;
-  visibility: hidden;
-} */
 * {
   margin: 0;
   padding: 0;
