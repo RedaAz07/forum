@@ -20,17 +20,22 @@ body::-webkit-scrollbar,
   display: none;
 }
 
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  -webkit-text-fill-color: white !important;
+  transition: background-color 5000s ease-in-out 0s;
+  caret-color: white;
+}
+
 body {
   background: linear-gradient(135deg, #222831, #393e46);
-  /* backdrop-filter: blur(10px);
-  background-color: blur(10px);
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); */
 }
 
 .allPost {
-  /* background-color: red; */
   width: 85%;
   margin: auto;
   display: flex;
@@ -56,7 +61,6 @@ body {
 
 .first-part {
   width: 100%;
-  /* background-color: blue; */
 }
 
 .second-part {
@@ -111,13 +115,22 @@ body {
   padding: 8px 20px;
   border-radius: 10px;
   color: white;
+  box-shadow: 0 0 20px #00adb5;
 }
 
 .comment form input {
+  color: white;
   padding: 0 0 0 10px;
   height: 35px;
   width: 150px;
+  background-color: transparent;
   border-radius: 10px;
+  outline: none;
+  border: 1px solid gray;
+}
+
+.comment form input:focus{
+  border: 1px solid #00adb5;
 }
 
 .commentaires h3 {
