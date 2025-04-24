@@ -276,6 +276,24 @@ body:has(#commentshow:checked) .post-time {
   gap: 30px;
   align-items: center;
 }
+.reactionComment{
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 3px;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+
+.comment-like-btn,
+.comment-dislike-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  color: white;
+}
 
 .reaction {
   border-radius: 20px;
@@ -305,7 +323,13 @@ body:has(#commentshow:checked) .post-time {
 .dislike-btn.active-dislike {
   color: #ff0000ba;
 }
+.comment-like-btn.active-like {
+  color: #0000ffbf;
+}
 
+.comment-dislike-btn.active-dislike {
+  color: #ff0000ba;
+}
 .span-like.active-like {
   color: #0000ffbf;
 }

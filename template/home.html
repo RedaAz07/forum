@@ -121,7 +121,7 @@
             <div class="reaction">
               <span>{{.TotalComments}}</span>
               <input type="checkbox" class="hidd" id="commentshow-{{.Id}}" />
-              <label for="commentshow-{{.Id}}" class="comment-icon"><i class="fa-regular fa-comment"></i></label>
+              <label for="commentshow-{{.Id}}" class="comment-icon"><i class="fa-solid fa-comment"></i></label>
               <style>
                 #post-{{.Id}}:has(#commentshow-{{.Id}}:checked) .second-part {
                   display: flex;
@@ -163,18 +163,18 @@
                 <span class="time">{{.TimeFormattedComment}}</span>
                 <div class="comment-reactions">
                   <form action="/CommentsLike " method="post">
-                    <div class="reaction">
+                    <div class="reactionComment">
                       <span class="span-like  {{if eq .UserReactionComment 1}}active-like{{end}}">{{.TotalLikes}}</span>
                       <button name="reaction" value="1"
-                        class="like-btn {{if eq .UserReactionComment 1}}active-like{{end}}" type="submit">
+                        class="comment-like-btn {{if eq .UserReactionComment 1}}active-like{{end}}" type="submit">
                         <i class="fa-solid fa-thumbs-up"></i>
                       </button>
                     </div>
-                    <div class="reaction">
+                    <div class="reactionComment">
                       <span
                         class="span-dislike {{if eq .UserReactionComment -1}}active-dislike{{end}}">{{.TotalDislikes}}</span>
                       <button name="reaction" value="-1"
-                        class="dislike-btn {{if eq .UserReactionComment -1}}active-dislike{{end}}" type="submit">
+                        class="comment-dislike-btn {{if eq .UserReactionComment -1}}active-dislike{{end}}" type="submit">
                         <i class="fa-solid fa-thumbs-down"></i>
                       </button>
                     </div>

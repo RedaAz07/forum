@@ -1,0 +1,255 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #141414;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.error-content {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 35%;
+  height: 70%;
+  /* border: 1px solid black; */
+}
+
+h1 {
+  font-size: 140px;
+  font-weight: bold;
+  color: #00ff26;
+  animation: animation 1s ease-in-out;
+}
+
+h2 {
+  font-size: 40px;
+  color: white;
+  margin-bottom: 10px;
+  font-weight: bold;
+  animation: animation 1s ease-in-out;
+}
+
+p {
+  text-align: center;
+  color: white;
+  margin-bottom: 20px;
+  animation: animation 1s ease-in-out;
+}
+
+.buttons {
+  margin-top: 30px;
+  justify-content: center;
+  display: flex;
+  gap: 50px;
+}
+
+.first,.second {
+  text-decoration: none;
+  background-color: #00ff26;
+  color: black;
+  padding: 12px 25px;
+  border-radius: 15px;
+  font-weight: bold;
+  transition: 0.3s;
+  text-align: center;
+  cursor: pointer;
+  width: 170px;
+}
+
+.first:hover,.second:hover {
+  background-color: #14df32;
+}
+.image{
+  width: 30%;
+  height: 70%;
+  /* border: 1px solid black; */
+}
+.image img {
+  animation: animation 1s ease-out;
+  width: 100%;
+  height: 100%;
+}
+
+.first {
+  animation: button1 1s ease-in-out;
+}
+
+.second {
+  animation: button2 1s ease-in-out;
+}
+
+/* Animations */
+@keyframes button1 {
+  0% {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}
+@keyframes button2 {
+  0% {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}
+
+@keyframes animation {
+  0% {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+.responsive-error {
+  display: none;
+}
+
+/* Responsive Design */
+@media (max-width:1100px){
+  .error-content {
+    width: 40%;
+    height: 50%;
+  }
+  .image{
+    width: 40%;
+    height: 60%;
+  }
+  h1 {
+    font-size: 110px;
+  }
+  
+  h2 {
+    font-size: 30px;
+    margin-bottom: 5px;
+  }
+  
+  p {
+    margin-bottom: 15px;
+  }
+  
+  .buttons {
+    margin-top: 20px;
+    gap: 40px;
+  }
+  
+  .first,.second {
+    width: 140px;
+    padding: 10px 27px;
+  }
+}
+
+@media (max-width:700px){
+  .container{
+    justify-content: space-evenly;
+  }
+  .error-content {
+    width: 40%;
+    height: 40%;
+  }
+  h1 {
+    font-size: 100px;
+  }
+  
+  h2 {
+    font-size: 25px;
+  }
+  
+  p {
+    margin-bottom: 10px;
+  }
+  .buttons {
+    margin-top: 15px;
+    gap: 30px;
+  }
+  
+  .first,.second {
+    width: 120px;
+    padding: 7px 20px;
+  }
+}
+@media (max-width:510px){
+  .responsive-error h1{
+    color: rgb(255, 0, 0);
+  }
+  .error-content{
+    display: none;
+  }
+  .image{
+    display: none;
+  }
+  .responsive-error{
+    display: block; 
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #141414;
+    width: 100%;
+    height: 70%;
+    border-radius: 15px;
+    border: 1px solid #00ff26;
+  }
+  .responsive-error:hover{
+    box-shadow: 0px 5px 10px #06e227;
+  }
+  .responsive-error p{
+    font-size: 13px;
+  }
+  .responsive-btn{
+    margin-top: 10px;
+    display: flex;
+    gap: 40px;
+  }
+  .responsive-btn .fst{
+    animation: button1 0.6s ease-in-out;
+  }
+  .responsive-btn .scd{
+    animation: button2 0.6s ease-in-out;
+  }
+  .responsive-btn .fst,.responsive-btn .scd {
+    text-decoration: none;
+    background-color: #00ff26;
+    color: black;
+    padding: 7px 25px;
+    border-radius: 15px;
+    font-weight: bold;
+    transition: 0.3s;
+    text-align: center;
+    cursor: pointer;
+    width: 130px;
+  }
+}
