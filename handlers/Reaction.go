@@ -18,7 +18,6 @@ func ReactionHandler(w http.ResponseWriter, r *http.Request) {
 
 	postID := r.FormValue("postID")
 	reaction := r.FormValue("reaction")
-	fmt.Println("reaction", reaction)
 	if postID == "" || reaction == "" || (reaction != "1" && reaction != "-1") {
 		http.Error(w, "Invalid input", http.StatusBadRequest)
 		return
@@ -34,8 +33,6 @@ func ReactionHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Internal server error", http.StatusInternalServerError)
 		return
 	}
-	fmt.Println("userid", userid)
-	fmt.Println("postID", postID)
 
 	stmt := `select value from likes where postID = ? and  userID = ?`
 	row := utils.Db.QueryRow(stmt, postID, userid)

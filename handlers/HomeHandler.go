@@ -10,8 +10,14 @@ import (
 )
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
-
-
+	session, err := r.Cookie("session")
+	var sessValue string
+	if err != nil {
+		// fmt.Println("Session cookie error:", err)
+		sessValue = ""
+	} else {
+		sessValue = session.Value
+	}
 
 	//! get categories
 	stmtCategories := `
@@ -45,26 +51,35 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//! example of the map
+	// get user id to use it in commentlikes and publikes
+	query := `select id from users where session = ?`
+	var userId int
+	utils.Db.QueryRow(query, sessValue).Scan(&userId)
+
 	//!  get comments
 
 	stmtcommnts := `
 	SELECT 
     c.id,
     COALESCE(c.comment, '') AS comment,
-  c.time AS time,
+    c.time AS time,
     COALESCE(c.username, '') AS username,
     c.postID,
     COUNT(CASE WHEN cl.value = '1' THEN 1 END) AS total_likes, 
-    COUNT(CASE WHEN cl.value = '-1' THEN 1 END) AS total_dislikes
-FROM comments c
-INNER JOIN posts p ON c.postID = p.id
-LEFT JOIN commentsLikes cl ON c.id = cl.commentID
-GROUP BY c.id
-ORDER BY c.time DESC;
+    COUNT(CASE WHEN cl.value = '-1' THEN 1 END) AS total_dislikes,
+    COALESCE((
+        SELECT value 
+        FROM commentsLikes 
+        WHERE commentID = c.id AND userID = ?
+    ), 0) AS user_reaction_comment
+	FROM comments c
+	LEFT JOIN commentsLikes cl ON c.id = cl.commentID
+	GROUP BY c.id
+	ORDER BY c.time DESC;
 
 	`
 
-	rows2, err2 := utils.Db.Query(stmtcommnts)
+	rows2, err2 := utils.Db.Query(stmtcommnts,userId)
 	if err2 != nil {
 		fmt.Println("DB Query error:", err2)
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
@@ -75,7 +90,7 @@ ORDER BY c.time DESC;
 
 	for rows2.Next() {
 		var comment utils.Comments
-		err2 = rows2.Scan(&comment.Id, &comment.Comment, &comment.Time, &comment.Username, &comment.PostID, &comment.TotalLikes, &comment.TotalDislikes)
+		err2 = rows2.Scan(&comment.Id, &comment.Comment, &comment.Time, &comment.Username, &comment.PostID, &comment.TotalLikes, &comment.TotalDislikes,&comment.UserReactionComment)
 		if err2 != nil {
 			fmt.Println("Scan error:", err2)
 			helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
@@ -89,30 +104,31 @@ ORDER BY c.time DESC;
 
 		comments = append(comments, comment)
 	}
-	fmt.Println(len(comments))
 	//  !  end get comments
-	// !  add the communts to   map
 
+	// !  add the communts to   map
 	commentMap := make(map[int][]utils.Comments)
 	for _, c := range comments {
 		commentMap[c.PostID] = append(commentMap[c.PostID], c)
 	}
-
 	// !  get posts
 	stmt := `SELECT 
-  p.id, 
-  p.username, 
-  p.title, 
-  p.description, 
-  p.time, 
-  COUNT(CASE WHEN l.value = 1 THEN 1 END) AS total_likes, 
-  COUNT(CASE WHEN l.value = -1 THEN 1 END) AS total_dislikes
-FROM posts p
-LEFT JOIN likes l ON p.id = l.postID
-GROUP BY p.id
-ORDER BY p.time DESC
-`
-	rows, err := utils.Db.Query(stmt)
+				p.id, 
+				p.username, 
+				p.title, 
+				p.description, 
+				p.time, 
+				COUNT(CASE WHEN l.value = 1 THEN 1 END) AS total_likes, 
+				COUNT(CASE WHEN l.value = -1 THEN 1 END) AS total_dislikes,
+				COALESCE((
+					SELECT value FROM likes WHERE postID = p.id AND userID = ?
+				), 0) AS user_reaction_pub
+				FROM posts p
+				LEFT JOIN likes l ON p.id = l.postID
+				GROUP BY p.id
+				ORDER BY p.time DESC;
+	`
+	rows, err := utils.Db.Query(stmt, userId)
 	if err != nil {
 		fmt.Println("DB Query error:", err)
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
@@ -120,12 +136,11 @@ ORDER BY p.time DESC
 	}
 
 	var posts []utils.Posts
-	var catgs []string
 	var post utils.Posts
-	var totalLikes, totalDislikes int
+	var totalLikes, totalDislikes, user_reaction_pub int
 	for rows.Next() {
 
-		err = rows.Scan(&post.Id, &post.Username, &post.Title, &post.Description, &post.Time, &totalLikes, &totalDislikes)
+		err = rows.Scan(&post.Id, &post.Username, &post.Title, &post.Description, &post.Time, &totalLikes, &totalDislikes, &user_reaction_pub)
 		if err != nil {
 			fmt.Println("Scan error:", err)
 			helpers.RanderTemplate(w, "home.html", http.StatusInternalServerError, nil)
@@ -136,6 +151,7 @@ ORDER BY p.time DESC
 		post.TotalLikes = totalLikes
 		post.TotalDislikes = totalDislikes
 		post.TotalComments = len(commentMap[post.Id])
+		post.UserReactionPosts = user_reaction_pub
 
 		now := time.Now()
 		diff := now.Sub(post.Time)
@@ -170,14 +186,6 @@ ORDER BY p.time DESC
 	}
 	//! end get categories
 
-	session, err := r.Cookie("session")
-	var sessValue string
-	if err != nil {
-		// fmt.Println("Session cookie error:", err)
-		sessValue = ""
-	} else {
-		sessValue = session.Value
-	}
 	variables := struct {
 		Session    string
 		UserActive string
@@ -190,7 +198,6 @@ ORDER BY p.time DESC
 		Posts:      posts,
 		Categories: categories,
 	}
-	fmt.Println("PostCatgs", catgs)
 
 	helpers.RanderTemplate(w, "home.html", 200, variables)
 

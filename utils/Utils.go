@@ -27,30 +27,32 @@ type Categories struct {
 	PostID int
 }
 type Posts struct {
-	Id            int
-	Username      string
-	Title         string
-	Description   string
-	Time          time.Time
-	TimeFormatted string
-	TotalLikes    int
-	TotalDislikes int
-	Comments      []Comments
-	Categories    []Categories
-	TotalComments int
+	Id                int
+	Username          string
+	Title             string
+	Description       string
+	Time              time.Time
+	TimeFormatted     string
+	TotalLikes        int
+	TotalDislikes     int
+	Comments          []Comments
+	Categories        []Categories
+	TotalComments     int
+	UserReactionPosts int
 }
 type Catgs struct {
 	Catgs []string
 }
 type Comments struct {
-	PostID   int
-	Id       int
-	Username string
-	Comment  string
-	Time     time.Time
+	PostID               int
+	Id                   int
+	Username             string
+	Comment              string
+	Time                 time.Time
 	TimeFormattedComment string
-	TotalLikes    int
-	TotalDislikes int
+	TotalLikes           int
+	TotalDislikes        int
+	UserReactionComment  int
 }
 
 var (

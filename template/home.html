@@ -78,7 +78,6 @@
 
   <div class="allPost">
     {{range .Posts}}
-
     {{$userId := .Id}}
 
     <div class="post-card" id="post-{{.Id}}">
@@ -107,14 +106,14 @@
           {{if $.Session}}
           <form action="/reaction" method="post">
             <div class="reaction">
-              <span>{{.TotalLikes}}</span>
-              <button name="reaction" value="1" class="like-btn" type="submit" >
+              <span  class="span-like  {{if eq .UserReactionPosts 1}}active-like{{end}}" >{{.TotalLikes}}</span>
+              <button name="reaction" value="1" class="like-btn  {{if eq .UserReactionPosts 1}}active-like{{end}}" type="submit" >
                 <i class="fa-regular fa-thumbs-up"></i>
               </button>
             </div>
             <div class="reaction">
-              <span>{{.TotalDislikes}}</span>
-              <button name="reaction" value="-1" class="dislike-btn" type="submit">
+              <span class="span-dislike {{if eq .UserReactionPosts -1}}active-dislike{{end}}">{{.TotalDislikes}}</span>
+              <button name="reaction" value="-1" class="dislike-btn  {{if eq .UserReactionPosts -1}}active-dislike{{end}}" type="submit">
                 <i class="fa-regular fa-thumbs-down"></i>
               </button>
             </div>
@@ -164,13 +163,17 @@
                 <div class="comment-reactions">
                   <form action="/CommentsLike " method="post">
                     <div class="reaction">
-                      <span> {{.TotalLikes}}</span>
-                      <button name="reaction" value="1" class="like-btn" type="submit"><i class="fa-regular fa-thumbs-up"></i></button>
+                      <span>{{.TotalLikes}}</span>
+                      <button name="reaction" value="1" class="like-btn {{if eq .UserReactionComment 1}}active-like{{end}}" type="submit">
+                        <i class="fa-regular fa-thumbs-up"></i>
+                      </button>
                     </div>
                     <div class="reaction">
                       <span>{{.TotalDislikes}}</span>
-                      <button name="reaction" value="-1" class="dislike-btn" type="submit"><i class="fa-regular fa-thumbs-down"></i></button>
-                    </div>
+                      <button name="reaction" value="-1" class="dislike-btn {{if eq .UserReactionComment -1}}active-dislike{{end}}" type="submit">
+                        <i class="fa-regular fa-thumbs-down"></i>
+                      </button>
+                    </div>                    
                     <input type="hidden" name="userId" value="{{$userId}}" />
                     <input type="hidden" name="commentID" value="{{.Id}}" />
                   </form>
@@ -204,27 +207,5 @@
     }
   });
 </script>
-<!-- <script>
-    document.addEventListener("click", function (e) {
-      const menuToggle = document.getElementById("toggle-menu");
-      const postToggle = document.getElementById("post-toggle");
-  
-      const isClickInsideMenu =
-        e.target.closest(".dropdown") || e.target.closest(".avatar-label");
-  
-      const isClickInsidePostForm =
-        e.target.closest(".postform") || e.target.closest(".postbtn");
-  
-      // Si menu maftou7 w ma clikitich f menu → tseddo
-      if (menuToggle.checked && !isClickInsideMenu) {
-        menuToggle.checked = false;
-      }
-  
-      // Si postform maftou7 w ma clikitich f postform → tseddo
-      if (postToggle.checked && !isClickInsidePostForm) {
-        postToggle.checked = false;
-      }
-    });
-  </script> -->
 
 </html>

@@ -1,5 +1,5 @@
 :root {
-  --wahd: #00ADB5;
+  --wahd: #00adb5;
   --joj: #090114;
   --tlata: #6a2fc7;
   --bg: #0a0a0a;
@@ -21,7 +21,7 @@ body::-webkit-scrollbar,
 }
 
 body {
-  background: linear-gradient(135deg, #222831, #393E46);
+  background: linear-gradient(135deg, #222831, #393e46);
   /* backdrop-filter: blur(10px);
   background-color: blur(10px);
   border-radius: 20px;
@@ -121,8 +121,7 @@ body {
 }
 
 .commentaires h3 {
-  /* color: #04dbf1; */
-  color: white;
+  color: #04dbf1;
   text-align: center;
   margin-bottom: 15px;
 }
@@ -273,14 +272,29 @@ body:has(#commentshow:checked) .post-time {
 }
 
 .like-btn,
-.dislike-btn ,
-.comment-icon{
+.dislike-btn,
+.comment-icon {
   background: transparent;
   border: none;
   cursor: pointer;
   font-size: 18px;
   color: white;
-  
+}
+
+.like-btn.active-like {
+  color: #0000ffbf;
+}
+
+.dislike-btn.active-dislike {
+  color: #ff0000ba;
+}
+
+.span-like.active-like {
+  color: #0000ffbf;
+}
+
+.span-dislike.active-dislike {
+  color: #ff0000ba;
 }
 
 .postform {
@@ -288,7 +302,7 @@ body:has(#commentshow:checked) .post-time {
   display: none;
   width: 500px;
   height: 400px;
-  box-shadow:0 4px 15px rgb(67 171 180 / 38%);
+  box-shadow: 0 4px 15px rgb(67 171 180 / 38%);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -356,7 +370,6 @@ body:has(#commentshow:checked) .post-time {
 }
 
 .tagC {
-
   border: 2px solid var(--wahd);
   padding: 5px 0;
   width: 100px;
@@ -367,7 +380,7 @@ body:has(#commentshow:checked) .post-time {
   user-select: none;
 }
 
-.tag-check:checked+.tagC {
+.tag-check:checked + .tagC {
   background-color: var(--wahd);
   color: white;
 }
@@ -379,8 +392,6 @@ body:has(#post-toggle:checked) .postform {
 body:has(#post-toggle:checked) .allPost {
   opacity: 0.3;
 }
-
-
 
 .comment-content .comm {
   background-color: gray;
@@ -396,8 +407,6 @@ body:has(#post-toggle:checked) .allPost {
 .comment-content .user {
   margin-bottom: 2px;
 }
-
-
 
 .comment-actions {
   align-items: center;
@@ -442,11 +451,4 @@ body:has(#post-toggle:checked) .allPost {
     opacity: 1;
     scale: 1;
   }
-}
-
-.like{
-  color: blue;
-}
-.deslike{
-  color: red;
 }

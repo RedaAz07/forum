@@ -2,11 +2,12 @@ package route
 
 import (
 	"fmt"
-	"forum/handlers"
-	"forum/helpers"
-	"forum/utils"
 	"net/http"
 	"text/template"
+
+	"forum/handlers"
+	"forum/middleware"
+	"forum/utils"
 )
 
 func Route() {
@@ -18,7 +19,7 @@ func Route() {
 		return
 	}
 	http.HandleFunc("/", (handlers.HomeHandler))
-	http.HandleFunc("/logout", helpers.Auth(handlers.LogOutHandler))
+	http.HandleFunc("/logout", middleware.Auth(handlers.LogOutHandler))
 
 	http.HandleFunc("/login", handlers.LoginShowHandler)
 	http.HandleFunc("/register", handlers.RegisterShowHandler)
@@ -28,19 +29,11 @@ func Route() {
 
 	http.HandleFunc("/static/", handlers.StyleHandler)
 
-	http.HandleFunc("/createPost", helpers.Auth(handlers.CreatePost))
+	http.HandleFunc("/createPost", middleware.Auth(handlers.CreatePost))
 
-	http.HandleFunc("/reaction", helpers.Auth(handlers.ReactionHandler))
+	http.HandleFunc("/reaction", middleware.Auth(handlers.ReactionHandler))
 
-	http.HandleFunc("/comment", helpers.Auth(handlers.CommentHandler))
+	http.HandleFunc("/comment", middleware.Auth(handlers.CommentHandler))
 
-
-	http.HandleFunc("/CommentsLike", helpers.Auth(handlers.CommentsLikeHandler))
-
-
-	
-
-
-
-
+	http.HandleFunc("/CommentsLike", middleware.Auth(handlers.CommentsLikeHandler))
 }
