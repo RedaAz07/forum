@@ -20,8 +20,12 @@
   <header>
     <a href="/" class="title">Forum</a>
     <div>
-      {{if .Session}}
       <div class="gap">
+        {{if not .Session}}
+        <input type="checkbox" id="menu-toggle1" class="hidd" />
+        <label for="menu-toggle1" class="postbtn">Filter</label>
+        {{end}}
+        {{if .Session}}
         <input type="checkbox" id="menu-toggle" class="hidd" />
         <label for="menu-toggle" class="postbtn">Menu</label>
         <input type="checkbox" id="post-toggle" class="hidd" />
@@ -44,7 +48,23 @@
             <input type="submit" value="Create Post" class="btnform" /><br />
           </form>
         </div>
+        {{ else }}
+        <div  class="filter">
+          <form action="/filter"    method="post">
+          <div class="categorie">
 
+            {{ range .Categories}}
+
+            <input type="checkbox" id="tag{{.Id}}" class="tag-check" name="tags" value="{{.Id}}" hidden>
+            <label for="tag{{.Id}}" class="tagC">{{.Name}}</label>
+            {{end}}
+
+          </div>
+          <button type="submit"  class="postbtn"> filter</button>
+        </form>
+        </div>
+{{end}}
+{{if .Session}}
         <input type="checkbox" id="toggle-menu" class="hidd" />
         <label for="toggle-menu" class="avatar-label">
           <img src="https://robohash.org/{{.UserActive}}.png?size=50x50" />
