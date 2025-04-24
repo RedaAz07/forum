@@ -278,10 +278,14 @@ body:has(#commentshow:checked) .post-time {
 }
 
 .reaction {
+  border-radius: 20px;
   display: flex;
-  gap: 2px;
+  flex-direction: row-reverse;
+  gap: 3px;
   align-items: center;
   justify-content: center;
+  background-color: #04dbf121;
+  padding: 8px 10px;
 }
 
 .like-btn,

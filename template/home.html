@@ -108,14 +108,14 @@
               <span class="span-like  {{if eq .UserReactionPosts 1}}active-like{{end}}">{{.TotalLikes}}</span>
               <button name="reaction" value="1" class="like-btn  {{if eq .UserReactionPosts 1}}active-like{{end}}"
                 type="submit">
-                <i class="fa-regular fa-thumbs-up"></i>
+                <i class="fa-solid fa-thumbs-up"></i>
               </button>
             </div>
             <div class="reaction">
               <span class="span-dislike {{if eq .UserReactionPosts -1}}active-dislike{{end}}">{{.TotalDislikes}}</span>
               <button name="reaction" value="-1"
                 class="dislike-btn  {{if eq .UserReactionPosts -1}}active-dislike{{end}}" type="submit">
-                <i class="fa-regular fa-thumbs-down"></i>
+                <i class="fa-solid fa-thumbs-down"></i>
               </button>
             </div>
             <div class="reaction">
@@ -167,7 +167,7 @@
                       <span class="span-like  {{if eq .UserReactionComment 1}}active-like{{end}}">{{.TotalLikes}}</span>
                       <button name="reaction" value="1"
                         class="like-btn {{if eq .UserReactionComment 1}}active-like{{end}}" type="submit">
-                        <i class="fa-regular fa-thumbs-up"></i>
+                        <i class="fa-solid fa-thumbs-up"></i>
                       </button>
                     </div>
                     <div class="reaction">
@@ -175,7 +175,7 @@
                         class="span-dislike {{if eq .UserReactionComment -1}}active-dislike{{end}}">{{.TotalDislikes}}</span>
                       <button name="reaction" value="-1"
                         class="dislike-btn {{if eq .UserReactionComment -1}}active-dislike{{end}}" type="submit">
-                        <i class="fa-regular fa-thumbs-down"></i>
+                        <i class="fa-solid fa-thumbs-down"></i>
                       </button>
                     </div>
                     <input type="hidden" name="userId" value="{{$userId}}" />
