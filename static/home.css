@@ -6,7 +6,12 @@
   --bg2: #4285f4;
   --akhdar: #0afb26;
 }
-
+.notfound {
+  display: flex;
+  justify-content: center;
+  margin-top: 150px;
+  color: white;
+}
 * {
   padding: 0;
   margin: 0;
@@ -20,9 +25,8 @@ body::-webkit-scrollbar,
   display: none;
 }
 
-
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
+input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
@@ -129,7 +133,7 @@ body {
   border: 1px solid gray;
 }
 
-.comment form input:focus{
+.comment form input:focus {
   border: 1px solid #00adb5;
 }
 
@@ -276,7 +280,7 @@ body:has(#commentshow:checked) .post-time {
   gap: 30px;
   align-items: center;
 }
-.reactionComment{
+.reactionComment {
   border-radius: 20px;
   display: flex;
   flex-direction: row-reverse;
@@ -408,7 +412,7 @@ body:has(#commentshow:checked) .post-time {
   border-radius: 10px;
 }
 
-.postform form .categorie  {
+.postform form .categorie {
   display: flex;
   flex-wrap: wrap;
   margin: auto;
@@ -500,25 +504,24 @@ body:has(#post-toggle:checked) .allPost {
   }
 }
 
-.like{
+.like {
   color: blue;
 }
-.deslike{
+.deslike {
   color: red;
 }
 
-.filter form h2{
+.filter form h2 {
   margin-top: 15px;
   margin-bottom: 35px;
 }
 
-
-.filter{
+.filter {
   animation: 0.8s postAn ease-in-out;
   display: none;
   width: 500px;
   height: 270px;
-  box-shadow:0 4px 15px rgb(67 171 180 / 38%);
+  box-shadow: 0 4px 15px rgb(67 171 180 / 38%);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -530,8 +533,6 @@ body:has(#post-toggle:checked) .allPost {
   border-radius: 15px;
 }
 
-
-
 body:has(#menu-toggle1:checked) .filter {
   display: block;
 }
@@ -540,12 +541,12 @@ body:has(#menu-toggle1:checked) .allPost {
   opacity: 0.3;
 }
 
-.tag-check:checked+.tagC {
+.tag-check:checked + .tagC {
   background-color: var(--wahd);
   color: white;
 }
 
-.filter form .categorie  {
+.filter form .categorie {
   display: flex;
   flex-wrap: wrap;
   margin: auto;
@@ -568,4 +569,3 @@ body:has(#menu-toggle1:checked) .allPost {
   box-shadow: 0 0 20px #00adb5;
   border-radius: 10px;
 }
-
