@@ -46,14 +46,17 @@
         </div>
         {{ else }}
         <div  class="filter">
-          <form action="/myPosts" method="post">
+          <h1>Filter</h1>
+          <form action="/myPosts" method="post" class="form1">
+            <h4>Filter by myPosts</h4>
           <button type="submit"  class="filterbtn">My posts</button>
           </form>
-          <form action="/likedPosts" method="post">
+          <form action="/likedPosts" method="post" class="form2">
+            <h4>Filter by likedPosts</h4>
             <button type="submit"  class="filterbtn">Liked Posts</button>
           </form>
-          <form action="/filter" method="post">
-            <h2>Filter By Categorie</h2>
+          <form action="/filter" method="post" class="form3">
+            <h4>Filter By Categorie</h4>
           <div class="categorie">
             {{ range .Categories}}
             <input type="checkbox" id="tag{{.Id}}" class="tag-check" name="tags" value="{{.Id}}" hidden>

@@ -520,7 +520,7 @@ body:has(#post-toggle:checked) .allPost {
   animation: 0.8s postAn ease-in-out;
   display: none;
   width: 500px;
-  height: 270px;
+  height: 450px;
   box-shadow: 0 4px 15px rgb(67 171 180 / 38%);
   top: 50%;
   left: 50%;
@@ -532,7 +532,18 @@ body:has(#post-toggle:checked) .allPost {
   text-align: center;
   border-radius: 15px;
 }
+.filter h1 {
+  margin: 10px 0;
+  color: #04dbf1;
+}
 
+.filter h4 {
+  margin: 30px 0 5px 0;
+}
+.filter .form1,
+.filter .form2 {
+  margin: 20px 0;
+}
 body:has(#menu-toggle1:checked) .filter {
   display: block;
 }
@@ -546,7 +557,7 @@ body:has(#menu-toggle1:checked) .allPost {
   color: white;
 }
 
-.filter form .categorie {
+.filter .form3 .categorie {
   display: flex;
   flex-wrap: wrap;
   margin: auto;
@@ -554,10 +565,10 @@ body:has(#menu-toggle1:checked) .allPost {
   gap: 15px;
 }
 
-.filter form .filterbtn {
+.filter .form3 .filterbtn {
+  margin-top: 20px;
   font-size: 18px;
   border: 1px solid;
-  margin-top: 50px;
   font-weight: bold;
   cursor: pointer;
   width: 90%;
@@ -566,6 +577,20 @@ body:has(#menu-toggle1:checked) .allPost {
   background-color: var(--wahd);
   outline: none;
   border: none;
-  box-shadow: 0 0 20px #00adb5;
+  box-shadow: 0 0 10px #00adb5;
   border-radius: 10px;
 }
+.filter .form1 .filterbtn,.filter .form2 .filterbtn{
+  font-size: 18px;
+  border: 1px solid;
+  font-weight: bold;
+  cursor: pointer;
+  width: 90%;
+  height: 40px;
+  color: white;
+  background-color: var(--wahd);
+  outline: none;
+  border: none;
+  box-shadow: 0 0 10px #00adb5;
+  border-radius: 10px;
+} 
