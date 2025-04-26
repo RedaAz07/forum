@@ -157,3 +157,8 @@ body:has(#toggle-menu:checked) .allPost {
     transform: translateY(0);
   }
 }
+
+
+body:has(#menu-toggle:checked) .filter {
+  display: block;
+}

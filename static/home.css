@@ -36,7 +36,8 @@ input:-webkit-autofill:active {
 }
 
 body {
-  background: linear-gradient(135deg, #222831, #393e46);
+  height: 100vh;
+  background: linear-gradient(135deg, #222831, #393e46) no-repeat;
 }
 
 .allPost {
@@ -520,7 +521,7 @@ body:has(#post-toggle:checked) .allPost {
   animation: 0.8s postAn ease-in-out;
   display: none;
   width: 500px;
-  height: 270px;
+  height: 500px;
   box-shadow: 0 4px 15px rgb(67 171 180 / 38%);
   top: 50%;
   left: 50%;
