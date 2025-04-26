@@ -46,6 +46,12 @@
         </div>
         {{ else }}
         <div  class="filter">
+          <form action="/myPosts" method="post">
+          <button type="submit"  class="filterbtn">My posts</button>
+          </form>
+          <form action="/likedPosts" method="post">
+            <button type="submit"  class="filterbtn">Liked Posts</button>
+          </form>
           <form action="/filter" method="post">
             <h2>Filter By Categorie</h2>
           <div class="categorie">
