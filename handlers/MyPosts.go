@@ -9,33 +9,41 @@ import (
 	"forum/utils"
 )
 
-func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	session, err := r.Cookie("session")
+func MyPosts(w http.ResponseWriter, r *http.Request) {
+	cookie, err := r.Cookie("session")
 	var sessValue string
 	if err != nil {
-		// fmt.Println("Session cookie error:", err)
+		fmt.Println("Session cookie error:", err)
 		sessValue = ""
 	} else {
-		sessValue = session.Value
+		sessValue = cookie.Value
 	}
 	query := `select id from users where session = ?`
 	var userId int
 	utils.Db.QueryRow(query, sessValue).Scan(&userId)
 
-// get comments 
-	commentMap := helpers.FetchComments(w,r)
-	
-	categorMap := helpers.FetchCategories(w)
-	
+	// get comments
+	commentMap := helpers.FetchComments(w, r)
+
 	//! end of the map
 	// get user id to use it in commentlikes and publikes
 
-
-	//get categories
+	// get categories
 	categories := helpers.AllCategories(w)
-	//end get categories
-	// !  get posts
-	stmt := `SELECT 
+
+	mapp := helpers.FetchCategories(w)
+
+	stmtId := `select username from users where session = ? `
+	var username string
+	queryId := utils.Db.QueryRow(stmtId, cookie.Value)
+	errr := queryId.Scan(&username)
+	if errr != nil {
+		fmt.Println("query error", errr)
+		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
+		return
+	}
+	stmtPosts := `
+	SELECT 
 				p.id, 
 				p.username, 
 				p.title, 
@@ -48,28 +56,28 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 				), 0) AS user_reaction_pub
 				FROM posts p
 				LEFT JOIN likes l ON p.id = l.postID
+				where p.username = ?
 				GROUP BY p.id
 				ORDER BY p.time DESC;
-	`
-	rows, err := utils.Db.Query(stmt, userId)
+				`
+	rows, err := utils.Db.Query(stmtPosts, userId, username)
 	if err != nil {
-		fmt.Println("DB Query error:", err)
+		fmt.Println("query error", err)
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
 		return
 	}
-
+	defer rows.Close()
 	var posts []utils.Posts
-	var post utils.Posts
 	var totalLikes, totalDislikes, user_reaction_pub int
-	for rows.Next() {
 
+	for rows.Next() {
+		var post utils.Posts
 		err = rows.Scan(&post.Id, &post.Username, &post.Title, &post.Description, &post.Time, &totalLikes, &totalDislikes, &user_reaction_pub)
 		if err != nil {
-			fmt.Println("Scan error:", err)
-			helpers.RanderTemplate(w, "home.html", http.StatusInternalServerError, nil)
+			fmt.Println("query error", err)
+			helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
 			return
 		}
-		post.Categories = categorMap[post.Id]
 		post.Comments = commentMap[post.Id]
 		post.TotalLikes = totalLikes
 		post.TotalDislikes = totalDislikes
@@ -80,13 +88,10 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		diff := now.Sub(post.Time)
 		seconds := int(diff.Seconds())
 		post.TimeFormatted = helpers.FormatDuration((seconds))
+
+		post.Categories = mapp[post.Id]
 		posts = append(posts, post)
-
 	}
-
-	// !  end get posts
-
-	
 
 	variables := struct {
 		Session    string
@@ -101,11 +106,5 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		Categories: categories,
 	}
 
-	helpers.RanderTemplate(w, "home.html", 200, variables)
-
-	/* !  bnisba l ay relation many to many endi hna kaykhnsi njbdha bohdha 7it adir lya mochkil f posts f like w dislikes
-	so ghatl9ani jbedt l categories w l comments f bohdhom w7tithom fwa7d lmap bach key hya post id w value hya struct
-	mn b3d kan7thom fstruct post li fiha kolchi
-	*/
-	//!  i add the clike on comments + add table  +add the form in home html but its not working + handler without fixing
+	helpers.RanderTemplate(w, "home.html", http.StatusOK, variables)
 }

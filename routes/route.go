@@ -39,4 +39,9 @@ func Route() {
 	
 	http.HandleFunc("/filter",(handlers.Filter_By_Categorie))
 
+	http.HandleFunc("/myPosts", middleware.Auth(handlers.MyPosts))
+
+	//http.HandleFunc("/likedPosts", middleware.Auth(handlers.MyPosts))
+
+
 }

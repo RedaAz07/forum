@@ -36,7 +36,7 @@ input:-webkit-autofill:active {
 }
 
 body {
-  background: linear-gradient(135deg, #222831, #393e46);
+  background: #222831;
 }
 
 .allPost {
@@ -343,7 +343,7 @@ body:has(#commentshow:checked) .post-time {
 }
 
 .postform {
-  animation: 0.8s postAn ease-in-out;
+  animation: 0.5s postAn ease-in-out;
   display: none;
   width: 500px;
   height: 400px;
@@ -420,7 +420,7 @@ body:has(#commentshow:checked) .post-time {
   gap: 15px;
 }
 
-.tagC {
+.tagC,.tagCategorie {
   border: 2px solid var(--wahd);
   padding: 5px 0;
   width: 100px;
@@ -517,10 +517,9 @@ body:has(#post-toggle:checked) .allPost {
 }
 
 .filter {
-  animation: 0.8s postAn ease-in-out;
+  animation: 0.5s postAn ease-in-out;
   display: none;
   width: 500px;
-  height: 450px;
   box-shadow: 0 4px 15px rgb(67 171 180 / 38%);
   top: 50%;
   left: 50%;
@@ -544,15 +543,28 @@ body:has(#post-toggle:checked) .allPost {
 .filter .form2 {
   margin: 20px 0;
 }
-body:has(#menu-toggle1:checked) .filter {
+body:has(#filter-toggle1:checked) .filter {
   display: block;
 }
 
-body:has(#menu-toggle1:checked) .allPost {
+body:has(#filter-toggle1:checked) .allPost {
+  opacity: 0.3;
+}
+
+body:has(#filter-toggle:checked) .filter {
+  display: block;
+}
+
+body:has(#filter-toggle:checked) .allPost {
   opacity: 0.3;
 }
 
 .tag-check:checked + .tagC {
+  background-color: var(--wahd);
+  color: white;
+}
+
+.tag:checked + .tagCategorie {
   background-color: var(--wahd);
   color: white;
 }
@@ -566,7 +578,7 @@ body:has(#menu-toggle1:checked) .allPost {
 }
 
 .filter .form3 .filterbtn {
-  margin-top: 20px;
+  margin: 20px 0;
   font-size: 18px;
   border: 1px solid;
   font-weight: bold;

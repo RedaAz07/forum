@@ -22,8 +22,8 @@
     <div>
       <div class="gap">
         {{if .Session}}
-        <input type="checkbox" id="menu-toggle" class="hidd" />
-        <label for="menu-toggle" class="postbtn">Menu</label>
+        <input type="checkbox" id="filter-toggle1" class="hidd" />
+        <label for="filter-toggle1" class="postbtn">Filter</label>
         <input type="checkbox" id="post-toggle" class="hidd" />
         <label for="post-toggle" class="postbtn">Create post</label>
         <div class="postform">
@@ -44,30 +44,32 @@
             <input type="submit" value="Create Post" class="btnform" /><br />
           </form>
         </div>
-        {{ else }}
-        <div  class="filter">
+        {{end}}
+        <div class="filter">
           <h1>Filter</h1>
+          {{if .Session}}
           <form action="/myPosts" method="post" class="form1">
             <h4>Filter by myPosts</h4>
-          <button type="submit"  class="filterbtn">My posts</button>
+            <button type="submit" class="filterbtn">My posts</button>
           </form>
           <form action="/likedPosts" method="post" class="form2">
             <h4>Filter by likedPosts</h4>
-            <button type="submit"  class="filterbtn">Liked Posts</button>
+            <button type="submit" class="filterbtn">Liked Posts</button>
           </form>
+          {{end}}
           <form action="/filter" method="post" class="form3">
             <h4>Filter By Categorie</h4>
-          <div class="categorie">
-            {{ range .Categories}}
-            <input type="checkbox" id="tag{{.Id}}" class="tag-check" name="tags" value="{{.Id}}" hidden>
-            <label for="tag{{.Id}}" class="tagC">{{.Name}}</label>
-            {{end}}
-          </div>
-          <button type="submit"  class="filterbtn">filter</button>
-        </form>
+            <div class="categorie">
+              {{ range .Categories}}
+
+              <input type="checkbox" id="tagg{{.Id}}" class="tag" name="tags" value="{{.Id}}" hidden>
+              <label for="tagg{{.Id}}" class="tagCategorie">{{.Name}}</label>
+              {{end}}
+            </div>
+            <button type="submit" class="filterbtn">filter</button>
+          </form>
         </div>
-      {{end}}
-      {{if .Session}}
+        {{if .Session}}
         <input type="checkbox" id="toggle-menu" class="hidd" />
         <label for="toggle-menu" class="avatar-label">
           <img src="https://robohash.org/{{.UserActive}}.png?size=50x50" />
@@ -91,8 +93,8 @@
       </div>
       {{else}}
       <div class="gap">
-        <input type="checkbox" id="menu-toggle1" class="hidd" />
-        <label for="menu-toggle1" class="postbtn">Filter</label>
+        <input type="checkbox" id="filter-toggle" class="hidd" />
+        <label for="filter-toggle" class="postbtn">Filter</label>
         <a href="/register" class="register">Register</a>
         <a href="/login" class="login">Login</a>
       </div>
@@ -127,7 +129,7 @@
         <p class="post-description">{{.Description}}</p>
 
         <div class="post-reactions">
-          
+
           <form action="/reaction" method="post">
             <div class="reaction">
               <span class="span-like  {{if eq .UserReactionPosts 1}}active-like{{end}}">{{.TotalLikes}}</span>
@@ -198,7 +200,8 @@
                       <span
                         class="span-dislike {{if eq .UserReactionComment -1}}active-dislike{{end}}">{{.TotalDislikes}}</span>
                       <button name="reaction" value="-1"
-                        class="comment-dislike-btn {{if eq .UserReactionComment -1}}active-dislike{{end}}" type="submit">
+                        class="comment-dislike-btn {{if eq .UserReactionComment -1}}active-dislike{{end}}"
+                        type="submit">
                         <i class="fa-solid fa-thumbs-down"></i>
                       </button>
                     </div>
@@ -219,22 +222,32 @@
     {{end}}
   </div>
   {{else}}
-  <h1 class="notfound">No  posts found with this categorie 🤷‍♂️</h1>
+  <h1 class="notfound">No posts found  🤷‍♂️</h1>
   {{end}}
 </body>
 <script>
   const toggleMenu = document.getElementById("toggle-menu");
   const postToggle = document.getElementById("post-toggle");
-  
+  const filterToggle = document.getElementById("filter-toggle1")
+
   toggleMenu.addEventListener("change", function () {
     if (this.checked) {
       postToggle.checked = false;
+      filterToggle.checked = false;
     }
   });
 
   postToggle.addEventListener("change", function () {
     if (this.checked) {
       toggleMenu.checked = false;
+      filterToggle.checked = false;
+    }
+  });
+
+  filterToggle.addEventListener("change", function () {
+    if (this.checked) {
+      toggleMenu.checked = false;
+      postToggle.checked = false;
     }
   });
 </script>
