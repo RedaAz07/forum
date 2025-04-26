@@ -41,7 +41,5 @@ func Route() {
 
 	http.HandleFunc("/myPosts", middleware.Auth(handlers.MyPosts))
 
-	//http.HandleFunc("/likedPosts", middleware.Auth(handlers.MyPosts))
-
-
+	http.HandleFunc("/likedPosts", middleware.Auth(handlers.LikedPosts))
 }
