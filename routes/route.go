@@ -3,7 +3,7 @@ package route
 import (
 	"fmt"
 	"net/http"
-	"text/template"
+	"html/template"
 
 	"forum/handlers"
 	"forum/middleware"
@@ -36,4 +36,7 @@ func Route() {
 	http.HandleFunc("/comment", middleware.Auth(handlers.CommentHandler))
 
 	http.HandleFunc("/CommentsLike", middleware.Auth(handlers.CommentsLikeHandler))
+	
+	http.HandleFunc("/filter",(handlers.Filter_By_Categorie))
+
 }

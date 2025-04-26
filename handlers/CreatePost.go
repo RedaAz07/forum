@@ -35,6 +35,7 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 	description := r.FormValue("description")
 
 	category := r.Form["tags"] //* if he just choose the category
+	fmt.Println(category)
 
 	// !  check if the user create a new category
 

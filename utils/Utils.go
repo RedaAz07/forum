@@ -3,7 +3,7 @@ package utils
 import (
 	"database/sql"
 	"net/http"
-	"text/template"
+	"html/template"
 	"time"
 )
 

@@ -21,10 +21,6 @@
     <a href="/" class="title">Forum</a>
     <div>
       <div class="gap">
-        {{if not .Session}}
-        <input type="checkbox" id="menu-toggle1" class="hidd" />
-        <label for="menu-toggle1" class="postbtn">Filter</label>
-        {{end}}
         {{if .Session}}
         <input type="checkbox" id="menu-toggle" class="hidd" />
         <label for="menu-toggle" class="postbtn">Menu</label>
@@ -61,8 +57,8 @@
           <button type="submit"  class="filterbtn">filter</button>
         </form>
         </div>
-{{end}}
-{{if .Session}}
+      {{end}}
+      {{if .Session}}
         <input type="checkbox" id="toggle-menu" class="hidd" />
         <label for="toggle-menu" class="avatar-label">
           <img src="https://robohash.org/{{.UserActive}}.png?size=50x50" />
@@ -86,13 +82,15 @@
       </div>
       {{else}}
       <div class="gap">
+        <input type="checkbox" id="menu-toggle1" class="hidd" />
+        <label for="menu-toggle1" class="postbtn">Filter</label>
         <a href="/register" class="register">Register</a>
         <a href="/login" class="login">Login</a>
       </div>
       {{end}}
     </div>
   </header>
-
+  {{if gt (len .Posts) 0}}
   <div class="allPost">
     {{range .Posts}}
     {{$userId := .Id}}
@@ -120,7 +118,7 @@
         <p class="post-description">{{.Description}}</p>
 
         <div class="post-reactions">
-          {{if $.Session}}
+          
           <form action="/reaction" method="post">
             <div class="reaction">
               <span class="span-like  {{if eq .UserReactionPosts 1}}active-like{{end}}">{{.TotalLikes}}</span>
@@ -154,7 +152,6 @@
             </div>
             <input type="hidden" name="postID" value="{{.Id}}" />
           </form>
-          {{end}}
         </div>
       </div>
       <div class="second-part" id="post-{{.Id}}">
@@ -212,6 +209,9 @@
     </div>
     {{end}}
   </div>
+  {{else}}
+  <h1 class="messageErr">No found posts with this categorie 🤷‍♂️</h1>
+  {{end}}
 </body>
 <script>
   const toggleMenu = document.getElementById("toggle-menu");

@@ -9,7 +9,7 @@ import (
 
 func main() {
 	helpers.DataBase()
-	fmt.Println("http://localhost:8080/")
+	fmt.Println("server listening on http://localhost:8080/")
 	route.Route()
 
 	err := http.ListenAndServe(":8080", nil)
