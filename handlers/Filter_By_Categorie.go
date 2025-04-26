@@ -3,13 +3,13 @@ package handlers
 import (
 	"fmt"
 	"net/http"
+	"time"
 
 	"forum/helpers"
 	"forum/utils"
 )
 
 func Filter_By_Categorie(w http.ResponseWriter, r *http.Request) {
-
 	//! get categories
 	stmtCategories := `
 	SELECT C.name, C.id ,  CP.postID  FROM categories C
@@ -41,8 +41,7 @@ func Filter_By_Categorie(w http.ResponseWriter, r *http.Request) {
 		categorMap[d.PostID] = append(categorMap[d.PostID], d)
 	}
 
-// !  end
-
+	// !  end
 
 	session, errr := r.Cookie("session")
 	var sessValue string
@@ -64,12 +63,18 @@ func Filter_By_Categorie(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
-	query := `SELECT DISTINCT p.id, p.title, p.description, p.time
-		FROM posts p
-		INNER JOIN categories_post cp ON p.id = cp.postID
-		INNER JOIN categories c ON cp.categoryID= c.id
-		WHERE c.id = ?
-		ORDER BY p.time DESC`
+	query := `  SELECT  
+				p.id, 
+				p.username, 
+				p.title, 
+				p.description, 
+				p.time
+				FROM posts p
+				INNER JOIN categories_post cp ON p.id = cp.postID
+				INNER JOIN categories c ON cp.categoryID = c.id
+				WHERE c.id = ?
+				ORDER BY p.time DESC
+`
 	var posts []utils.Posts
 	var post utils.Posts
 	mapp := make(map[int]bool) // pour éviter duplication
@@ -82,7 +87,7 @@ func Filter_By_Categorie(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		for rows.Next() {
-			err := rows.Scan(&post.Id, &post.Title, &post.Description, &post.Time)
+			err := rows.Scan(&post.Id, &post.Username, &post.Title, &post.Description, &post.Time)
 			if err != nil {
 				fmt.Println(" error", err)
 				helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
@@ -92,7 +97,11 @@ func Filter_By_Categorie(w http.ResponseWriter, r *http.Request) {
 				post.Categories = categorMap[post.Id]
 				posts = append(posts, post)
 				mapp[post.Id] = true
-			}		
+				now := time.Now()
+				diff := now.Sub(post.Time)
+				seconds := int(diff.Seconds())
+				post.TimeFormatted = helpers.FormatDuration((seconds))
+			}
 		}
 	}
 	// ! get categories

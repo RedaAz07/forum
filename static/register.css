@@ -9,7 +9,16 @@
   --akhdar: #0afb26;
   --red: #0ef;
 }
-
+a{
+  position: fixed;
+  left: 40px;
+  top: 20px;
+  padding: 10px;
+}
+a i{
+  color: #00c8db;
+  font-size: 35px;
+}
 .input-box input:-webkit-autofill,
 .input-box input:-webkit-autofill:hover, 
 .input-box input:-webkit-autofill:focus,
@@ -19,7 +28,6 @@
   transition: background-color 5000s ease-in-out 0s;
   caret-color: white;
 }
-
 
 
 /* .input-box:has(#show10:checked) i.fa-eye-slash {
