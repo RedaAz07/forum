@@ -33,34 +33,26 @@ func LikedPosts(w http.ResponseWriter, r *http.Request) {
 
 	mapp := helpers.FetchCategories(w)
 
-	stmtId := `select username from users where session = ? `
-	var username string
-	queryId := utils.Db.QueryRow(stmtId, cookie.Value)
-	errr := queryId.Scan(&username)
-	if errr != nil {
-		fmt.Println("query error", errr)
-		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
-		return
-	}
 	stmtPosts := `
-			SELECT 
-    p.id,
-    p.username,
-    p.title,
-    p.description,
-    p.time,
-    COUNT(CASE WHEN l.value = 1 THEN 1 END) AS total_likes,
-    COUNT(CASE WHEN l.value = -1 THEN 1 END) AS total_dislikes,
-    COALESCE((
-        SELECT value FROM likes WHERE postID = p.id AND userID = ? AND value = 1
-    ), 0) AS user_reaction_pub
-FROM posts p
-LEFT JOIN likes l ON p.id = l.postID
-WHERE p.username = ?
-GROUP BY p.id
-ORDER BY p.time DESC;
+		SELECT 
+			p.id,
+			p.username,
+			p.title,
+			p.description,
+			p.time,
+			COUNT(CASE WHEN l.value = 1 THEN 1 END) AS total_likes,
+			COUNT(CASE WHEN l.value = -1 THEN 1 END) AS total_dislikes,
+			COALESCE((SELECT value FROM likes WHERE postID = p.id AND userID = ?), 0) AS user_reaction_pub
+		FROM posts p
+		LEFT JOIN likes l ON p.id = l.postID
+		WHERE p.id IN (
+			SELECT postID FROM likes WHERE userID = ? AND value = 1
+		)
+		GROUP BY p.id
+		ORDER BY p.time DESC;
+
 `
-	rows, err := utils.Db.Query(stmtPosts, userId, username)
+	rows, err := utils.Db.Query(stmtPosts, userId, userId)
 	if err != nil {
 		fmt.Println("query error", err)
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
