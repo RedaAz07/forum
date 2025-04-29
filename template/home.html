@@ -11,7 +11,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     integrity="sha512-uWFS2SyMlXU1P9Uv9Z4q1XLh3QjsoZ4SB8QoX0OQH5m6goZQyA5DFmuH2gOdf5U3GVabkUqZbJKnSSCBaEVz2w=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 
 
@@ -20,10 +19,8 @@
   <header>
     <a href="/" class="title">Forum</a>
     <div>
+      {{if .Session}}
       <div class="gap">
-        {{if .Session}}
-        <input type="checkbox" id="filter-toggle1" class="hidd" />
-        <label for="filter-toggle1" class="postbtn">Filter</label>
         <input type="checkbox" id="post-toggle" class="hidd" />
         <label for="post-toggle" class="postbtn">Create post</label>
         <div class="postform">
@@ -44,32 +41,7 @@
             <input type="submit" value="Create Post" class="btnform" /><br />
           </form>
         </div>
-        {{end}}
-        <div class="filter">
-          <h1>Filter</h1>
-          {{if .Session}}
-          <form action="/myPosts" method="post" class="form1">
-            <h4>Filter by myPosts</h4>
-            <button type="submit" class="filterbtn">My posts</button>
-          </form>
-          <form action="/likedPosts" method="post" class="form2">
-            <h4>Filter by likedPosts</h4>
-            <button type="submit" class="filterbtn">Liked Posts</button>
-          </form>
-          {{end}}
-          <form action="/filter" method="post" class="form3">
-            <h4>Filter By Categorie</h4>
-            <div class="categorie">
-              {{ range .Categories}}
 
-              <input type="checkbox" id="tagg{{.Id}}" class="tag" name="tags" value="{{.Id}}" hidden>
-              <label for="tagg{{.Id}}" class="tagCategorie">{{.Name}}</label>
-              {{end}}
-            </div>
-            <button type="submit" class="filterbtn">filter</button>
-          </form>
-        </div>
-        {{if .Session}}
         <input type="checkbox" id="toggle-menu" class="hidd" />
         <label for="toggle-menu" class="avatar-label">
           <img src="https://robohash.org/{{.UserActive}}.png?size=50x50" />
@@ -81,7 +53,7 @@
             <button class="Btn" type="submit">
               <div class="sign">
                 <svg viewBox="0 0 512 512">
-                  <path fill="white"
+                  <path
                     d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z">
                   </path>
                 </svg>
@@ -93,26 +65,27 @@
       </div>
       {{else}}
       <div class="gap">
-        <input type="checkbox" id="filter-toggle" class="hidd" />
-        <label for="filter-toggle" class="postbtn">Filter</label>
         <a href="/register" class="register">Register</a>
         <a href="/login" class="login">Login</a>
       </div>
       {{end}}
     </div>
   </header>
-  {{if gt (len .Posts) 0}}
+
   <div class="allPost">
     {{range .Posts}}
+
     {{$userId := .Id}}
 
     <div class="post-card" id="post-{{.Id}}">
       <div class="first-part">
         <div class="post-header">
           <div class="user-info">
-            <img src="https://robohash.org/{{.Username}}.png?size=50x50" class="avatar" />
-            <span class="username">{{.Username}}</span>
-            <span class="hdah">{{.TimeFormatted}}</span>
+            <div class="user-info">
+              <img src="https://robohash.org/{{.Username}}.png?size=50x50" class="avatar" />
+              <span class="username">{{.Username}}</span>
+              <span class="hdah">{{.TimeFormatted}}</span>
+            </div>
           </div>
           <span class="post-time">{{.TimeFormatted}}</span>
         </div>
@@ -129,40 +102,77 @@
         <p class="post-description">{{.Description}}</p>
 
         <div class="post-reactions">
-
+          {{if $.Session}}
           <form action="/reaction" method="post">
             <div class="reaction">
-              <span class="span-like  {{if eq .UserReactionPosts 1}}active-like{{end}}">{{.TotalLikes}}</span>
-              <button name="reaction" value="1" class="like-btn  {{if eq .UserReactionPosts 1}}active-like{{end}}"
-                type="submit">
-                <i class="fa-solid fa-thumbs-up"></i>
+              <span>{{.TotalLikes}}</span>
+              <button name="reaction" value="1" class="like-btn" type="submit">
+                👍
               </button>
             </div>
             <div class="reaction">
-              <span class="span-dislike {{if eq .UserReactionPosts -1}}active-dislike{{end}}">{{.TotalDislikes}}</span>
-              <button name="reaction" value="-1"
-                class="dislike-btn  {{if eq .UserReactionPosts -1}}active-dislike{{end}}" type="submit">
-                <i class="fa-solid fa-thumbs-down"></i>
+              <span>{{.TotalDislikes}}</span>
+              <button name="reaction" value="-1" class="dislike-btn" type="submit">
+                👎
               </button>
             </div>
             <div class="reaction">
               <span>{{.TotalComments}}</span>
               <input type="checkbox" class="hidd" id="commentshow-{{.Id}}" />
-              <label for="commentshow-{{.Id}}" class="comment-icon"><i class="fa-solid fa-comment"></i></label>
+              <label for="commentshow-{{.Id}}" class="comment">💬</label>
               <style>
-                #post-{{.Id}}:has(#commentshow-{{.Id}}:checked) .second-part {
+                #post- {
+                    {
+                    .Id
+                  }
+                }
+
+                :has(#commentshow- {
+                      {
+                      .Id
+                    }
+                  }
+
+                  :checked) .second-part {
                   display: flex;
                 }
-                #post-{{.Id}}:has(#commentshow-{{.Id}}:checked) .post-time {
+
+                #post- {
+                    {
+                    .Id
+                  }
+                }
+
+                :has(#commentshow- {
+                      {
+                      .Id
+                    }
+                  }
+
+                  :checked) .post-time {
                   display: none;
                 }
-                #post-{{.Id}}:has(#commentshow-{{.Id}}:checked) .hdah {
+
+                #post- {
+                    {
+                    .Id
+                  }
+                }
+
+                :has(#commentshow- {
+                      {
+                      .Id
+                    }
+                  }
+
+                  :checked) .hdah {
                   display: block;
                 }
               </style>
             </div>
             <input type="hidden" name="postID" value="{{.Id}}" />
           </form>
+          {{end}}
         </div>
       </div>
       <div class="second-part" id="post-{{.Id}}">
@@ -189,21 +199,13 @@
                 <span class="time">{{.TimeFormattedComment}}</span>
                 <div class="comment-reactions">
                   <form action="/CommentsLike " method="post">
-                    <div class="reactionComment">
-                      <span class="span-like  {{if eq .UserReactionComment 1}}active-like{{end}}">{{.TotalLikes}}</span>
-                      <button name="reaction" value="1"
-                        class="comment-like-btn {{if eq .UserReactionComment 1}}active-like{{end}}" type="submit">
-                        <i class="fa-solid fa-thumbs-up"></i>
-                      </button>
+                    <div class="reaction">
+                      <span> {{.TotalLikes}}</span>
+                      <button name="reaction" value="1" class="like-btn" type="submit">👍</button>
                     </div>
-                    <div class="reactionComment">
-                      <span
-                        class="span-dislike {{if eq .UserReactionComment -1}}active-dislike{{end}}">{{.TotalDislikes}}</span>
-                      <button name="reaction" value="-1"
-                        class="comment-dislike-btn {{if eq .UserReactionComment -1}}active-dislike{{end}}"
-                        type="submit">
-                        <i class="fa-solid fa-thumbs-down"></i>
-                      </button>
+                    <div class="reaction">
+                      <span>{{.TotalDislikes}}</span>
+                      <button name="reaction" value="-1" class="dislike-btn" type="submit">👎</button>
                     </div>
                     <input type="hidden" name="userId" value="{{$userId}}" />
                     <input type="hidden" name="commentID" value="{{.Id}}" />
@@ -221,35 +223,44 @@
     </div>
     {{end}}
   </div>
-  {{else}}
-  <h1 class="notfound">No posts found  🤷‍♂️</h1>
-  {{end}}
 </body>
 <script>
   const toggleMenu = document.getElementById("toggle-menu");
   const postToggle = document.getElementById("post-toggle");
-  const filterToggle = document.getElementById("filter-toggle1")
 
   toggleMenu.addEventListener("change", function () {
     if (this.checked) {
       postToggle.checked = false;
-      filterToggle.checked = false;
     }
   });
 
   postToggle.addEventListener("change", function () {
     if (this.checked) {
       toggleMenu.checked = false;
-      filterToggle.checked = false;
-    }
-  });
-
-  filterToggle.addEventListener("change", function () {
-    if (this.checked) {
-      toggleMenu.checked = false;
-      postToggle.checked = false;
     }
   });
 </script>
+<!-- <script>
+    document.addEventListener("click", function (e) {
+      const menuToggle = document.getElementById("toggle-menu");
+      const postToggle = document.getElementById("post-toggle");
+  
+      const isClickInsideMenu =
+        e.target.closest(".dropdown") || e.target.closest(".avatar-label");
+  
+      const isClickInsidePostForm =
+        e.target.closest(".postform") || e.target.closest(".postbtn");
+  
+      // Si menu maftou7 w ma clikitich f menu → tseddo
+      if (menuToggle.checked && !isClickInsideMenu) {
+        menuToggle.checked = false;
+      }
+  
+      // Si postform maftou7 w ma clikitich f postform → tseddo
+      if (postToggle.checked && !isClickInsidePostForm) {
+        postToggle.checked = false;
+      }
+    });
+  </script> -->
 
 </html>
