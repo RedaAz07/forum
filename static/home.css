@@ -531,7 +531,7 @@ body:has(#post-toggle:checked) .allPost {
   text-align: center;
   border-radius: 15px;
 }
-.filter h1 {
+.filter h1 ,.filter h2{
   margin: 10px 0;
   color: #04dbf1;
 }
