@@ -1,23 +1,13 @@
 package route
 
 import (
-	"fmt"
 	"net/http"
-	"html/template"
 
 	"forum/handlers"
 	"forum/middleware"
-	"forum/utils"
 )
 
 func Route() {
-	var err error
-
-	utils.Tp, err = template.ParseGlob("template/*.html")
-	if err != nil {
-		fmt.Println("err parsing templates", err)
-		return
-	}
 	http.HandleFunc("/", (handlers.HomeHandler))
 	http.HandleFunc("/logout", middleware.Auth(handlers.LogOutHandler))
 
@@ -36,8 +26,8 @@ func Route() {
 	http.HandleFunc("/comment", middleware.Auth(handlers.CommentHandler))
 
 	http.HandleFunc("/CommentsLike", middleware.Auth(handlers.CommentsLikeHandler))
-	
-	http.HandleFunc("/filter",(handlers.Filter_By_Categorie))
+
+	http.HandleFunc("/filter", (handlers.Filter_By_Categorie))
 
 	http.HandleFunc("/myPosts", middleware.Auth(handlers.MyPosts))
 
