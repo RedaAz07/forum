@@ -40,6 +40,7 @@ func LikedPosts(w http.ResponseWriter, r *http.Request) {
 			p.title,
 			p.description,
 			p.time,
+			COALESCE((p.image_path), '') AS imaghe_path,
 			COUNT(CASE WHEN l.value = 1 THEN 1 END) AS total_likes,
 			COUNT(CASE WHEN l.value = -1 THEN 1 END) AS total_dislikes,
 			COALESCE((SELECT value FROM likes WHERE postID = p.id AND userID = ?), 0) AS user_reaction_pub
@@ -64,7 +65,7 @@ func LikedPosts(w http.ResponseWriter, r *http.Request) {
 
 	for rows.Next() {
 		var post utils.Posts
-		err = rows.Scan(&post.Id, &post.Username, &post.Title, &post.Description, &post.Time, &totalLikes, &totalDislikes, &user_reaction_pub)
+		err = rows.Scan(&post.Id, &post.Username, &post.Title, &post.Description, &post.Time, &post.ImagePath, &totalLikes, &totalDislikes, &user_reaction_pub)
 		if err != nil {
 			fmt.Println("query error", err)
 			helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)

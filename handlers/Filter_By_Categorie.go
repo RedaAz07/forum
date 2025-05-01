@@ -39,6 +39,7 @@ func Filter_By_Categorie(w http.ResponseWriter, r *http.Request) {
 				p.title, 
 				p.description, 
 				p.time,
+				COALESCE((p.image_path), '') AS imaghe_path,
 				COUNT(CASE WHEN l.value = 1 THEN 1 END) AS total_likes, 
 				COUNT(CASE WHEN l.value = -1 THEN 1 END) AS total_dislikes
 				FROM posts p
@@ -62,7 +63,7 @@ func Filter_By_Categorie(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		for rows.Next() {
-			err = rows.Scan(&post.Id, &post.Username, &post.Title, &post.Description, &post.Time, &totalLikes, &totalDislikes)
+			err = rows.Scan(&post.Id, &post.Username, &post.Title, &post.Description, &post.Time,&post.ImagePath, &totalLikes, &totalDislikes)
 			if err != nil {
 				fmt.Println(" error", err)
 				helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
