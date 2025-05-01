@@ -41,6 +41,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 				p.title, 
 				p.description, 
 				p.time, 
+				COALESCE((p.image_path), '') AS imaghe_path,
 				COUNT(CASE WHEN l.value = 1 THEN 1 END) AS total_likes, 
 				COUNT(CASE WHEN l.value = -1 THEN 1 END) AS total_dislikes,
 				COALESCE((
@@ -63,7 +64,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	var totalLikes, totalDislikes, user_reaction_pub int
 	for rows.Next() {
 
-		err = rows.Scan(&post.Id, &post.Username, &post.Title, &post.Description, &post.Time, &totalLikes, &totalDislikes, &user_reaction_pub)
+		err = rows.Scan(&post.Id, &post.Username, &post.Title, &post.Description, &post.Time,&post.ImagePath, &totalLikes, &totalDislikes, &user_reaction_pub)
 		if err != nil {
 			fmt.Println("Scan error:", err)
 			helpers.RanderTemplate(w, "home.html", http.StatusInternalServerError, nil)

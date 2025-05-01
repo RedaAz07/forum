@@ -39,6 +39,7 @@ type Posts struct {
 	Categories        []Categories
 	TotalComments     int
 	UserReactionPosts int
+	ImagePath string
 }
 type Catgs struct {
 	Catgs []string

@@ -8,16 +8,18 @@ import (
 )
 
 func Route() {
+	
 	http.HandleFunc("/", (handlers.HomeHandler))
 	http.HandleFunc("/logout", middleware.Auth(handlers.LogOutHandler))
-
+	
 	http.HandleFunc("/login", handlers.LoginShowHandler)
 	http.HandleFunc("/register", handlers.RegisterShowHandler)
-
+	
 	http.HandleFunc("/loginAuth", handlers.LoginHandler)
 	http.HandleFunc("/registerAuth", handlers.RegisterHandler)
-
+	
 	http.HandleFunc("/static/", handlers.StyleHandler)
+	http.HandleFunc("/uploads/", handlers.UploadHandler)
 
 	http.HandleFunc("/createPost", middleware.Auth(handlers.CreatePost))
 

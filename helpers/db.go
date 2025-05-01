@@ -8,7 +8,7 @@ import (
 
 	"forum/utils"
 
-	_"github.com/mattn/go-sqlite3"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func DataBase() {
@@ -28,6 +28,6 @@ func DataBase() {
 	if err != nil {
 		log.Fatal("exec error: ", err)
 	}
-	
+	utils.Db.Exec("delete from posts where title = 'image katuploada ajmiii'")
 	fmt.Println("Queries executed successfully!")
 }

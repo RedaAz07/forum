@@ -2,8 +2,10 @@ package handlers
 
 import (
 	"fmt"
+	"io"
 	"log"
 	"net/http"
+	"os"
 
 	"forum/helpers"
 	"forum/utils"
@@ -31,11 +33,44 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 		return
 
 	}
+	/////////////////////////////////////
+	//! start of upload
+
+	r.ParseMultipartForm(10 << 20)
+
+	file, handler, err := r.FormFile("myFile")
+	if err != nil {
+		fmt.Println("Error uploading file:", err)
+		http.Error(w, "Error uploading file", http.StatusBadRequest)
+		return
+	}
+	defer file.Close()
+
+	// Create directory if not exist
+	os.MkdirAll("uploads", 0o775)
+
+	// Create file on server
+	filename := handler.Filename
+	dst, err := os.Create("uploads/" + filename)
+	if err != nil {
+		http.Error(w, "Cannot save file", http.StatusInternalServerError)
+		return
+	}
+	defer dst.Close()
+
+	// Copy file content
+	_, err = io.Copy(dst, file)
+	if err != nil {
+		http.Error(w, "Error saving file", http.StatusInternalServerError)
+		return
+	}
+	//! end of upload 
+
+	///////////////////////////////////////////
 	title := r.FormValue("title")
 	description := r.FormValue("description")
 
 	category := r.Form["tags"] //* if he just choose the category
-	fmt.Println(category)
 
 	// !  check if the user create a new category
 
@@ -45,9 +80,9 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 	var username string
 	row.Scan(&username)
 
-	stmt := `insert into posts (title, description, username) values(?, ?, ?)`
+	stmt := `insert into posts (title, description, username,image_path) values(?, ?, ?, ?)`
 
-	res, _ := utils.Db.Exec(stmt, title, description, username)
+	res, _ := utils.Db.Exec(stmt, title, description, username, filename)
 
 	postID, err := res.LastInsertId()
 	if err != nil {
