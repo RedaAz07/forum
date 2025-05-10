@@ -29,7 +29,7 @@ func Route() {
 
 	http.HandleFunc("/CommentsLike", middleware.Auth(handlers.CommentsLikeHandler))
 
-	http.HandleFunc("/filter", (handlers.Filter_By_Categorie))
+	http.HandleFunc("/filter", handlers.Filter_By_Categorie)
 
 	http.HandleFunc("/myPosts", middleware.Auth(handlers.MyPosts))
 

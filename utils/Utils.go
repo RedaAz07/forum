@@ -2,14 +2,9 @@ package utils
 
 import (
 	"database/sql"
-	"net/http"
 	"html/template"
+	"net/http"
 	"time"
-)
-
-var (
-	Tp *template.Template
-	Db *sql.DB
 )
 
 type ErrorPage struct {
@@ -39,7 +34,7 @@ type Posts struct {
 	Categories        []Categories
 	TotalComments     int
 	UserReactionPosts int
-	ImagePath string
+	ImagePath         string
 }
 type Catgs struct {
 	Catgs []string
@@ -57,6 +52,8 @@ type Comments struct {
 }
 
 var (
+	Tp          *template.Template
+	Db          *sql.DB
 	ErrorBadReq = ErrorPage{
 		Code:         http.StatusBadRequest,
 		ErrorMessage: "Oops! It looks like there was an issue with your request. Please check your input and try again.",

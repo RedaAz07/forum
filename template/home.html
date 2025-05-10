@@ -63,7 +63,7 @@
             <h4>Filter By Categorie</h4>
             <div class="categorie">
               {{ range .Categories}}
-              
+
               <input type="checkbox" id="tagg{{.Id}}" class="tag" name="tags" value="{{.Id}}" hidden>
               <label for="tagg{{.Id}}" class="tagCategorie">{{.Name}}</label>
               {{end}}
@@ -118,11 +118,20 @@
       {{end}}
     </div>
   </header>
+  <!-- main section -->
   {{if gt (len .Posts) 0}}
   <div class="allPost">
+    <aside class="aside1">
+      <div class="forum-card">
+        <h2>Our Forum is a community of<br><span>active and passionate members</span></h2>
+        <p>Join to ask questions, share knowledge, and grow together.</p>
+        <a href="/signup" class="btn">Create account</a>
+        <a href="/login" class="login-link">Log in</a>
+      </div>
+    </aside>
     {{range .Posts}}
     {{$userId := .Id}}
-
+    <!-- post card section -->
     <div class="post-card" id="post-{{.Id}}">
       <div class="first-part">
         <div class="post-header">
@@ -143,9 +152,7 @@
           {{end}}
         </div>
         {{if .ImagePath}}
-          <img src="/uploads/{{.ImagePath}}"  class="image">
-        {{else}}
-          <img src="/static/images/notfound.png" alt="Image not found" class="image">
+        <img src="/uploads/{{.ImagePath}}" class="image">
         {{end}}
 
 
@@ -153,7 +160,7 @@
 
         <div class="post-reactions">
 
-          <form action="/reaction" method="post" >
+          <form action="/reaction" method="post">
             <div class="reaction">
               <span class="span-like  {{if eq .UserReactionPosts 1}}active-like{{end}}">{{.TotalLikes}}</span>
               <button name="reaction" value="1" class="like-btn  {{if eq .UserReactionPosts 1}}active-like{{end}}"
@@ -243,10 +250,19 @@
       </div>
     </div>
     {{end}}
+    <!-- end post card section -->
+    <aside class="aside2">
+      {{range .Users}}
+      <div class="user">
+        <span><i class="fa-solid fa-user"></i></span><span>{{.}}</span>
+      </div>
+      {{end}}
+    </aside>
   </div>
   {{else}}
-  <h1 class="notfound">No posts found  🤷‍♂️</h1>
+  <h1 class="notfound">No posts found 🤷‍♂️</h1>
   {{end}}
+  <!-- end main section -->
 </body>
 <script>
   const toggleMenu = document.getElementById("toggle-menu");

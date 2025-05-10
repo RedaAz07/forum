@@ -48,20 +48,20 @@ body {
 }
 
 .post-card {
+  overflow-y: auto;
   display: flex;
   color: #fff;
   padding: 24px;
-  margin: 16px auto;
-  border-radius: 12px;
-  width: 760px;
+  border-radius: 10px;
+  width: 1000px;
   background: linear-gradient(135deg, #43abb4, #5baab3c9);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  margin: 10px 400px;
 }
-.post-card .image{
+.post-card .image {
   margin-bottom: 10px;
   border-radius: 15px;
   width: 70%;
@@ -613,4 +613,91 @@ body:has(#filter-toggle:checked) .allPost {
   border: none;
   box-shadow: 0 0 10px #00adb5;
   border-radius: 10px;
+}
+
+/* dkxii lkhr ga33 */
+.aside1 {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 100px;
+  left: 200px;
+  width: 270px;
+  height: 80vh;
+  padding: 20px;
+}
+.aside2 {
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  position: fixed;
+  top: 100px;
+  right: 200px;
+  width: 270px;
+  height: 80vh;
+  padding: 50px;
+}
+.aside2 .user {
+  width: 100%;
+  margin: 0 auto 5px 0;
+  display: flex;
+  gap: 30px;
+}
+.aside2 .user span i {
+  font-size: 20px;
+}
+.forum-card {
+  background: #fff;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 270px;
+  font-family: Arial, sans-serif;
+  margin: 20px auto;
+}
+
+.forum-card h2 {
+  font-size: 18px;
+  color: #222;
+  margin-bottom: 12px;
+}
+
+.forum-card h2 span {
+  font-weight: bold;
+  color: #000;
+  font-size: 20px;
+}
+
+.forum-card p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.forum-card .btn {
+  display: inline-block;
+  padding: 10px 18px;
+  border: 1px solid #7c3aed;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #7c3aed;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.forum-card .btn:hover {
+  background-color: #7c3aed;
+  color: #fff;
+}
+
+.forum-card .login-link {
+  display: block;
+  margin-top: 12px;
+  font-size: 14px;
+  color: #333;
+  text-decoration: none;
+}
+
+.forum-card .login-link:hover {
+  text-decoration: underline;
 }

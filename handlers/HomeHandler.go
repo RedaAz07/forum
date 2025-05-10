@@ -10,6 +10,22 @@ import (
 )
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
+	// get all users
+	var allusers []string
+	var username string
+	queryUsers := `select username from users order by username ASC`
+	users, errUsers := utils.Db.Query(queryUsers)
+	for users.Next() {
+		errUsers = users.Scan(&username)
+		if errUsers != nil {
+			fmt.Println("DB Query error:", errUsers)
+			helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
+			return
+		}
+		allusers = append(allusers, username)
+	}
+	// end of get all usrers
+
 	session, err := r.Cookie("session")
 	var sessValue string
 	if err != nil {
@@ -22,18 +38,17 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	var userId int
 	utils.Db.QueryRow(query, sessValue).Scan(&userId)
 
-// get comments 
-	commentMap := helpers.FetchComments(w,r)
-	
+	// get comments
+	commentMap := helpers.FetchComments(w, r)
+
 	categorMap := helpers.FetchCategories(w)
-	
+
 	//! end of the map
 	// get user id to use it in commentlikes and publikes
 
-
-	//get categories
+	// get categories
 	categories := helpers.AllCategories(w)
-	//end get categories
+	// end get categories
 	// !  get posts
 	stmt := `SELECT 
 				p.id, 
@@ -64,7 +79,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	var totalLikes, totalDislikes, user_reaction_pub int
 	for rows.Next() {
 
-		err = rows.Scan(&post.Id, &post.Username, &post.Title, &post.Description, &post.Time,&post.ImagePath, &totalLikes, &totalDislikes, &user_reaction_pub)
+		err = rows.Scan(&post.Id, &post.Username, &post.Title, &post.Description, &post.Time, &post.ImagePath, &totalLikes, &totalDislikes, &user_reaction_pub)
 		if err != nil {
 			fmt.Println("Scan error:", err)
 			helpers.RanderTemplate(w, "home.html", http.StatusInternalServerError, nil)
@@ -87,19 +102,19 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 	// !  end get posts
 
-	
-
 	variables := struct {
 		Session    string
 		UserActive string
 		Posts      []utils.Posts
 		Categories []utils.Categories
 		PostCatgs  []string
+		Users []string
 	}{
 		Session:    sessValue,
 		UserActive: helpers.GetUsernameFromSession(sessValue),
 		Posts:      posts,
 		Categories: categories,
+		Users: allusers,
 	}
 
 	helpers.RanderTemplate(w, "home.html", 200, variables)
