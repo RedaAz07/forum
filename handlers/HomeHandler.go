@@ -10,22 +10,7 @@ import (
 )
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	// get all users
-	var allusers []string
-	var username string
-	queryUsers := `select username from users order by username ASC`
-	users, errUsers := utils.Db.Query(queryUsers)
-	for users.Next() {
-		errUsers = users.Scan(&username)
-		if errUsers != nil {
-			fmt.Println("DB Query error:", errUsers)
-			helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
-			return
-		}
-		allusers = append(allusers, username)
-	}
-	// end of get all usrers
-
+	allusers:=helpers.AllUsers(w)
 	session, err := r.Cookie("session")
 	var sessValue string
 	if err != nil {
@@ -108,13 +93,13 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		Posts      []utils.Posts
 		Categories []utils.Categories
 		PostCatgs  []string
-		Users []string
+		Users      []string
 	}{
 		Session:    sessValue,
 		UserActive: helpers.GetUsernameFromSession(sessValue),
 		Posts:      posts,
 		Categories: categories,
-		Users: allusers,
+		Users:      allusers,
 	}
 
 	helpers.RanderTemplate(w, "home.html", 200, variables)
