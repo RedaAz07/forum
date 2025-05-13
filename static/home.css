@@ -40,26 +40,27 @@ body {
 }
 
 .allPost {
-  width: 75%;
+  width: 100%;
   margin: auto;
   display: flex;
-  margin: 100px auto 0 auto;
-  flex-wrap: wrap;
+  margin: 100px 0px;
+  flex-direction: column;
 }
 
 .post-card {
   overflow-y: auto;
   display: flex;
+  flex-direction: column;
   color: #fff;
   padding: 24px;
   border-radius: 10px;
   width: 800px;
-  background: linear-gradient(135deg, #43abb4, #5baab3c9);
+  background: #222831;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.18);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  margin: 10px 350px;
+  margin: 10px auto;
 }
 .post-card .image {
   margin-bottom: 5px;
@@ -77,40 +78,34 @@ body {
   max-height: 100%;
   overflow: auto;
   border-radius: 10px;
-  box-shadow: 0px 0px 20px rgb(45 49 58);
   padding: 12px 0;
   height: 350px;
   display: flex;
   flex-direction: column;
   display: none;
-  width: 70%;
+  width: 100%;
+  margin: 10px 0px;
   background-color: #2e313ac9;
 }
 
 .comment {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 18%;
   width: 100%;
-}
-
-.second-part hr {
-  width: 90%;
-  box-shadow: 2px 2px 5px rgb(145, 143, 143);
+  border: 2px #000;
+  margin-bottom: 10px;
 }
 
 .commentaires {
   height: 82%;
-  max-height: 80%;
   overflow: auto;
 }
 
 .comment form {
   gap: 5px;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100%;
+  height: fit-content;
+  margin: 0px 20px;
   margin-bottom: 10px;
 }
 
@@ -131,7 +126,7 @@ body {
   color: white;
   padding: 0 0 0 10px;
   height: 35px;
-  width: 150px;
+  width: 100%;
   background-color: transparent;
   border-radius: 10px;
   outline: none;
@@ -174,6 +169,7 @@ body {
 }
 
 .comment-content {
+  width: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -213,19 +209,13 @@ body {
   cursor: pointer;
 }
 
-.hdah {
-  display: none;
-  color: #2d313a7d;
-  font-size: 12px;
-}
+
 
 body:has(#commentshow:checked) .second-part {
   display: flex;
 }
 
-body:has(#commentshow:checked) .post-time {
-  display: none;
-}
+
 
 .post-header {
   display: flex;
@@ -254,7 +244,7 @@ body:has(#commentshow:checked) .post-time {
 }
 
 .post-title {
-  font-size: 1.2rem;
+  font-size: 1.7rem;
   margin-bottom: 20px;
 }
 
@@ -262,7 +252,7 @@ body:has(#commentshow:checked) .post-time {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .tag {
@@ -274,7 +264,7 @@ body:has(#commentshow:checked) .post-time {
 }
 
 .post-description {
-  font-size: 17px;
+  font-size: 1.3rem;
   color: #fff5f5fb;
 }
 
@@ -300,7 +290,7 @@ body:has(#commentshow:checked) .post-time {
   border: none;
   cursor: pointer;
   font-size: 13px;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 
 .reaction {
@@ -321,29 +311,32 @@ body:has(#commentshow:checked) .post-time {
   border: none;
   cursor: pointer;
   font-size: 18px;
+  color: rgb(0, 0, 0);
+}
+.comment-icon {
   color: white;
 }
 
 .like-btn.active-like {
-  color: #0000ffbf;
+  color: white;
 }
 
 .dislike-btn.active-dislike {
-  color: #ff0000ba;
+  color: white;
 }
 .comment-like-btn.active-like {
-  color: #0000ffbf;
+  color: white;
 }
 
 .comment-dislike-btn.active-dislike {
-  color: #ff0000ba;
+  color: white;
 }
 .span-like.active-like {
-  color: #0000ffbf;
+  color: white;
 }
 
 .span-dislike.active-dislike {
-  color: #ff0000ba;
+  color: white;
 }
 
 .postform {
@@ -454,8 +447,9 @@ body:has(#post-toggle:checked) .allPost {
   color: white;
   border-radius: 15px;
   padding: 8px 15px;
-  max-width: 200px;
-  max-height: 150px;
+  width: fit-content;
+  max-width: 70%;
+  max-height: 100%;
   overflow: auto;
   word-wrap: break-word;
 }

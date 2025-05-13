@@ -9,7 +9,7 @@
 }
 header {
   animation: navbar 1.5s ease-in-out;
-  background: #00ADB5;
+  background: #222831;
   z-index: 3;
   position: fixed;
   top: 0;
@@ -19,7 +19,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* box-shadow: 0px 1px 2px var(--wahd); */
+  box-shadow: 0px 1px 2px var(--wahd);
 }
 header img {
   filter: brightness(150%);
