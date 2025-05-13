@@ -11,10 +11,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     integrity="sha512-uWFS2SyMlXU1P9Uv9Z4q1XLh3QjsoZ4SB8QoX0OQH5m6goZQyA5DFmuH2gOdf5U3GVabkUqZbJKnSSCBaEVz2w=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
 </head>
-
-
 
 <body>
   <header>
@@ -32,13 +30,11 @@
             <input type="text" name="title" placeholder="Title" required /><br />
             <textarea name="description" placeholder="Content" required></textarea><br />
             <div class="categorie">
-
               {{ range .Categories}}
 
-              <input type="checkbox" id="tag{{.Id}}" class="tag-check" name="tags" value="{{.Id}}" hidden>
-              <label for="tag{{.Id}}" class="tagC">{{.Name}}</label>
+              <input type="checkbox" id="tag{{.Id}}" class="tag-checkk" name="tags" value="{{.Id}}" hidden />
+              <label for="tag{{.Id}}" class="tagCC">{{.Name}}</label>
               {{end}}
-
             </div>
             <div class="upload">
               <input type="file" name="myFile" />
@@ -47,46 +43,7 @@
             <input type="submit" value="Create Post" class="btnform" /><br />
           </form>
         </div>
-        {{end}}
-        {{if .Session}}
-        <div class="filter">
-          <h1>Filter</h1>
-          <form action="/myPosts" method="post" class="form1">
-            <h4>Filter by myPosts</h4>
-            <button type="submit" class="filterbtn">My posts</button>
-          </form>
-          <form action="/likedPosts" method="post" class="form2">
-            <h4>Filter by likedPosts</h4>
-            <button type="submit" class="filterbtn">Liked Posts</button>
-          </form>
-          <form action="/filter" method="post" class="form3">
-            <h4>Filter By Categorie</h4>
-            <div class="categorie">
-              {{ range .Categories}}
-
-              <input type="checkbox" id="tagg{{.Id}}" class="tag" name="tags" value="{{.Id}}" hidden>
-              <label for="tagg{{.Id}}" class="tagCategorie">{{.Name}}</label>
-              {{end}}
-            </div>
-            <button type="submit" class="filterbtn">filter</button>
-          </form>
-        </div>
-        {{else}}
-        <div class="filter">
-          <h2>Filter By Categorie</h2>
-          <form action="/filter" method="post" class="form3">
-            <div class="categorie">
-              {{ range .Categories}}
-
-              <input type="checkbox" id="tagg{{.Id}}" class="tag" name="tags" value="{{.Id}}" hidden>
-              <label for="tagg{{.Id}}" class="tagCategorie">{{.Name}}</label>
-              {{end}}
-            </div>
-            <button type="submit" class="filterbtn">filter</button>
-          </form>
-        </div>
-        {{end}}
-        {{if .Session}}
+        {{end}} {{if .Session}}
         <input type="checkbox" id="toggle-menu" class="hidd" />
         <label for="toggle-menu" class="avatar-label">
           <img src="https://robohash.org/{{.UserActive}}.png?size=50x50" />
@@ -121,65 +78,94 @@
   <!-- main section -->
   {{if gt (len .Posts) 0}}
   <div class="allPost">
+    {{if .Session}}
     <aside class="aside1">
-      <div class="forum-card">
-        <h2>Our Forum is a community of<br><span>active and passionate members</span></h2>
-        <p>Join to ask questions, share knowledge, and grow together.</p>
-        <a href="/register" class="btn">Create account</a>
-        <a href="/login" class="login-link">Log in</a>
-      </div>
+      <h1>Filter</h1>
+      <form action="/myPosts" method="post" class="form1">
+        <h4>Filter by myPosts</h4>
+        <button type="submit" class="filterbtn">My posts</button>
+      </form>
+      <form action="/likedPosts" method="post" class="form2">
+        <h4>Filter by likedPosts</h4>
+        <button type="submit" class="filterbtn">Liked Posts</button>
+      </form>
+      <form action="/filter" method="post" class="form3">
+        {{ range .Categories }}
+        <input type="checkbox" id="tagg{{.Id}}" class="tag" name="tags" value="{{.Id}}" hidden />
+
+        <label for="tagg{{.Id}}" class="jme3">
+          <span>{{.Icon}}</span>
+          <span class="tagCategorie">{{.Name}}</span>
+        </label>
+        {{ end }}
+        <button type="submit" class="filterbtn">filter</button>
+      </form>
     </aside>
+    {{else}}
+    <aside class="aside1">
+      <form action="/filter" method="post" class="form3">
+        {{ range .Categories }}
+        <input type="checkbox" id="tagg{{.Id}}" class="tag" name="tags" value="{{.Id}}" hidden />
+
+        <label for="tagg{{.Id}}" class="jme3">
+          <span>{{.Icon}}</span>
+          <span class="tagCategorie">{{.Name}}</span>
+        </label>
+        {{ end }}
+        <button type="submit" class="filterbtn">filter</button>
+      </form>
+    </aside>
+    {{end}}
     {{range .Posts}}
     {{$userId := .Id}}
     <!-- post card section -->
-    <div class="post-card" id="post-{{.Id}}">
-      <div class="first-part">
-        <div class="post-header">
-          <div class="user-info">
-            <img src="https://robohash.org/{{.Username}}.png?size=50x50" class="avatar" />
-            <span class="username">{{.Username}}</span>
-            <span class="hdah">{{.TimeFormatted}}</span>
+    <div class="post-combine">
+      <div class="post-card" id="post-{{.Id}}">
+        <div class="first-part">
+          <div class="post-header">
+            <div class="user-info">
+              <img src="https://robohash.org/{{.Username}}.png?size=50x50" class="avatar" />
+              <span class="username">{{.Username}}</span>
+              <span class="hdah">{{.TimeFormatted}}</span>
+            </div>
+            <span class="post-time">{{.TimeFormatted}}</span>
           </div>
-          <span class="post-time">{{.TimeFormatted}}</span>
-        </div>
 
-        <h2 class="post-title">{{.Title}}</h2>
+          <h2 class="post-title">{{.Title}}</h2>
 
-        <div class="post-tags">
-
-          {{range .Categories}}
-          <span class="tag">{{.Name}}</span>
+          <div class="post-tags">
+            {{range .Categories}}
+            <span class="tag">{{.Name}}</span>
+            {{end}}
+          </div>
+          {{if .ImagePath}}
+          <img src="/uploads/{{.ImagePath}}" class="image" />
           {{end}}
-        </div>
-        {{if .ImagePath}}
-        <img src="/uploads/{{.ImagePath}}" class="image">
-        {{end}}
 
+          <p class="post-description">{{.Description}}</p>
 
-        <p class="post-description">{{.Description}}</p>
-
-        <div class="post-reactions">
-
-          <form action="/reaction" method="post">
-            <div class="reaction">
-              <span class="span-like  {{if eq .UserReactionPosts 1}}active-like{{end}}">{{.TotalLikes}}</span>
-              <button name="reaction" value="1" class="like-btn  {{if eq .UserReactionPosts 1}}active-like{{end}}"
-                type="submit">
-                <i class="fa-solid fa-thumbs-up"></i>
-              </button>
-            </div>
-            <div class="reaction">
-              <span class="span-dislike {{if eq .UserReactionPosts -1}}active-dislike{{end}}">{{.TotalDislikes}}</span>
-              <button name="reaction" value="-1"
-                class="dislike-btn  {{if eq .UserReactionPosts -1}}active-dislike{{end}}" type="submit">
-                <i class="fa-solid fa-thumbs-down"></i>
-              </button>
-            </div>
-            <div class="reaction">
-              <span>{{.TotalComments}}</span>
-              <input type="checkbox" class="hidd" id="commentshow-{{.Id}}" />
-              <label for="commentshow-{{.Id}}" class="comment-icon"><i class="fa-solid fa-comment"></i></label>
-              <style>
+          <div class="post-reactions">
+            <form action="/reaction" method="post">
+              <div class="reaction">
+                <span class="span-like  {{if eq .UserReactionPosts 1}}active-like{{end}}">{{.TotalLikes}}</span>
+                <button name="reaction" value="1" class="like-btn  {{if eq .UserReactionPosts 1}}active-like{{end}}"
+                  type="submit">
+                  <i class="fa-solid fa-thumbs-up"></i>
+                </button>
+              </div>
+              <div class="reaction">
+                <span
+                  class="span-dislike {{if eq .UserReactionPosts -1}}active-dislike{{end}}">{{.TotalDislikes}}</span>
+                <button name="reaction" value="-1"
+                  class="dislike-btn  {{if eq .UserReactionPosts -1}}active-dislike{{end}}" type="submit">
+                  <i class="fa-solid fa-thumbs-down"></i>
+                </button>
+              </div>
+              <div class="reaction">
+                <span>{{.TotalComments}}</span>
+                <input type="checkbox" class="hidd" id="commentshow-{{.Id}}" />
+                <label for="commentshow-{{.Id}}" class="comment-icon"><i class="fa-solid fa-comment"></i></label>
+                <style>
                 #post-{{.Id}}:has(#commentshow-{{.Id}}:checked) .second-part {
                   display: flex;
                 }
@@ -189,68 +175,72 @@
                 #post-{{.Id}}:has(#commentshow-{{.Id}}:checked) .hdah {
                   display: block;
                 }
-              </style>
-            </div>
-            <input type="hidden" name="postID" value="{{.Id}}" />
-          </form>
+                </style>
+              </div>
+              <input type="hidden" name="postID" value="{{.Id}}" />
+            </form>
+          </div>
         </div>
-      </div>
-      <div class="second-part" id="post-{{.Id}}">
-        {{if $.Session}}
-        <div class="comment">
-          <form action="/comment" method="post">
-            <input type="hidden" name="postID" value="{{.Id}}" />
-            <img src="https://robohash.org/{{$.UserActive}}.png?size=50x50" />
-            <input type="text" name="comment" placeholder="Add Comment" required /><br />
-            <button type="submit">Add</button>
-          </form>
-          <hr />
-        </div>
-        {{end}} {{if gt (len .Comments) 0}}
-        <div class="commentaires">
-          <h3>Comments</h3>
-          {{range .Comments}}
-          <div class="comments">
-            <img src="https://robohash.org/{{.Username}}.png?size=50x50" />
-            <div class="comment-content">
-              <p class="user"><strong>{{.Username}}</strong></p>
-              <p class="comm">{{.Comment}}</p>
-              <div class="comment-actions">
-                <span class="time">{{.TimeFormattedComment}}</span>
-                <div class="comment-reactions">
-                  <form action="/CommentsLike " method="post">
-                    <div class="reactionComment">
-                      <span class="span-like  {{if eq .UserReactionComment 1}}active-like{{end}}">{{.TotalLikes}}</span>
-                      <button name="reaction" value="1"
-                        class="comment-like-btn {{if eq .UserReactionComment 1}}active-like{{end}}" type="submit">
-                        <i class="fa-solid fa-thumbs-up"></i>
-                      </button>
-                    </div>
-                    <div class="reactionComment">
-                      <span
-                        class="span-dislike {{if eq .UserReactionComment -1}}active-dislike{{end}}">{{.TotalDislikes}}</span>
-                      <button name="reaction" value="-1"
-                        class="comment-dislike-btn {{if eq .UserReactionComment -1}}active-dislike{{end}}"
-                        type="submit">
-                        <i class="fa-solid fa-thumbs-down"></i>
-                      </button>
-                    </div>
-                    <input type="hidden" name="userId" value="{{$userId}}" />
-                    <input type="hidden" name="commentID" value="{{.Id}}" />
-                  </form>
+        <div class="second-part" id="post-{{.Id}}">
+          {{if $.Session}}
+          <div class="comment">
+            <form action="/comment" method="post">
+              <input type="hidden" name="postID" value="{{.Id}}" />
+              <img src="https://robohash.org/{{$.UserActive}}.png?size=50x50" />
+              <input type="text" name="comment" placeholder="Add Comment" required /><br />
+              <button type="submit">Add</button>
+            </form>
+            <hr />
+          </div>
+          {{end}}
+          {{if gt (len .Comments) 0}}
+          <div class="commentaires">
+            <h3>Comments</h3>
+            {{range .Comments}}
+            <div class="comments">
+              <img src="https://robohash.org/{{.Username}}.png?size=50x50" />
+              <div class="comment-content">
+                <p class="user"><strong>{{.Username}}</strong></p>
+                <p class="comm">{{.Comment}}</p>
+                <div class="comment-actions">
+                  <span class="time">{{.TimeFormattedComment}}</span>
+                  <div class="comment-reactions">
+                    <form action="/CommentsLike " method="post">
+                      <div class="reactionComment">
+                        <span
+                          class="span-like  {{if eq .UserReactionComment 1}}active-like{{end}}">{{.TotalLikes}}</span>
+                        <button name="reaction" value="1"
+                          class="comment-like-btn {{if eq .UserReactionComment 1}}active-like{{end}}" type="submit">
+                          <i class="fa-solid fa-thumbs-up"></i>
+                        </button>
+                      </div>
+                      <div class="reactionComment">
+                        <span
+                          class="span-dislike {{if eq .UserReactionComment -1}}active-dislike{{end}}">{{.TotalDislikes}}</span>
+                        <button name="reaction" value="-1"
+                          class="comment-dislike-btn {{if eq .UserReactionComment -1}}active-dislike{{end}}"
+                          type="submit">
+                          <i class="fa-solid fa-thumbs-down"></i>
+                        </button>
+                      </div>
+                      <input type="hidden" name="userId" value="{{$userId}}" />
+                      <input type="hidden" name="commentID" value="{{.Id}}" />
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
+            {{end}}
           </div>
+          {{else}}
+          <h1 class="messageErr">No Commentaires 🤷‍♂️</h1>
           {{end}}
         </div>
-        {{else}}
-        <h1 class="messageErr">No Commentaires 🤷‍♂️</h1>
-        {{end}}
       </div>
     </div>
     {{end}}
     <!-- end post card section -->
+    {{if .Session}}
     <aside class="aside2">
       {{range .Users}}
       <div class="user">
@@ -258,6 +248,7 @@
       </div>
       {{end}}
     </aside>
+    {{end}}
   </div>
   {{else}}
   <h1 class="notfound">No posts found 🤷‍♂️</h1>
@@ -267,7 +258,7 @@
 <script>
   const toggleMenu = document.getElementById("toggle-menu");
   const postToggle = document.getElementById("post-toggle");
-  const filterToggle = document.getElementById("filter-toggle1")
+  const filterToggle = document.getElementById("filter-toggle1");
 
   toggleMenu.addEventListener("change", function () {
     if (this.checked) {

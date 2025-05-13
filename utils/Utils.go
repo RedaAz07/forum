@@ -18,6 +18,7 @@ type Users struct {
 }
 type Categories struct {
 	Name   string
+	Icon   template.HTML
 	Id     int
 	PostID int
 }

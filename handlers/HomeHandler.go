@@ -10,7 +10,7 @@ import (
 )
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	allusers:=helpers.AllUsers(w)
+	allusers := helpers.AllUsers(w)
 	session, err := r.Cookie("session")
 	var sessValue string
 	if err != nil {
@@ -34,6 +34,8 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	// get categories
 	categories := helpers.AllCategories(w)
 	// end get categories
+
+	
 	// !  get posts
 	stmt := `SELECT 
 				p.id, 
