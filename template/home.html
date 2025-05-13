@@ -126,24 +126,23 @@
             <div class="user-info">
               <img src="https://robohash.org/{{.Username}}.png?size=50x50" class="avatar" />
               <span class="username">{{.Username}}</span>
-              <span class="hdah">{{.TimeFormatted}}</span>
             </div>
             <span class="post-time">{{.TimeFormatted}}</span>
           </div>
 
           <h2 class="post-title">{{.Title}}</h2>
 
-          <div class="post-tags">
-            {{range .Categories}}
-            <span class="tag">{{.Name}}</span>
-            {{end}}
-          </div>
+          
           {{if .ImagePath}}
           <img src="/uploads/{{.ImagePath}}" class="image" />
           {{end}}
 
           <p class="post-description">{{.Description}}</p>
-
+          <div class="post-tags">
+            {{range .Categories}}
+            <span class="tag">{{.Name}}</span>
+            {{end}}
+          </div>
           <div class="post-reactions">
             <form action="/reaction" method="post">
               <div class="reaction">
@@ -168,12 +167,6 @@
                 <style>
                 #post-{{.Id}}:has(#commentshow-{{.Id}}:checked) .second-part {
                   display: flex;
-                }
-                #post-{{.Id}}:has(#commentshow-{{.Id}}:checked) .post-time {
-                  display: none;
-                }
-                #post-{{.Id}}:has(#commentshow-{{.Id}}:checked) .hdah {
-                  display: block;
                 }
                 </style>
               </div>
