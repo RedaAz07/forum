@@ -36,7 +36,7 @@ input:-webkit-autofill:active {
 }
 
 body {
-  background: #222831;
+  background: #373f4b;
 }
 
 .allPost {
@@ -49,7 +49,7 @@ body {
   flex-wrap: wrap;
   justify-content: space-around;
 }
-.post-combine{
+.post-combine {
   display: flex;
   flex-direction: column;
 }
@@ -216,13 +216,9 @@ body {
   cursor: pointer;
 }
 
-
-
 body:has(#commentshow:checked) .second-part {
   display: flex;
 }
-
-
 
 .post-header {
   display: flex;
@@ -297,7 +293,7 @@ body:has(#commentshow:checked) .second-part {
   border: none;
   cursor: pointer;
   font-size: 13px;
-  color: rgb(0, 0, 0);
+  color: white;
 }
 
 .reaction {
@@ -318,25 +314,22 @@ body:has(#commentshow:checked) .second-part {
   border: none;
   cursor: pointer;
   font-size: 18px;
-  color: rgb(0, 0, 0);
-}
-.comment-icon {
   color: white;
 }
 
 .like-btn.active-like {
-  color: white;
+  color: #43abb4;
 }
 
 .dislike-btn.active-dislike {
-  color: white;
+  color: #ed2939;
 }
 .comment-like-btn.active-like {
-  color: white;
+  color: #43abb4;
 }
 
 .comment-dislike-btn.active-dislike {
-  color: white;
+  color: #ed2939;
 }
 .span-like.active-like {
   color: white;
@@ -533,8 +526,6 @@ body:has(#filter-toggle:checked) .allPost {
   opacity: 0.3;
 }
 
-
-
 /* dkxii lkhr ga33 */
 .aside1 form {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
@@ -544,14 +535,15 @@ body:has(#filter-toggle:checked) .allPost {
   width: 270px;
   height: 80vh;
   padding: 20px;
-  background-color: #00adb5;
+  background-color: #222831;
+  color: white;
   border-radius: 12px;
   display: flex;
   justify-content: center;
   flex-direction: column;
 }
-.jme3{
-  padding: 11px 20px; 
+.jme3 {
+  padding: 11px 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -563,26 +555,27 @@ body:has(#filter-toggle:checked) .allPost {
   transition: 0.2s;
   cursor: pointer;
 }
-.jme3 label{
+.jme3 label {
   cursor: pointer;
 }
 .tagC,
 .tagCategorie {
   width: 100px;
 }
-.jme3:hover{
+.jme3:hover {
   background-color: #cdcbec;
 }
 
 input[type="checkbox"].tag:checked + label.jme3 {
   background-color: #cdcbec;
 }
-.aside1 form button{
+.aside1 form button {
   border: 2px solid white;
   cursor: pointer;
   margin-top: 20px;
   width: 90%;
   background-color: #43abb400;
+  color: white;
   border-radius: 12px;
   margin: auto;
   box-shadow: 0 0 20px #04dbf1;
