@@ -44,14 +44,12 @@ body {
   margin: auto;
   display: flex;
   margin: 100px 0px;
-  background-color: red;
   width: 75%;
   margin: 100px auto 0 auto;
   flex-wrap: wrap;
   justify-content: space-around;
 }
 .post-combine{
-  background-color: blue;
   display: flex;
   flex-direction: column;
 }
