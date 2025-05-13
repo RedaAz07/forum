@@ -28,6 +28,6 @@ func DataBase() {
 	if err != nil {
 		log.Fatal("exec error: ", err)
 	}
-	utils.Db.Exec("delete from posts where title = 'image katuploada ajmiii'")
+	// utils.Db.Exec("delete from posts where description = 'assasas'")
 	fmt.Println("Queries executed successfully!")
 }
