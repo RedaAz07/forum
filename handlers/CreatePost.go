@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 
 	"forum/helpers"
 	"forum/utils"
@@ -48,6 +49,25 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 
 	// Create directory if not exist
 	os.MkdirAll("uploads", 0o775)
+	buffer := make([]byte, 512)
+	_, err = file.Read(buffer)
+	if err != nil {
+		http.Error(w, "Can't read file", http.StatusInternalServerError)
+		return
+	}
+
+	file.Seek(0, io.SeekStart)
+
+	contentType := http.DetectContentType(buffer)
+	fmt.Println(contentType)
+
+	if !strings.HasPrefix(contentType, "image/") {
+		// http.Redirect(w, r, "/", 302)
+		http.Redirect(w, r, "/", 302)
+
+		return
+
+	}
 
 	// Create file on server
 	filename := handler.Filename
@@ -64,7 +84,7 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error saving file", http.StatusInternalServerError)
 		return
 	}
-	//! end of upload 
+	//! end of upload
 
 	///////////////////////////////////////////
 	title := r.FormValue("title")
