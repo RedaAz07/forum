@@ -21,9 +21,9 @@
       <div class="gap">
         {{if .Session}}
         <input type="checkbox" id="filter-toggle1" class="hidd" />
-        <label for="filter-toggle1" class="postbtn">Filter</label>
+        <label for="filter-toggle1" class="postbtn1">Filter</label>
         <input type="checkbox" id="post-toggle" class="hidd" />
-        <label for="post-toggle" class="postbtn">Create post</label>
+        <label for="post-toggle" class="postbtn2">Create post</label>
         <div class="postform">
           <h2>Create Post</h2>
           <form action="/createPost" method="post" enctype="multipart/form-data">
@@ -67,8 +67,6 @@
       </div>
       {{else}}
       <div class="gap">
-        <input type="checkbox" id="filter-toggle" class="hidd" />
-        <label for="filter-toggle" class="postbtn">Filter</label>
         <a href="/register" class="register">Register</a>
         <a href="/login" class="login">Login</a>
       </div>
@@ -79,20 +77,16 @@
   {{if gt (len .Posts) 0}}
   <div class="allPost">
     {{if .Session}}
-    <aside class="aside1">
-      <h1>Filter</h1>
+    <aside class="aside2">
       <form action="/myPosts" method="post" class="form1">
-        <h4>Filter by myPosts</h4>
         <button type="submit" class="filterbtn">My posts</button>
       </form>
       <form action="/likedPosts" method="post" class="form2">
-        <h4>Filter by likedPosts</h4>
         <button type="submit" class="filterbtn">Liked Posts</button>
       </form>
       <form action="/filter" method="post" class="form3">
         {{ range .Categories }}
         <input type="checkbox" id="tagg{{.Id}}" class="tag" name="tags" value="{{.Id}}" hidden />
-
         <label for="tagg{{.Id}}" class="jme3">
           <span>{{.Icon}}</span>
           <span class="tagCategorie">{{.Name}}</span>
@@ -103,10 +97,9 @@
     </aside>
     {{else}}
     <aside class="aside1">
-      <form action="/filter" method="post" class="form3">
+      <form action="/filter" method="post">
         {{ range .Categories }}
         <input type="checkbox" id="tagg{{.Id}}" class="tag" name="tags" value="{{.Id}}" hidden />
-
         <label for="tagg{{.Id}}" class="jme3">
           <span>{{.Icon}}</span>
           <span class="tagCategorie">{{.Name}}</span>
@@ -132,7 +125,7 @@
 
           <h2 class="post-title">{{.Title}}</h2>
 
-          
+
           {{if .ImagePath}}
           <img src="/uploads/{{.ImagePath}}" class="image" />
           {{end}}
@@ -232,15 +225,6 @@
     </div>
     {{end}}
     <!-- end post card section -->
-    {{if .Session}}
-    <aside class="aside2">
-      {{range .Users}}
-      <div class="user">
-        <span><i class="fa-solid fa-user"></i></span><span>{{.}}</span>
-      </div>
-      {{end}}
-    </aside>
-    {{end}}
   </div>
   </div>
   {{else}}
