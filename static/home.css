@@ -45,7 +45,7 @@ body {
   width: 80%;
   margin: auto;
   margin: 100px auto 0 auto;
-  padding: 0 0 0 70px;
+  padding: 0 0 0 100px;
 }
 .post-combine {
   display: flex;
@@ -70,7 +70,7 @@ body {
 .post-card .image {
   margin-bottom: 5px;
   border-radius: 10px;
-  width: 70%;
+  width: 100%;
   height: 250px;
 }
 
@@ -80,11 +80,10 @@ body {
 
 .second-part {
   animation: 0.5s linear second-part;
-  max-height: 100%;
   overflow: auto;
   border-radius: 10px;
   padding: 12px 0;
-  height: 350px;
+  max-height: 350px;
   display: flex;
   flex-direction: column;
   display: none;
@@ -92,7 +91,11 @@ body {
   margin: 10px 0px;
   background-color: #2e313ac9;
 }
-
+.comment-title{
+  text-align: center;
+  font-size: 16px;
+  color: #04dbf1;
+}
 .comment {
   display: flex;
   width: 100%;
@@ -142,11 +145,7 @@ body {
   border: 1px solid #00adb5;
 }
 
-.commentaires h3 {
-  color: #04dbf1;
-  text-align: center;
-  margin-bottom: 15px;
-}
+
 
 .commentaires .comments {
   margin-left: 10px;
@@ -179,29 +178,6 @@ body {
   flex-direction: column;
 }
 
-.comment-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.commentaires .comments .usernamee {
-  font-weight: bold;
-  font-family: Arial, Helvetica, sans-serif;
-  color: black;
-  margin: 0;
-}
-
-.commentaires .comments .time-comment {
-  font-size: 11px;
-  color: gray;
-  margin: 0;
-}
-
-.comment-text {
-  font-family: sans-serif;
-  margin: 0;
-}
 
 .avatar,
 .comment form img {
@@ -527,7 +503,7 @@ body:has(#filter-toggle:checked) .allPost {
 /* dkxii lkhr ga33 */
 .aside1 form {
   position: fixed;
-  width: 270px;
+  width:300px;
   height: fit-content;
   background: #222831;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
@@ -585,7 +561,7 @@ input[type="checkbox"].tag:checked + label.jme3 {
 
 .aside2 {
   position: fixed;
-  width: 270px;
+  width:300px;
   height: 80vh;
   background: #222831;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
