@@ -16,5 +16,6 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusNotFound, utils.ErrorNotFound)
 		return
 	}
+	// fmt.Println("servile  sf howq ")
 	http.ServeFile(w, r, filePath)
 }

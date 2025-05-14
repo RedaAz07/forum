@@ -13,7 +13,6 @@ import (
 )
 
 func CreatePost(w http.ResponseWriter, r *http.Request) {
-	// !  check the post method
 	if r.Method != "POST" {
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusMethodNotAllowed, nil)
 		return
@@ -26,7 +25,6 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/", 302)
 		return
 	}
-	// !  get the data
 
 	err := r.ParseForm()
 	if err != nil {
@@ -34,61 +32,71 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 		return
 
 	}
-	/////////////////////////////////////
-	//! start of upload
+
 
 	r.ParseMultipartForm(10 << 20)
 
-	file, handler, err := r.FormFile("myFile")
+	file, header, err := r.FormFile("myFile")
+
+	var photoURL string
+
+	if err == nil {
+		defer file.Close()
+
+		photoDir := "uploads/"
+
+		if _, err := os.Stat(photoDir); os.IsNotExist(err) {
+			err := os.MkdirAll(photoDir, 0o755)
+			if err != nil {
+				http.Error(w, "Error creating upload directory", http.StatusInternalServerError)
+				return
+			}
+		}
+
+		photoPath := photoDir + header.Filename
+
+		dst, err := os.Create(photoPath)
+		if err != nil {
+			fmt.Println("Error saving file:", err)
+			http.Error(w, "Error saving photo", http.StatusInternalServerError)
+			return
+		}
+		defer dst.Close()
+		io.Copy(dst, file)
+
+		photoURL = photoDir + header.Filename
+		fmt.Println(photoURL)
+	} else {
+		fmt.Println("ddddd")
+		photoURL = ""
+	}
+	///////////////
+	if file!=nil{
+			buffer := make([]byte, 512)
+
+_,_ = file.Read(buffer)
 	if err != nil {
-		fmt.Println("Error uploading file:", err)
-		http.Error(w, "Error uploading file", http.StatusBadRequest)
+		http.Error(w, "Can't read file", http.StatusInternalServerError)
 		return
 	}
-	defer file.Close()
 
-	// Create directory if not exist
-	os.MkdirAll("uploads", 0o775)
-	//********  ntakdo mn dak  file  ikon tswira
-	buffer := make([]byte, 512)
-_, err = file.Read(buffer)
-if err != nil {
-	http.Error(w, "Can't read file", http.StatusInternalServerError)
-	return
-}
+	file.Seek(0, io.SeekStart)
 
-  file.Seek(0, io.SeekStart)
+	contentType := http.DetectContentType(buffer)
 
-    contentType := http.DetectContentType(buffer)
-   fmt.Println(contentType)
-
- if !strings.HasPrefix(contentType, "image/") {
-	//http.Redirect(w, r, "/", 302)
+	if !strings.HasPrefix(contentType, "image/")  {
+		fmt.Println(contentType)
 		http.Redirect(w, r, "/", 302)
 
-	
-	return
-	
- }
-
-	// Create file on server
-	filename := handler.Filename
-	
-	
-	dst, err := os.Create("uploads/" + filename)
-	if err != nil {
-		http.Error(w, "Cannot save file", http.StatusInternalServerError)
 		return
-	}
-	defer dst.Close()
 
-	// Copy file content
-	_, err = io.Copy(dst, file)
-	if err != nil {
-		http.Error(w, "Error saving file", http.StatusInternalServerError)
-		return
 	}
-	//! end of upload 
+	}
+	////////////////////////
+	
+	
+
+	//! end of upload
 
 	///////////////////////////////////////////
 	title := r.FormValue("title")
@@ -96,9 +104,7 @@ if err != nil {
 
 	category := r.Form["tags"] //* if he just choose the category
 
-	// !  check if the user create a new category
 
-	// ! get the username
 	stmt2 := `select  username from users where session = ?`
 	row := utils.Db.QueryRow(stmt2, session)
 	var username string
@@ -106,7 +112,7 @@ if err != nil {
 
 	stmt := `insert into posts (title, description, username,image_path) values(?, ?, ?, ?)`
 
-	res, _ := utils.Db.Exec(stmt, title, description, username, filename)
+	res, _ := utils.Db.Exec(stmt, title, description, username, photoURL)
 
 	postID, err := res.LastInsertId()
 	if err != nil {
@@ -126,7 +132,6 @@ if err != nil {
 		}
 
 	}
-
 
 	http.Redirect(w, r, "/", 302)
 }

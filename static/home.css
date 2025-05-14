@@ -40,22 +40,20 @@ body {
 }
 
 .allPost {
-  width: 100%;
-  margin: auto;
   display: flex;
-  margin: 100px 0px;
-  width: 75%;
+  flex-direction: column;
+  width: 80%;
+  margin: auto;
   margin: 100px auto 0 auto;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  padding: 0 0 0 70px;
 }
 .post-combine {
   display: flex;
-  flex-direction: column;
+  width: 70%;
+  margin-left: auto;
 }
 
 .post-card {
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
   color: #fff;
@@ -67,7 +65,7 @@ body {
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.18);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  margin: 10px auto;
+  margin: 0 auto 15px auto;
 }
 .post-card .image {
   margin-bottom: 5px;
@@ -528,21 +526,19 @@ body:has(#filter-toggle:checked) .allPost {
 
 /* dkxii lkhr ga33 */
 .aside1 form {
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   position: fixed;
-  top: 100px;
-  left: 220px;
   width: 270px;
   height: 80vh;
+  background: #222831;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  background-color: #222831;
   color: white;
   border-radius: 12px;
   display: flex;
   justify-content: center;
   flex-direction: column;
 }
-.jme3 {
+.aside1 .jme3 {
   padding: 11px 20px;
   display: flex;
   justify-content: center;
@@ -555,7 +551,7 @@ body:has(#filter-toggle:checked) .allPost {
   transition: 0.2s;
   cursor: pointer;
 }
-.jme3 label {
+.aside1 .jme3 label {
   cursor: pointer;
 }
 .tagC,
@@ -569,43 +565,48 @@ body:has(#filter-toggle:checked) .allPost {
 input[type="checkbox"].tag:checked + label.jme3 {
   background-color: #cdcbec;
 }
-.aside1 form button {
+.aside1 form button ,.aside2 form button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 2px solid white;
   cursor: pointer;
-  margin-top: 20px;
   width: 90%;
   background-color: #43abb400;
   color: white;
   border-radius: 12px;
-  margin: auto;
-  box-shadow: 0 0 20px #04dbf1;
+  margin:20px auto 5px auto;
+  box-shadow: 0 0 5px #04dbf1;
   font-size: 18px;
   font-weight: bold;
   letter-spacing: 1px;
   padding: 10px 0;
 }
 
-.aside1 .form1,
-.aside1 .form2 {
-  margin: 20px 0;
-}
 .aside2 {
-  background: #fff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
   position: fixed;
-  top: 100px;
-  right: 240px;
   width: 270px;
   height: 80vh;
-  padding: 50px;
-}
-.aside2 .user {
-  width: 100%;
-  margin: 0 auto 5px 0;
+  background: #222831;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  color: white;
+  border-radius: 12px;
   display: flex;
-  gap: 30px;
+  justify-content: center;
+  flex-direction: column;
 }
-.aside2 .user span i {
+
+.aside2 .jme3 {
+  padding: 11px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 90%;
+  margin: 15px auto;
   font-size: 20px;
+  border-radius: 12px;
+  transition: 0.2s;
+  cursor: pointer;
 }
