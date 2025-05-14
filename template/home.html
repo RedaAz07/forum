@@ -40,7 +40,7 @@
               <input type="file" name="myFile" value="Upload an image"/>
             </div>
             <br />
-            <input type="submit" value="Create Post" class="btnform" id ="buton" /><br />
+            <input type="submit" value="Create Post" class="btnform" onclick="submitPost()" /><br />
           </form>
         </div>
         {{end}} {{if .Session}}
@@ -127,7 +127,7 @@
 
 
           {{if .ImagePath}}
-          <img src="/uploads/{{.ImagePath}}" class="image" />
+          <img src="{{.ImagePath}}" class="image" />
           {{end}}
 
           <p class="post-description">{{.Description}}</p>
