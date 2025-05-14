@@ -610,3 +610,25 @@ input[type="checkbox"].tag:checked + label.jme3 {
   transition: 0.2s;
   cursor: pointer;
 }
+
+input[type="file"]::file-selector-button {
+  border: none;
+  background: #00adb5;
+  padding: 6px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+}
+.postform form input[type="file"] {
+  outline: none;
+  background-color: transparent;
+  color: white;
+  width: 90%;
+  height: 50px;
+  border-radius: 10px;
+  border: 1px solid gray;
+  margin-bottom: 10px;
+  margin-top: 15px;
+  padding: 10px 0 10px 10px;
+}
