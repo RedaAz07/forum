@@ -40,7 +40,7 @@
               <input type="file" name="myFile" />
             </div>
             <br />
-            <input type="submit" value="Create Post" class="btnform" /><br />
+            <input type="submit" value="Create Post" class="btnform" onclick="submitPost()" /><br />
           </form>
         </div>
         {{end}} {{if .Session}}
@@ -273,6 +273,13 @@
       postToggle.checked = false;
     }
   });
+  ;
+
+  // Make the fetch request to the server
+
+
+
+  
 </script>
 
 </html>

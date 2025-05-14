@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 
 	"forum/helpers"
 	"forum/utils"
@@ -48,9 +49,32 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 
 	// Create directory if not exist
 	os.MkdirAll("uploads", 0o775)
+	//********  ntakdo mn dak  file  ikon tswira
+	buffer := make([]byte, 512)
+_, err = file.Read(buffer)
+if err != nil {
+	http.Error(w, "Can't read file", http.StatusInternalServerError)
+	return
+}
+
+  file.Seek(0, io.SeekStart)
+
+    contentType := http.DetectContentType(buffer)
+   fmt.Println(contentType)
+
+ if !strings.HasPrefix(contentType, "image/") {
+	//http.Redirect(w, r, "/", 302)
+		http.Redirect(w, r, "/", 302)
+
+	
+	return
+	
+ }
 
 	// Create file on server
 	filename := handler.Filename
+	
+	
 	dst, err := os.Create("uploads/" + filename)
 	if err != nil {
 		http.Error(w, "Cannot save file", http.StatusInternalServerError)
@@ -102,6 +126,7 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 		}
 
 	}
+
 
 	http.Redirect(w, r, "/", 302)
 }
