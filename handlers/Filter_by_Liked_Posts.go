@@ -30,7 +30,6 @@ func LikedPosts(w http.ResponseWriter, r *http.Request) {
 
 	// get categories
 	categories := helpers.AllCategories(w)
-	allusers:=helpers.AllUsers(w)
 
 	mapp := helpers.FetchCategories(w)
 
@@ -93,13 +92,11 @@ func LikedPosts(w http.ResponseWriter, r *http.Request) {
 		Posts      []utils.Posts
 		Categories []utils.Categories
 		PostCatgs  []string
-		Users      []string
 	}{
 		Session:    sessValue,
 		UserActive: helpers.GetUsernameFromSession(sessValue),
 		Posts:      posts,
 		Categories: categories,
-		Users:      allusers,
 	}
 
 	helpers.RanderTemplate(w, "home.html", http.StatusOK, variables)

@@ -78,12 +78,6 @@
   <div class="allPost">
     {{if .Session}}
     <aside class="aside2">
-      <form action="/myPosts" method="post" class="form1">
-        <button type="submit" class="filterbtn">My posts</button>
-      </form>
-      <form action="/likedPosts" method="post" class="form2">
-        <button type="submit" class="filterbtn">Liked Posts</button>
-      </form>
       <form action="/filter" method="post" class="form3">
         {{ range .Categories }}
         <input type="checkbox" id="tagg{{.Id}}" class="tag" name="tags" value="{{.Id}}" hidden />
@@ -93,6 +87,12 @@
         </label>
         {{ end }}
         <button type="submit" class="filterbtn">filter</button>
+      </form>
+      <form action="/myPosts" method="post" class="form1">
+        <button type="submit" class="filterbtn">My posts</button>
+      </form>
+      <form action="/likedPosts" method="post" class="form2">
+        <button type="submit" class="filterbtn">Liked Posts</button>
       </form>
     </aside>
     {{else}}

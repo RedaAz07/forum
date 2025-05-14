@@ -28,6 +28,7 @@ func DataBase() {
 	if err != nil {
 		log.Fatal("exec error: ", err)
 	}
-	utils.Db.Exec("delete from posts where description = 'Nostrum pariatur Cu'")
+	// utils.Db.Exec("DELETE FROM posts WHERE description IN ('Laborum Iure dicta', 'uèjujj', 'jujujuj');")
+	// utils.Db.Exec("DELETE FROM posts WHERE title ='Odio ut non totam qu'")
 	fmt.Println("Queries executed successfully!")
 }

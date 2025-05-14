@@ -17,7 +17,6 @@ func Filter_By_Categorie(w http.ResponseWriter, r *http.Request) {
 
 	}
 	commentMap := helpers.FetchComments(w, r)
-	allusers := helpers.AllUsers(w)
 	categories := helpers.AllCategories(w)
 	categorMap := helpers.FetchCategories(w)
 
@@ -91,13 +90,11 @@ func Filter_By_Categorie(w http.ResponseWriter, r *http.Request) {
 		Posts      []utils.Posts
 		Categories []utils.Categories
 		PostCatgs  []string
-		Users      []string
 	}{
 		Session:    sessValue,
 		UserActive: helpers.GetUsernameFromSession(sessValue),
 		Posts:      posts,
 		Categories: categories,
-		Users:      allusers,
 	}
 
 	helpers.RanderTemplate(w, "home.html", 200, variables)

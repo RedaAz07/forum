@@ -528,7 +528,7 @@ body:has(#filter-toggle:checked) .allPost {
 .aside1 form {
   position: fixed;
   width: 270px;
-  height: 80vh;
+  height: fit-content;
   background: #222831;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;

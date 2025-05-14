@@ -15,7 +15,7 @@ func AllCategories(w http.ResponseWriter) []utils.Categories {
 		`<i class="fa-solid fa-flask"></i>`,
 		`<i class="fa-solid fa-dumbbell"></i>`,
 		`<i class="fa-solid fa-microchip"></i>`,
-		`<i class="fa-solid fa-scissors"></i>`,
+		`<i class="fa-solid fa-person-walking"></i>`,
 		`<i class="fa-solid fa-landmark"></i>`,
 	}
 

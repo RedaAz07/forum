@@ -52,7 +52,7 @@ header .title {
 .gap .postbtn2,.postbtn1 {
   padding: 8px 20px;
   text-decoration: none;
-  background-color: var(--wahd);
+  background-color: #43abb4cc;
   border: 2px solid white;
   border-radius: 10px;
   color: white;
@@ -66,19 +66,11 @@ header .title {
   color: white;
   font-size: 18px;
 }
-.postbtn {
-  padding: 7px 20px;
-  text-decoration: none;
-  background-color: var(--wahd);
-  border-radius: 10px;
-  border: 2px solid white;
-  color: white;
-  font-size: 18px;
-}
+
 .login {
   padding: 7px 20px;
   text-decoration: none;
-  background-color: var(--wahd);
+  background-color: #43abb4cc;
   border-radius: 10px;
   border: 2px solid white;
   color: white;

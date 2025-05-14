@@ -10,7 +10,6 @@ import (
 )
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	allusers := helpers.AllUsers(w)
 	session, err := r.Cookie("session")
 	var sessValue string
 	if err != nil {
@@ -95,13 +94,11 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		Posts      []utils.Posts
 		Categories []utils.Categories
 		PostCatgs  []string
-		Users      []string
 	}{
 		Session:    sessValue,
 		UserActive: helpers.GetUsernameFromSession(sessValue),
 		Posts:      posts,
 		Categories: categories,
-		Users:      allusers,
 	}
 
 	helpers.RanderTemplate(w, "home.html", 200, variables)
