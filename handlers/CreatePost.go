@@ -83,11 +83,11 @@ _,_ = file.Read(buffer)
 	file.Seek(0, io.SeekStart)
 
 	contentType := http.DetectContentType(buffer)
+	fmt.Println(contentType)
 
-	if !strings.HasPrefix(contentType, "image/")  {
+	if !strings.HasPrefix(contentType, "image/")&& !strings.HasPrefix(contentType, "application/") {
 		fmt.Println(contentType)
 		http.Redirect(w, r, "/", 302)
-
 		return
 
 	}
