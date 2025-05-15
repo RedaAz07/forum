@@ -71,27 +71,17 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 		photoURL = ""
 	}
 	///////////////
-	if file!=nil{
-			buffer := make([]byte, 512)
+	
 
-_,_ = file.Read(buffer)
-	if err != nil {
-		http.Error(w, "Can't read file", http.StatusInternalServerError)
-		return
-	}
-
-	file.Seek(0, io.SeekStart)
-
-	contentType := http.DetectContentType(buffer)
-	fmt.Println(contentType)
-
-	if !strings.HasPrefix(contentType, "image/")&& !strings.HasPrefix(contentType, "application/") {
-		fmt.Println(contentType)
+  if photoURL != "" {
+	if !strings.HasSuffix(photoURL,".jpg") &&!strings.HasSuffix(photoURL,".png") && !strings.HasSuffix(photoURL,".jpeg") {
+	//	fmt.Println(contentType)
 		http.Redirect(w, r, "/", 302)
 		return
 
 	}
-	}
+}
+	
 	////////////////////////
 	
 	
