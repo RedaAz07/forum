@@ -36,7 +36,7 @@ body {
 h1 {
   font-size: 140px;
   font-weight: bold;
-  color: #00ff26;
+  color: #43abb4cc;
   animation: animation 1s ease-in-out;
 }
 
@@ -64,7 +64,7 @@ p {
 
 .first,.second {
   text-decoration: none;
-  background-color: #00ff26;
+  background-color: #43abb4cc;
   color: black;
   padding: 12px 25px;
   border-radius: 15px;
@@ -76,7 +76,7 @@ p {
 }
 
 .first:hover,.second:hover {
-  background-color: #14df32;
+  background-color: #38b3becc;
 }
 .image{
   width: 30%;
@@ -221,10 +221,10 @@ p {
     width: 100%;
     height: 70%;
     border-radius: 15px;
-    border: 1px solid #00ff26;
+    border: 1px solid #43abb4cc;
   }
   .responsive-error:hover{
-    box-shadow: 0px 5px 10px #06e227;
+    box-shadow: 0px 5px 10px #38b3becc;
   }
   .responsive-error p{
     font-size: 13px;
@@ -242,7 +242,7 @@ p {
   }
   .responsive-btn .fst,.responsive-btn .scd {
     text-decoration: none;
-    background-color: #00ff26;
+    background-color: #43abb4cc;
     color: black;
     padding: 7px 25px;
     border-radius: 15px;
