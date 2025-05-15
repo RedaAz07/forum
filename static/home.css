@@ -43,7 +43,6 @@ body {
   display: flex;
   flex-direction: column;
   width: 80%;
-  margin: auto;
   margin: 100px auto 0 auto;
   padding: 0 0 0 100px;
 }
@@ -91,7 +90,7 @@ body {
   margin: 10px 0px;
   background-color: #2e313ac9;
 }
-.comment-title{
+.comment-title {
   text-align: center;
   font-size: 16px;
   color: #04dbf1;
@@ -104,7 +103,7 @@ body {
 }
 
 .commentaires {
-  height: 82%;
+  height: 100%;
   overflow: auto;
 }
 
@@ -145,8 +144,6 @@ body {
   border: 1px solid #00adb5;
 }
 
-
-
 .commentaires .comments {
   margin-left: 10px;
   z-index: 5;
@@ -177,7 +174,6 @@ body {
   display: flex;
   flex-direction: column;
 }
-
 
 .avatar,
 .comment form img {
@@ -215,7 +211,7 @@ body:has(#commentshow:checked) .second-part {
 }
 
 .post-time {
-  margin-bottom: 15px;
+  margin-bottom: 5px;
   color: white;
   font-size: 15px;
 }
@@ -499,11 +495,19 @@ body:has(#filter-toggle:checked) .filter {
 body:has(#filter-toggle:checked) .allPost {
   opacity: 0.3;
 }
+body:has(#filter-category:checked) .aside1,
+body:has(#filter-category:checked) .aside2 {
+  display: block;
+  z-index: 50;
+}
+body:has(#filter-category:checked) .post-combine {
+  opacity: 0.3;
+}
 
 /* dkxii lkhr ga33 */
 .aside1 form {
   position: fixed;
-  width:300px;
+  width: 300px;
   height: fit-content;
   background: #222831;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
@@ -521,7 +525,7 @@ body:has(#filter-toggle:checked) .allPost {
   align-items: center;
   gap: 20px;
   width: 90%;
-  margin: 15px auto;
+  margin: 10px auto;
   font-size: 20px;
   border-radius: 12px;
   transition: 0.2s;
@@ -541,7 +545,8 @@ body:has(#filter-toggle:checked) .allPost {
 input[type="checkbox"].tag:checked + label.jme3 {
   background-color: #cdcbec;
 }
-.aside1 form button ,.aside2 form button {
+.aside1 form button,
+.aside2 form button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -551,7 +556,7 @@ input[type="checkbox"].tag:checked + label.jme3 {
   background-color: #43abb400;
   color: white;
   border-radius: 12px;
-  margin:20px auto 5px auto;
+  margin: 20px auto 5px auto;
   box-shadow: 0 0 5px #04dbf1;
   font-size: 18px;
   font-weight: bold;
@@ -561,8 +566,8 @@ input[type="checkbox"].tag:checked + label.jme3 {
 
 .aside2 {
   position: fixed;
-  width:300px;
-  height: 80vh;
+  width: 300px;
+  height: fit-content;
   background: #222831;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -607,4 +612,49 @@ input[type="file"]::file-selector-button {
   margin-bottom: 10px;
   margin-top: 15px;
   padding: 10px 0 10px 10px;
+}
+
+@media screen and (max-width: 1600px) {
+  .allPost {
+    width: 85%;
+  }
+}
+@media screen and (max-width: 1500px) {
+  .allPost {
+    width: 90%;
+  }
+}
+@media screen and (max-width: 1400px) {
+  .allPost {
+    width: 95%;
+  }
+}
+@media screen and (max-width: 1300px) {
+  .allPost {
+    width: 100%;
+    padding: 0px 20px;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .aside1 form,
+  .aside2 {
+    width: 270px;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .aside1,
+  .aside2 {
+    display: none;
+  }
+  .aside1 form {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .post-combine {
+    margin: 0;
+    width: 100%;
+  }
+  .allPost {
+    align-items: center;
+  }
 }

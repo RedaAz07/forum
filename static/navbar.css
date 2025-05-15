@@ -1,11 +1,11 @@
 :root {
   --wahd: #43abb4;
   --joj: #090114;
-  --tlata:#6A2FC7;
-  --bg:#0a0a0a;
-  --bg2:#4b5aff;
-  --akhdar:#0afb26;
-  --red: #EB4336;
+  --tlata: #6a2fc7;
+  --bg: #0a0a0a;
+  --bg2: #4b5aff;
+  --akhdar: #0afb26;
+  --red: #eb4336;
 }
 header {
   background: #222831;
@@ -14,13 +14,12 @@ header {
   top: 0;
   width: 100%;
   height: 70px;
-  padding: 15px 300px;
+  padding: 15px 90px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   box-shadow: 0px 1px 2px var(--wahd);
 }
-
 
 header .title {
   cursor: pointer;
@@ -40,7 +39,8 @@ header .title {
 .gap .postbtn1 {
   display: none;
 }
-.gap .postbtn2,.postbtn1 {
+.gap .postbtn2,
+.postbtn1 {
   padding: 8px 20px;
   text-decoration: none;
   background-color: #43abb4cc;
@@ -67,6 +67,22 @@ header .title {
   color: white;
   font-size: 18px;
 }
+.gap .filter-icon,
+.gap .login-icon {
+    padding: 8px 5px;
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: #43abb4;
+  border: 2px solid white;
+  width: 45px;
+  height: 40px;
+  display: none;
+  text-align: center;
+}
+.gap i{
+  color: white;
+  font-size: 20px;
+}
 
 header form .formlog {
   text-decoration: none;
@@ -82,7 +98,6 @@ header form .formlog {
   visibility: hidden;
 }
 
-
 .Btn {
   padding: 8px 5px;
   cursor: pointer;
@@ -95,4 +110,30 @@ header form .formlog {
 .Btn svg {
   height: 17px;
   width: 17px;
+}
+
+@media screen and (max-width: 1000px) {
+  .gap .filter-icon {
+    display: block;
+  }
+  header {
+    padding: 15px 40px;
+  }
+}
+@media screen and (max-width: 900px) {
+  header {
+    padding: 15px 30px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .gap .login-icon {
+    display: block;
+  }
+  .register,
+  .login {
+    display: none;
+  }
+  header {
+    padding: 15px 15px;
+  }
 }
