@@ -33,7 +33,6 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-
 	r.ParseMultipartForm(10 << 20)
 
 	file, header, err := r.FormFile("myFile")
@@ -65,35 +64,24 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 		io.Copy(dst, file)
 
 		photoURL = photoDir + header.Filename
-		fmt.Println(photoURL)
 	} else {
-		fmt.Println("ddddd")
 		photoURL = ""
 	}
-	///////////////
-	
 
-  if photoURL != "" {
-	if !strings.HasSuffix(photoURL,".jpg") &&!strings.HasSuffix(photoURL,".png") && !strings.HasSuffix(photoURL,".jpeg") {
-	//	fmt.Println(contentType)
-		http.Redirect(w, r, "/", 302)
-		return
-
+	if photoURL != "" {
+		if !strings.HasSuffix(photoURL, ".jpg") && !strings.HasSuffix(photoURL, ".png") && !strings.HasSuffix(photoURL, ".jpeg") {
+			helpers.RanderTemplate(w, "statusPage.html", 400, utils.ErrorBadReq)
+			return
+		}
 	}
-}
-	
-	////////////////////////
-	
-	
+
 
 	//! end of upload
 
-	///////////////////////////////////////////
 	title := r.FormValue("title")
 	description := r.FormValue("description")
 
 	category := r.Form["tags"] //* if he just choose the category
-
 
 	stmt2 := `select  username from users where session = ?`
 	row := utils.Db.QueryRow(stmt2, session)
