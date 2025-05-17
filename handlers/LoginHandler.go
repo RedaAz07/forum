@@ -15,7 +15,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		helpers.RanderTemplate(w, "statuspage.html", http.StatusMethodNotAllowed, utils.ErrorMethodnotAll)
 		return
 	}
-	
+	//  check if the user is alrady logged in 
 	if exists , _ :=helpers.SessionChecked(w,r) ; exists{
 		http.Redirect(w,r,"/", 302)
 		return
@@ -48,8 +48,8 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	sessionID := uuid.New().String()
-	stmt2 := `UPDATE users SET session = ? WHERE username = ?`
-	_, err = utils.Db.Exec(stmt2, sessionID, username)
+	stmt2 := `UPDATE users SET session = ? WHERE username = ? or  WHERE email = ?`
+	_, err = utils.Db.Exec(stmt2, sessionID, username, username)
 	if err != nil {
 		helpers.RanderTemplate(w, "login.html", http.StatusInternalServerError, "Error updating session. Please try again later.")
 		return
