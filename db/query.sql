@@ -3,8 +3,8 @@
 CREATE TABLE
     IF NOT EXISTS categories (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name VARCHAR(50),
-        icon TEXT
+        name VARCHAR(50) UNIQUE,
+        icon TEXT UNIQUE
     );
 
 CREATE TABLE

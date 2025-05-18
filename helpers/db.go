@@ -29,7 +29,7 @@ func DataBase() {
 		log.Fatal("exec error: ", err)
 	}
 
-	// utils.Db.Exec(`INSERT INTO categories (name, icon) VALUES('Sport', '<i class="fa-solid fa-medal"></i>'),('Music', '<i class="fa-solid fa-music"></i>'),('Movies', '<i class="fa-solid fa-film"></i>'),('Science', '<i class="fa-solid fa-flask"></i>'),('Gym', '<i class="fa-solid fa-dumbbell"></i>'),('Tecknology', '<i class="fa-solid fa-microchip"></i>'),('Culture', '<i class="fa-solid fa-person-walking"></i>'),('Politics', '<i class="fa-solid fa-landmark"></i>');`)
+	utils.Db.Exec(`INSERT INTO categories (name, icon) VALUES('Sport', '<i class="fa-solid fa-medal"></i>'),('Music', '<i class="fa-solid fa-music"></i>'),('Movies', '<i class="fa-solid fa-film"></i>'),('Science', '<i class="fa-solid fa-flask"></i>'),('Gym', '<i class="fa-solid fa-dumbbell"></i>'),('Tecknology', '<i class="fa-solid fa-microchip"></i>'),('Culture', '<i class="fa-solid fa-person-walking"></i>'),('Politics', '<i class="fa-solid fa-landmark"></i>');`)
 
 	fmt.Println("Queries executed successfully!")
 }
