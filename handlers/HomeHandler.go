@@ -10,6 +10,10 @@ import (
 )
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/" {
+		helpers.RanderTemplate(w, "statusPage.html", http.StatusNotFound, utils.ErrorNotFound)
+		return	
+	}
 	session, err := r.Cookie("session")
 	var sessValue string
 	if err != nil {

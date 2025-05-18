@@ -82,15 +82,15 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 	description := r.FormValue("description")
 
 	category := r.Form["tags"] //* if he just choose the category
-
-	stmt2 := `select  username from users where session = ?`
+var userId int 
+	stmt2 := `select  username , id  from users where session = ?`
 	row := utils.Db.QueryRow(stmt2, session)
 	var username string
-	row.Scan(&username)
+	row.Scan(&username , &userId)
 
-	stmt := `insert into posts (title, description, username,image_path) values(?, ?, ?, ?)`
+	stmt := `insert into posts (title, description, username,image_path, userID) values(?, ?, ?, ?,?)`
 
-	res, _ := utils.Db.Exec(stmt, title, description, username, photoURL)
+	res, _ := utils.Db.Exec(stmt, title, description, username, photoURL,userId )
 
 	postID, err := res.LastInsertId()
 	if err != nil {

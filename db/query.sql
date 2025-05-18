@@ -1,7 +1,10 @@
+
+
 CREATE TABLE
     IF NOT EXISTS categories (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name VARCHAR(50)
+        name VARCHAR(50) UNIQUE,
+        icon TEXT UNIQUE
     );
 
 CREATE TABLE
@@ -19,7 +22,10 @@ CREATE TABLE
         username VARCHAR(30),
         title VARCHAR(255),
         description TEXT,
-        time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        userID INTEGER  NOT NULL,
+        image_path TEXT,
+        FOREIGN KEY (userID) REFERENCES users (id) ON DELETE CASCADE
     );
 
 CREATE TABLE
@@ -29,7 +35,7 @@ CREATE TABLE
         username VARCHAR(30),
         comment TEXT,
         time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (postID) REFERENCES posts (id)
+        FOREIGN KEY (postID) REFERENCES posts (id) ON DELETE CASCADE
     );
 
 CREATE TABLE
@@ -38,8 +44,8 @@ CREATE TABLE
         postID INTEGER,
         value VARCHAR(2),
         PRIMARY KEY (userID, postID),
-        FOREIGN KEY (userID) REFERENCES users (id),
-        FOREIGN KEY (postID) REFERENCES posts (id)
+        FOREIGN KEY (userID) REFERENCES users (id) ON DELETE CASCADE,
+        FOREIGN KEY (postID) REFERENCES posts (id) ON DELETE CASCADE
     );
 
 CREATE TABLE
@@ -47,8 +53,8 @@ CREATE TABLE
         categoryID INTEGER,
         postID INTEGER,
         PRIMARY KEY (categoryID, postID),
-        FOREIGN KEY (categoryID) REFERENCES categories (id),
-        FOREIGN KEY (postID) REFERENCES posts (id)
+        FOREIGN KEY (categoryID) REFERENCES categories (id) ON DELETE CASCADE,
+        FOREIGN KEY (postID) REFERENCES posts (id) ON DELETE CASCADE
     );
 
 
@@ -58,6 +64,6 @@ CREATE TABLE IF NOT EXISTS commentsLikes (
     commentID INTEGER,
     value VARCHAR(2),
     PRIMARY KEY (userID, commentID),
-    FOREIGN KEY (userID) REFERENCES users (id),
-    FOREIGN KEY (commentID) REFERENCES comments (id)
+    FOREIGN KEY (userID) REFERENCES users (id) ON DELETE CASCADE,
+    FOREIGN KEY (commentID) REFERENCES comments (id) ON DELETE CASCADE
 );
