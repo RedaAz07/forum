@@ -1,5 +1,5 @@
 :root {
-  --wahd: #43abb4;
+  --wahd: #04aa6d;
   --joj: #090114;
   --tlata: #6a2fc7;
   --bg: #0a0a0a;
@@ -20,14 +20,15 @@ header {
   align-items: center;
   box-shadow: 0px 1px 2px var(--wahd);
 }
+header .F {
+  color: var(--wahd);
+}
 
 header .title {
   cursor: pointer;
-  font-size: 45px;
+  font-size: clamp(2.2rem, 4vw + 1rem, 3.5rem);
   font-weight: bold;
-  color: transparent;
-  -webkit-text-stroke: 2px white;
-  font-family: Arial, sans-serif;
+  color: rgba(255, 255, 255, 0.89);
   text-decoration: none;
 }
 
@@ -43,7 +44,7 @@ header .title {
 .postbtn1 {
   padding: 8px 20px;
   text-decoration: none;
-  background-color: #43abb4cc;
+  background-color: var(--wahd);
   border: 2px solid white;
   border-radius: 10px;
   color: white;
@@ -61,7 +62,7 @@ header .title {
 .login {
   padding: 7px 20px;
   text-decoration: none;
-  background-color: #43abb4cc;
+  background-color: var(--wahd);
   border-radius: 10px;
   border: 2px solid white;
   color: white;
@@ -69,17 +70,17 @@ header .title {
 }
 .gap .filter-icon,
 .gap .login-icon {
-    padding: 8px 5px;
+  padding: 8px 5px;
   cursor: pointer;
   border-radius: 10px;
-  background-color: #43abb4;
+  background-color: var(--wahd);
   border: 2px solid white;
   width: 45px;
   height: 40px;
   display: none;
   text-align: center;
 }
-.gap i{
+.gap i {
   color: white;
   font-size: 20px;
 }
@@ -102,7 +103,7 @@ header form .formlog {
   padding: 8px 5px;
   cursor: pointer;
   border-radius: 10px;
-  background-color: #43abb4;
+  background-color: var(--wahd);
   border: 2px solid white;
   width: 45px;
   height: 40px;
@@ -111,10 +112,43 @@ header form .formlog {
   height: 17px;
   width: 17px;
 }
+.icon-post {
+  display: none;
+  padding: 8px 12px;
+  text-decoration: none;
+  background-color: var(--wahd);
+  border: 2px solid white;
+  border-radius: 10px;
+  color: white;
+  font-size: 18px;
+  outline: none;
+  cursor: pointer;
+}
+
+@keyframes postAn1 {
+  0% {
+    opacity: 0;
+    top: -80%;
+  }
+
+  100% {
+    opacity: 1;
+    top: 10%;
+  }
+}
 
 @media screen and (max-width: 1000px) {
+  .icon-post {
+    display: block;
+  }
+  .gap .postbtn2 {
+    display: none;
+  }
   .gap .filter-icon {
     display: block;
+  }
+  .aside2 {
+    animation: 0.5s postAn1 ease-in;
   }
   header {
     padding: 15px 40px;
@@ -135,5 +169,19 @@ header form .formlog {
   }
   header {
     padding: 15px 15px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .gap {
+    gap: 8px;
+  }
+  .icon-post {
+    padding: 5px 12px;
+    border: 1px solid white;
+  }
+  .Btn,
+  .gap .filter-icon {
+    height: 36px;
+    border: 1px solid white;
   }
 }
