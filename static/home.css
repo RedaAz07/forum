@@ -1,5 +1,5 @@
 :root {
-  --wahd: #00adb5;
+  --wahd: #04aa6d;
   --joj: #090114;
   --tlata: #6a2fc7;
   --bg: #0a0a0a;
@@ -93,7 +93,7 @@ body {
 .comment-title {
   text-align: center;
   font-size: 16px;
-  color: #04dbf1;
+  color: #04aa6d;
 }
 .comment {
   display: flex;
@@ -122,11 +122,11 @@ body {
   font-size: 18px;
   font-weight: bold;
   border: none;
-  background-color: #30b8c1;
+  background-color: #04aa6d;
   padding: 8px 20px;
   border-radius: 10px;
   color: white;
-  box-shadow: 0 0 20px #00adb5;
+  box-shadow: 0 0 20px #04aa6d;
 }
 
 .comment form input {
@@ -141,7 +141,7 @@ body {
 }
 
 .comment form input:focus {
-  border: 1px solid #00adb5;
+  border: 1px solid #04aa6d;
 }
 
 .commentaires .comments {
@@ -543,7 +543,7 @@ body:has(#filter-category:checked) .post-combine {
 }
 
 input[type="checkbox"].tag:checked + label.jme3 {
-  background-color: #cdcbec;
+  background-color: #04aa6d;
 }
 .aside1 form button,
 .aside2 form button {
@@ -594,7 +594,7 @@ input[type="checkbox"].tag:checked + label.jme3 {
 
 input[type="file"]::file-selector-button {
   border: none;
-  background: #00adb5;
+  background: #04aa6d;
   padding: 6px 20px;
   font-size: 16px;
   border-radius: 5px;
