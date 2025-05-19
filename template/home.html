@@ -16,14 +16,24 @@
 
 <body>
   <header>
-    <a href="/" class="title">Forum</a>
+    <a href="/" class="title"><span class="F">F</span>orum</a>
     <div>
       <div class="gap">
         {{if .Session}}
-        <input type="checkbox" id="filter-toggle1" class="hidd" />
-        <label for="filter-toggle1" class="postbtn1">Filter</label>
         <input type="checkbox" id="post-toggle" class="hidd" />
         <label for="post-toggle" class="postbtn2">Create post</label>
+        <label for="post-toggle" class="icon-post"><i class="fa-solid fa-plus"></i></label>
+        <input type="checkbox" name="" id="filter-category" hidden>
+        <label for="filter-category" class="filter-icon"><i class="fa-solid fa-filter"></i></label>
+        <form action="/logout" method="post" class="formlog">
+          <button class="Btn" type="submit">
+            <svg viewBox="0 0 512 512">
+              <path fill="white"
+                d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z">
+              </path>
+            </svg>
+          </button>
+        </form> 
         <div class="postform">
           <h2>Create Post</h2>
           <form action="/createPost" method="post" enctype="multipart/form-data">
@@ -37,22 +47,12 @@
               {{end}}
             </div>
             <div class="upload">
-              <input type="file" name="myFile" value="Upload an image"/>
+              <input type="file" name="myFile" value="Upload an image" />
             </div>
             <br />
             <input type="submit" value="Create Post" class="btnform" onclick="submitPost()" /><br />
           </form>
         </div>
-        {{end}} {{if .Session}}
-          <form action="/logout" method="post" class="formlog">
-            <button class="Btn" type="submit">
-                <svg viewBox="0 0 512 512">
-                  <path fill="white"
-                    d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z">
-                  </path>
-                </svg>
-            </button>
-          </form>
       </div>
       {{else}}
       <div class="gap">
@@ -218,38 +218,26 @@
     {{end}}
     <!-- end post card section -->
   </div>
-  </div>
+  </div> 
   {{else}}
   <h1 class="notfound">No posts found 🤷‍♂️</h1>
   {{end}}
   <!-- end main section -->
 </body>
 <script>
-  const toggleMenu = document.getElementById("toggle-menu");
   const postToggle = document.getElementById("post-toggle");
-  const filterToggle = document.getElementById("filter-toggle1");
-
-  toggleMenu.addEventListener("change", function () {
-    if (this.checked) {
-      postToggle.checked = false;
-      filterToggle.checked = false;
-    }
-  });
-
+  const filterToggle = document.getElementById("filter-category");
   postToggle.addEventListener("change", function () {
     if (this.checked) {
-      toggleMenu.checked = false;
       filterToggle.checked = false;
     }
   });
 
   filterToggle.addEventListener("change", function () {
     if (this.checked) {
-      toggleMenu.checked = false;
       postToggle.checked = false;
     }
   });
 
 </script>
-
 </html>
