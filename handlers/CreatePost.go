@@ -36,7 +36,17 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 	r.ParseMultipartForm(10 << 20)
 
 	file, header, err := r.FormFile("myFile")
+    zize:=header.Size
+   fmt.Println(zize)
+	//fmt.Println(zize)
+	maxzize:= int64(10485760)
+	if zize>=maxzize{
+		fmt.Println("walooooo")
+	helpers.RanderTemplate(w, "statusPage.html", 400, utils.ErrorBadReq)
+	return
 
+
+	}
 	var photoURL string
 
 	if err == nil {
@@ -82,7 +92,7 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 	description := r.FormValue("description")
 
 	category := r.Form["tags"] //* if he just choose the category
-var userId int 
+    var userId int 
 	stmt2 := `select  username , id  from users where session = ?`
 	row := utils.Db.QueryRow(stmt2, session)
 	var username string
