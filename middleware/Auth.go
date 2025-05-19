@@ -7,7 +7,7 @@ import (
 )
 
 func Auth(HandlerFunc http.HandlerFunc) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request){
 		cookie, err := r.Cookie("session")
 		if err != nil || cookie.Value == "" {
 			http.Redirect(w, r, "/login", 302)
@@ -22,6 +22,7 @@ func Auth(HandlerFunc http.HandlerFunc) http.HandlerFunc {
 				http.Redirect(w, r, "/login", 302)
 				return
 			}
+			
 		}
 
 		HandlerFunc(w, r)

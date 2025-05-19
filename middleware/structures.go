@@ -22,4 +22,4 @@ type RateLimitPosts struct {
 }
 
 
-var PostRateLimits = make(map[int]*RateLimitPosts)
+// var PostRateLimits = make(map[int]*RateLimitPosts)
