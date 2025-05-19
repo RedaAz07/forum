@@ -27,7 +27,8 @@ func Route() {
 
 	http.HandleFunc("/reaction", middleware.Auth(handlers.ReactionHandler))
 
-	http.HandleFunc("/comment", middleware.Auth(handlers.CommentHandler))
+	http.HandleFunc("/comment", middleware.Auth(middleware.RateLimitCommentsMiddleware(handlers.CommentHandler)))
+	// http.HandleFunc("/comment", middleware.Auth(handlers.CommentHandler))
 
 	http.HandleFunc("/CommentsLike", middleware.Auth(handlers.CommentsLikeHandler))
 
