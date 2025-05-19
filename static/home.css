@@ -65,6 +65,13 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.18);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   margin: 0 auto 15px auto;
+   transform: translateX(400%);
+
+    transition: transform 0.4s ease;
+
+}
+.post-card.show{
+  transform: translateX(0);
 }
 .post-card .image {
   margin-bottom: 5px;

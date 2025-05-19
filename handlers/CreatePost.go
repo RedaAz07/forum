@@ -36,17 +36,18 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 	r.ParseMultipartForm(10 << 20)
 
 	file, header, err := r.FormFile("myFile")
-    zize:=header.Size
-   fmt.Println(zize)
-	//fmt.Println(zize)
+	if file!=nil{
+		 zize:=header.Size
 	maxzize:= int64(10485760)
 	if zize>=maxzize{
 		fmt.Println("walooooo")
-	helpers.RanderTemplate(w, "statusPage.html", 400, utils.ErrorBadReq)
-	return
+	 helpers.RanderTemplate(w, "statusPage.html", 400, utils.ErrorBadReq)
+	  return
 
 
 	}
+	}
+   
 	var photoURL string
 
 	if err == nil {
