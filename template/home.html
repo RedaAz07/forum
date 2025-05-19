@@ -15,8 +15,8 @@
 </head>
 
 <body>
-  <header>
-    <a href="/" class="title">Forum</a>
+  <header class="nav">
+    <a href="/" id="title">Forum</a>
     <div>
       <div class="gap">
         {{if .Session}}
@@ -229,13 +229,42 @@
   const postToggle = document.getElementById("post-toggle");
   const filterToggle = document.getElementById("filter-toggle1");
   const boxes = document.querySelectorAll('.post-card');
+  const nav = document.querySelector('.nav')
+const textEl = document.getElementById('title');
+const text = textEl.innerText;
+let idx = 1;
+const speed = 300; 
+
+function writeText() {
+    if (!textEl || !text) return; 
+    textEl.innerText = text.slice(0, idx);
+
+    idx++;
+    if (idx > text.length) {
+        idx = 1; 
+        setTimeout(writeText, 1000);
+    } else {
+        setTimeout(writeText, speed);
+    }
+}
+
+writeText();
+window.addEventListener('scroll', fixNav)
+
+function fixNav() {
+    if(window.scrollY > nav.offsetHeight + 150) {
+        nav.classList.add('active')
+    } else {
+        nav.classList.remove('active')
+    }
+}
 
 window.addEventListener('scroll', checkBoxes)
 
 checkBoxes()
 
 function checkBoxes() {
-    const triggerBottom = window.innerHeight / 5 * 4
+    const triggerBottom = window.innerHeight / 5 * 3
 
     boxes.forEach(box => {
         const boxTop = box.getBoundingClientRect().top
