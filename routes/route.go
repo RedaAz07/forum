@@ -7,6 +7,8 @@ import (
 	"forum/middleware"
 )
 
+var postRateLimits = make(map[int]*middleware.RateLimitPosts)
+
 func Route() {
 	
 	http.HandleFunc("/", (handlers.HomeHandler))
@@ -21,6 +23,7 @@ func Route() {
 	http.HandleFunc("/static/", handlers.StyleHandler)
 	http.HandleFunc("/uploads/", handlers.UploadHandler)
 
+	
 	http.HandleFunc("/createPost", middleware.Auth(handlers.CreatePost))
 
 	http.HandleFunc("/reaction", middleware.Auth(handlers.ReactionHandler))
