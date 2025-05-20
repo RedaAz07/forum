@@ -16,7 +16,7 @@ func FetchCategories(w http.ResponseWriter) (map[int][]utils.Categories, error) 
 
 	rowcat, errcat := utils.Db.Query(stmtCategories)
 	if errcat != nil {
-		RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
+		RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
 		return nil, errcat
 	}
 	var category []utils.Categories
@@ -24,7 +24,7 @@ func FetchCategories(w http.ResponseWriter) (map[int][]utils.Categories, error) 
 		var categor utils.Categories
 		errcat = rowcat.Scan(&categor.Name, &categor.Id, &categor.PostID)
 		if errcat != nil {
-			RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
+			RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
 			return nil, errcat
 		}
 		category = append(category, categor)
@@ -35,9 +35,10 @@ func FetchCategories(w http.ResponseWriter) (map[int][]utils.Categories, error) 
 
 	categorMap := make(map[int][]utils.Categories)
 	for _, d := range category {
-		categorMap[d.PostID] = append(categorMap[d.PostID], d)
+			
+			categorMap[d.PostID] = append(categorMap[d.PostID], d)
+		
 	}
-
 	//! end of the map
 	return categorMap, nil
 }

@@ -40,6 +40,7 @@ func Filter_By_Categorie(w http.ResponseWriter, r *http.Request) {
 	} else {
 		sessValue = cookie.Value
 	}
+
 	categ := r.Form["tags"]
 	if len(categ) == 0 {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
@@ -92,6 +93,7 @@ func Filter_By_Categorie(w http.ResponseWriter, r *http.Request) {
 				post.TimeFormatted = helpers.FormatDuration((seconds))
 				post.Categories = categorMap[post.Id]
 				posts = append(posts, post)
+					mapp1[post.Id] = true 
 			}
 		}
 	}
