@@ -231,9 +231,10 @@
   const boxes = document.querySelectorAll('.post-card');
   const nav = document.querySelector('.nav')
 const textEl = document.getElementById('title');
+
 const text = textEl.innerText;
 let idx = 1;
-const speed = 300; 
+const speed = 20; 
 
 function writeText() {
     if (!textEl || !text) return; 
@@ -264,7 +265,7 @@ window.addEventListener('scroll', checkBoxes)
 checkBoxes()
 
 function checkBoxes() {
-    const triggerBottom = window.innerHeight / 5 * 3
+    const triggerBottom = window.innerHeight 
 
     boxes.forEach(box => {
         const boxTop = box.getBoundingClientRect().top
