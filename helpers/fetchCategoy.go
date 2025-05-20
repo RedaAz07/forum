@@ -6,7 +6,7 @@ import (
 	"forum/utils"
 )
 
-func FetchCategories( w http.ResponseWriter ) map[int][]utils.Categories {
+func FetchCategories(w http.ResponseWriter) (map[int][]utils.Categories, error) {
 	//! get categories
 	stmtCategories := `
 		SELECT C.name, C.id ,  CP.postID  FROM categories C
@@ -17,7 +17,7 @@ func FetchCategories( w http.ResponseWriter ) map[int][]utils.Categories {
 	rowcat, errcat := utils.Db.Query(stmtCategories)
 	if errcat != nil {
 		RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
-		return nil
+		return nil, errcat
 	}
 	var category []utils.Categories
 	for rowcat.Next() {
@@ -25,7 +25,7 @@ func FetchCategories( w http.ResponseWriter ) map[int][]utils.Categories {
 		errcat = rowcat.Scan(&categor.Name, &categor.Id, &categor.PostID)
 		if errcat != nil {
 			RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
-			return nil 
+			return nil, errcat
 		}
 		category = append(category, categor)
 	}
@@ -39,5 +39,5 @@ func FetchCategories( w http.ResponseWriter ) map[int][]utils.Categories {
 	}
 
 	//! end of the map
-	return categorMap
+	return categorMap, nil
 }

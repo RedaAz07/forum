@@ -16,9 +16,21 @@ func Filter_By_Categorie(w http.ResponseWriter, r *http.Request) {
 		return
 
 	}
-	commentMap := helpers.FetchComments(w, r)
-	categories := helpers.AllCategories(w)
-	categorMap := helpers.FetchCategories(w)
+	commentMap  , errc := helpers.FetchComments(w, r)
+	if errc != nil {
+		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
+		return
+	}
+	categories , errcat:= helpers.AllCategories(w)
+	if errcat != nil {
+		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
+		return
+	}
+	categorMap  , errfcat:= helpers.FetchCategories(w)
+	if errfcat != nil {
+		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
+		return
+	}
 
 	cookie, errr := r.Cookie("session")
 	var sessValue string
