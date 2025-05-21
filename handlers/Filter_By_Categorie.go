@@ -16,9 +16,21 @@ func Filter_By_Categorie(w http.ResponseWriter, r *http.Request) {
 		return
 
 	}
-	commentMap := helpers.FetchComments(w, r)
-	categories := helpers.AllCategories(w)
-	categorMap := helpers.FetchCategories(w)
+	commentMap  , errc := helpers.FetchComments(w, r)
+	if errc != nil {
+		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
+		return
+	}
+	categories , errcat:= helpers.AllCategories(w)
+	if errcat != nil {
+		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
+		return
+	}
+	categorMap  , errfcat:= helpers.FetchCategories(w)
+	if errfcat != nil {
+		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
+		return
+	}
 
 	cookie, errr := r.Cookie("session")
 	var sessValue string
@@ -28,6 +40,7 @@ func Filter_By_Categorie(w http.ResponseWriter, r *http.Request) {
 	} else {
 		sessValue = cookie.Value
 	}
+
 	categ := r.Form["tags"]
 	if len(categ) == 0 {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
@@ -80,6 +93,7 @@ func Filter_By_Categorie(w http.ResponseWriter, r *http.Request) {
 				post.TimeFormatted = helpers.FormatDuration((seconds))
 				post.Categories = categorMap[post.Id]
 				posts = append(posts, post)
+					mapp1[post.Id] = true 
 			}
 		}
 	}

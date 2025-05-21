@@ -13,11 +13,16 @@ import (
 
 func DataBase() {
 	var err error
+	
 	utils.Db, err = sql.Open("sqlite3", "./db/db.db")
 	if err != nil {
 		log.Fatal("open error:", err)
 	}
 	//	defer utils.Db.Close()
+	err = utils.Db.Ping()
+	if err != nil {
+		log.Fatal("Error pinging database: ", err)
+	}
 
 	sqlfile, err := os.ReadFile("./db/query.sql")
 	if err != nil {

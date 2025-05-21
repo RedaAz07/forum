@@ -48,7 +48,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	sessionID := uuid.New().String()
-	stmt2 := `UPDATE users SET session = ? WHERE username = ? or  WHERE email = ?`
+	stmt2 := `UPDATE users SET session = ? WHERE username = ? or   email = ?`
 	_, err = utils.Db.Exec(stmt2, sessionID, username, username)
 	if err != nil {
 		helpers.RanderTemplate(w, "login.html", http.StatusInternalServerError, "Error updating session. Please try again later.")
@@ -63,5 +63,5 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		MaxAge:   3600,
 	})
 
-	http.Redirect(w, r, "/", http.StatusSeeOther)
+	http.Redirect(w, r, "/", 302)
 }
