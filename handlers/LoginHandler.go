@@ -63,5 +63,5 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		MaxAge:   3600,
 	})
 
-	http.Redirect(w, r, "/", http.StatusSeeOther)
+	http.Redirect(w, r, "/", 302)
 }

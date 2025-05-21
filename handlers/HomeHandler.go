@@ -12,7 +12,7 @@ import (
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusNotFound, utils.ErrorNotFound)
-		return	
+		return
 	}
 	session, err := r.Cookie("session")
 	var sessValue string
@@ -22,25 +22,23 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		sessValue = session.Value
 	}
-	query := `select id from users where session = ?`
+	query := `select id ,  session from users where session = ?`
 	var userId int
-	utils.Db.QueryRow(query, sessValue).Scan(&userId)
-
+	sess := ""
+	utils.Db.QueryRow(query, sessValue).Scan(&userId, &sess)
+	sessValue = sess
 	// get comments
-	commentMap  , errc:= helpers.FetchComments(w, r)
+	commentMap, errc := helpers.FetchComments(w, r)
 
-	categorMap  , erracat:= helpers.FetchCategories(w)
+	categorMap, erracat := helpers.FetchCategories(w)
 
-	categories  , errfc := helpers.AllCategories(w)
+	categories, errfc := helpers.AllCategories(w)
 
-
-  
-if  errc != nil || erracat != nil || errfc != nil {
+	if errc != nil || erracat != nil || errfc != nil {
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
 		return
 	}
 
-	
 	// !  get posts
 	stmt := `SELECT 
 				p.id, 
