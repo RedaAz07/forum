@@ -88,5 +88,3 @@ BEGIN
     DELETE FROM posts WHERE userID = OLD.id;
 
 END;
-
-

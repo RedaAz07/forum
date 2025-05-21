@@ -16,7 +16,7 @@ a{
   padding: 10px;
 }
 a i{
-  color: #00c8db;
+  color: #04aa6d;
   font-size: 35px;
 }
 .input-box input:-webkit-autofill,
@@ -90,10 +90,10 @@ body {
   width: 850px;
   height: 550px;
   margin: 20px;
-  border: 2px solid #43abb4;
+  border: 2px solid #04aa6d;
   background-color: #2a2e37;
   border-radius: 30px;
-  box-shadow: 0 0 20px #43abb4;
+  box-shadow: 0 0 20px #04aa6d;
 }
 .form-box {
   padding: 40px;
@@ -149,7 +149,7 @@ form {
 }
 .input-box input:focus,
 .input-box input:valid{
-    border-bottom-color: #43abb4;
+    border-bottom-color: #04aa6d;
 }
 .input-box label{
     position: absolute;
@@ -174,13 +174,13 @@ form {
 .input-box input:focus~label,
 .input-box input:valid~label{
     top: -3px;
-    color: #43abb4;
+    color: #04aa6d;
 }
 
 .btn {
   width: 100%;
   height: 48px;
-  background: #43abb4;
+  background: #04aa6d;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
@@ -200,7 +200,7 @@ form {
   left: -250%;
   width: 300%;
   height: 100%;
-  background-color: #43abb4;
+  background-color: #04aa6d;
   border-radius: 150px;
   z-index: 2;
   transition: 1.8s ease-in-out;
