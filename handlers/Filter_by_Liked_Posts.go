@@ -23,15 +23,24 @@ func LikedPosts(w http.ResponseWriter, r *http.Request) {
 	utils.Db.QueryRow(query, sessValue).Scan(&userId)
 
 	// get comments
-	commentMap := helpers.FetchComments(w, r)
+	commentMap , errc:= helpers.FetchComments(w, r)
+	if errc != nil {
+		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
+		return
+		
+	}
 
-	//! end of the map
-	// get user id to use it in commentlikes and publikes
+	categories , erral := helpers.AllCategories(w)
+	if erral != nil {
+		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
+		return
+	}
 
-	// get categories
-	categories := helpers.AllCategories(w)
-
-	mapp := helpers.FetchCategories(w)
+	mapp ,errfcat := helpers.FetchCategories(w)
+	if errfcat != nil {
+		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
+		return
+	}
 
 	stmtPosts := `
 		SELECT 

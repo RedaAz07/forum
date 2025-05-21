@@ -8,7 +8,7 @@ import (
 	"forum/utils"
 )
 
-func FetchComments(w http.ResponseWriter , r *http.Request) map[int][]utils.Comments {
+func FetchComments(w http.ResponseWriter , r *http.Request) (map[int][]utils.Comments , error) {
 	session, err := r.Cookie("session")
 	var sessValue string
 	if err != nil {
@@ -49,7 +49,7 @@ func FetchComments(w http.ResponseWriter , r *http.Request) map[int][]utils.Comm
 	if err2 != nil {
 		fmt.Println("DB Query error:", err2)
 		RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
-		return nil 
+		return nil, err2 
 	}
 
 	var comments []utils.Comments
@@ -60,7 +60,7 @@ func FetchComments(w http.ResponseWriter , r *http.Request) map[int][]utils.Comm
 		if err2 != nil {
 			fmt.Println("Scan error:", err2)
 			RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
-			return nil 
+			return nil  , err2
 		}
 
 		now := time.Now()
@@ -78,5 +78,5 @@ func FetchComments(w http.ResponseWriter , r *http.Request) map[int][]utils.Comm
 		commentMap[c.PostID] = append(commentMap[c.PostID], c)
 	}
 
-	return commentMap
+	return commentMap , nil
 }

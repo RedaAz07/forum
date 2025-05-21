@@ -6,7 +6,7 @@ import (
 	"forum/utils"
 )
 
-func FetchCategories( w http.ResponseWriter ) map[int][]utils.Categories {
+func FetchCategories(w http.ResponseWriter) (map[int][]utils.Categories, error) {
 	//! get categories
 	stmtCategories := `
 		SELECT C.name, C.id ,  CP.postID  FROM categories C
@@ -16,16 +16,16 @@ func FetchCategories( w http.ResponseWriter ) map[int][]utils.Categories {
 
 	rowcat, errcat := utils.Db.Query(stmtCategories)
 	if errcat != nil {
-		RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
-		return nil
+		RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
+		return nil, errcat
 	}
 	var category []utils.Categories
 	for rowcat.Next() {
 		var categor utils.Categories
 		errcat = rowcat.Scan(&categor.Name, &categor.Id, &categor.PostID)
 		if errcat != nil {
-			RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
-			return nil 
+			RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
+			return nil, errcat
 		}
 		category = append(category, categor)
 	}
@@ -35,9 +35,10 @@ func FetchCategories( w http.ResponseWriter ) map[int][]utils.Categories {
 
 	categorMap := make(map[int][]utils.Categories)
 	for _, d := range category {
-		categorMap[d.PostID] = append(categorMap[d.PostID], d)
+			
+			categorMap[d.PostID] = append(categorMap[d.PostID], d)
+		
 	}
-
 	//! end of the map
-	return categorMap
+	return categorMap, nil
 }
