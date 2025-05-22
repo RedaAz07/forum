@@ -25,16 +25,19 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	query := `select id ,  session from users where session = ?`
 	var userId int
 	sess := ""
-	utils.Db.QueryRow(query, sessValue).Scan(&userId, &sess)
+	err = utils.Db.QueryRow(query, sessValue).Scan(&userId, &sess)
+	// if err != nil {
+	// 	helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
+	// 	return
+
+	// }
+
 	sessValue = sess
 	// get comments
-	commentMap, errc := helpers.FetchComments(w, r)
-
-	categorMap, erracat := helpers.FetchCategories(w)
-
-	categories, errfc := helpers.AllCategories(w)
-
-	if errc != nil || erracat != nil || errfc != nil {
+	commentMap, err := helpers.FetchComments( r)
+	categorMap, errcat := helpers.FetchCategories()
+	categories, errall := helpers.AllCategories()
+	if err != nil || errcat != nil || errall != nil {
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
 		return
 	}
@@ -59,7 +62,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	`
 	rows, err := utils.Db.Query(stmt, userId)
 	if err != nil {
-		fmt.Println("DB Query error:", err)
+		fmt.Println("DB Query nfgbnfgbgfbgfbgfb:", err)
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
 		return
 	}

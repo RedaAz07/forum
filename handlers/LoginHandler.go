@@ -12,12 +12,12 @@ import (
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
-		helpers.RanderTemplate(w, "statuspage.html", http.StatusMethodNotAllowed, utils.ErrorMethodnotAll)
+		helpers.RanderTemplate(w, "statusPage.html", http.StatusMethodNotAllowed, utils.ErrorMethodnotAll)
 		return
 	}
 	//  check if the user is alrady logged in 
 	if exists , _ :=helpers.SessionChecked(w,r) ; exists{
-		http.Redirect(w,r,"/", 302)
+		http.Redirect(w,r,"/", 303)
 		return
 	}
 	
@@ -38,7 +38,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		helpers.RanderTemplate(w, "login.html", http.StatusBadRequest, "Invalid username or password")
 		return
 	} else if err != nil {
-		helpers.RanderTemplate(w, "login.html", http.StatusInternalServerError, "Database error")
+		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError,utils.ErrorInternalServerErr)
 		return
 	}
 

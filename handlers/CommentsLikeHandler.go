@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 
 	"forum/helpers"
@@ -10,16 +9,16 @@ import (
 
 func CommentsLikeHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		helpers.RanderTemplate(w, "statusPage.html", http.StatusMethodNotAllowed, utils.ErrorMethodnotAll)
 		return
 	}
 	_, session := helpers.SessionChecked(w, r)
 
 	commentId := r.FormValue("commentID")
-	userId:= r.FormValue("userId")
+	userId := r.FormValue("userId")
 	reaction := r.FormValue("reaction")
-	if userId == "" || commentId ==""|| reaction == "" || (reaction != "1" && reaction != "-1") {
-		http.Error(w, "Invalid input", http.StatusBadRequest)
+	if userId == "" || commentId == "" || reaction == "" || (reaction != "1" && reaction != "-1") {
+		helpers.RanderTemplate(w, "statusPage.html", http.StatusBadRequest, utils.ErrorBadReq)
 		return
 	}
 
@@ -28,12 +27,9 @@ func CommentsLikeHandler(w http.ResponseWriter, r *http.Request) {
 	errr := utils.Db.QueryRow(stmt2, session).Scan(&userid)
 
 	if errr != nil {
-		fmt.Println("Error scanning reaction 111 11 1 1 1 1 :", errr)
-
-		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
 		return
 	}
-
 
 	stmt := `select value from commentsLikes
 	
@@ -50,8 +46,7 @@ func CommentsLikeHandler(w http.ResponseWriter, r *http.Request) {
 		stmt := `insert into commentsLikes (commentID, userID, value) values(?, ?, ?)`
 		_, err := utils.Db.Exec(stmt, commentId, userid, reaction)
 		if err != nil {
-			fmt.Println("Error inserting reaction:", err)
-			http.Error(w, "Internal server error", http.StatusInternalServerError)
+			helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
 			return
 		}
 		http.Redirect(w, r, "/", 302)
@@ -61,9 +56,9 @@ func CommentsLikeHandler(w http.ResponseWriter, r *http.Request) {
 			stmt := `delete from commentsLikes where commentID = ? and userID = ?`
 			_, err := utils.Db.Exec(stmt, commentId, userid)
 			if err != nil {
-				fmt.Println("Error deleting reaction:", err)
-				http.Error(w, "Internal server error", http.StatusInternalServerError)
+				helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
 				return
+
 			}
 			http.Redirect(w, r, "/", 302)
 			return
@@ -73,8 +68,8 @@ func CommentsLikeHandler(w http.ResponseWriter, r *http.Request) {
 			stmt := `update commentsLikes set value = ? where commentID = ? and userID = ?`
 			_, err := utils.Db.Exec(stmt, reaction, commentId, userid)
 			if err != nil {
-				fmt.Println("Error updating reaction:", err)
-				http.Error(w, "Internal server error", http.StatusInternalServerError)
+				helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
+
 				return
 			}
 

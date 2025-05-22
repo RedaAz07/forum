@@ -1,31 +1,29 @@
 package handlers
 
 import (
-	"forum/helpers"
-	"forum/utils"
 	"net/http"
 	"time"
+
+	"forum/helpers"
+	"forum/utils"
 )
 
 func LogOutHandler(w http.ResponseWriter, r *http.Request) {
-
-
-	
-	if exists , _ :=helpers.SessionChecked(w,r) ; !exists{
-		http.Redirect(w,r,"/", 303)
+	if exists, _ := helpers.SessionChecked(w, r); !exists {
+		http.Redirect(w, r, "/", 303)
 		return
 	}
-	
+
 	cookie, err := r.Cookie("session")
 	if err != nil {
-helpers.RanderTemplate(w,"login.html", 200, nil)
+		http.Redirect(w, r, "/login", 303)
 		return
 	}
 
 	_, err = utils.Db.Exec("Update users set session = ? where session = ?", "Null", cookie.Value)
 	if err != nil {
-		helpers.RanderTemplate(w,"home.html", http.StatusInternalServerError, nil)
-		return		
+		http.Redirect(w, r, "/", 303)
+		return
 	}
 
 	expiredCookie := http.Cookie{
@@ -37,6 +35,5 @@ helpers.RanderTemplate(w,"login.html", 200, nil)
 	}
 	http.SetCookie(w, &expiredCookie)
 
-
-http.Redirect(w,r,"/login", 302)
+	http.Redirect(w, r, "/login", 302)
 }

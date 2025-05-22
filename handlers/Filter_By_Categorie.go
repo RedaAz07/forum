@@ -10,24 +10,22 @@ import (
 )
 
 func Filter_By_Categorie(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		helpers.RanderTemplate(w, "statusPage.html", http.StatusMethodNotAllowed, utils.ErrorMethodnotAll)
+		return
+	}
 	err := r.ParseForm()
 	if err != nil {
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusBadRequest, utils.ErrorBadReq)
 		return
 
 	}
-	commentMap  , errc := helpers.FetchComments(w, r)
-	if errc != nil {
-		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
-		return
-	}
-	categories , errcat:= helpers.AllCategories(w)
-	if errcat != nil {
-		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
-		return
-	}
-	categorMap  , errfcat:= helpers.FetchCategories(w)
-	if errfcat != nil {
+	commentMap, err := helpers.FetchComments(r)
+
+	categories, errcat := helpers.AllCategories()
+
+	mapp, errall := helpers.FetchCategories()
+	if err != nil || errcat != nil || errall != nil {
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
 		return
 	}
@@ -91,9 +89,9 @@ func Filter_By_Categorie(w http.ResponseWriter, r *http.Request) {
 				diff := now.Sub(post.Time)
 				seconds := int(diff.Seconds())
 				post.TimeFormatted = helpers.FormatDuration((seconds))
-				post.Categories = categorMap[post.Id]
+				post.Categories = mapp[post.Id]
 				posts = append(posts, post)
-					mapp1[post.Id] = true 
+				mapp1[post.Id] = true
 			}
 		}
 	}

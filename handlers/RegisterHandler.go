@@ -19,7 +19,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if r.Method != "POST" {
-		helpers.RanderTemplate(w, "StatusPage.html", http.StatusMethodNotAllowed, utils.ErrorMethodnotAll)
+		helpers.RanderTemplate(w, "statusPage.html", http.StatusMethodNotAllowed, utils.ErrorMethodnotAll)
 		return
 	}
 	// get the data
@@ -35,14 +35,16 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	// all possible error messages
 	if password == "" || email == "" || username == "" || firstpassword == "" {
 		ErrorMessage = "All inputs are required"
-	} else if len(email) >= 50 || len(username) >= 50 {
-		ErrorMessage = "must be at least 50 characters"
+	} else if len(email) >= 50 || len(email) <= 10 {
+		ErrorMessage = "Email must be between 5 and 50 characters"
 	} else if match, _ := regexp.MatchString(emailregex, email); !match {
 		ErrorMessage = "Invalid email format"
 	} else if firstpassword != password {
 		ErrorMessage = "Passwords do not match"
-	} else if len(username) < 8 {
-		ErrorMessage = "Username must be at least 8 characters"
+	} else if len(username) < 3 || len(username) > 15 {
+		ErrorMessage = "Username must be at least 3 characters"
+	} else if len(password) <= 8 || len(password) > 15 {
+		ErrorMessage = "Password must be at least 6 characters"
 	}
 	// check the username if is already used
 	stmt := "SELECT id FROM users WHERE username = ? OR email = ?"
@@ -53,6 +55,9 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	if err != sql.ErrNoRows {
 		ErrorMessage = "The username or email is already used"
 		helpers.RanderTemplate(w, "register.html", http.StatusBadRequest, ErrorMessage)
+		return
+	}else if err != nil {
+		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
 		return
 	}
 	// if there is  an error
@@ -70,7 +75,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	stmt2 := `INSERT INTO users (username, email, password) VALUES (?, ?, ?);`
 	_, err = utils.Db.Exec(stmt2, username, email, string(hashPassword))
 	if err != nil {
-		helpers.RanderTemplate(w, "register.html", http.StatusBadRequest, "Try again")
+		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
 		return
 	}
 	// create a session yith uuid
@@ -78,7 +83,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	stmt3 := `UPDATE users SET session = ? WHERE username = ?`
 	_, err = utils.Db.Exec(stmt3, sessionID, username)
 	if err != nil {
-		helpers.RanderTemplate(w, "register.html", http.StatusInternalServerError, "Error creating session. Please try again later.")
+		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
 		return
 	}
 	// create a cookie

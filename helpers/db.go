@@ -24,10 +24,7 @@ func DataBase() {
 		log.Fatal("Error pinging database: ", err)
 	}
 
-	sqlfile, err := os.ReadFile("./db/query.sql")
-	if err != nil {
-		log.Fatal("read error:", err)
-	}
+	sqlfile, _ := os.ReadFile("./db/query.sql")
 
 	_, err = utils.Db.Exec(string(sqlfile))
 	if err != nil {

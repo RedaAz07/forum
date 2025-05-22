@@ -8,7 +8,6 @@ import (
 )
 
 func Route() {
-	
 	http.HandleFunc("/", (handlers.HomeHandler))
 	http.HandleFunc("/logout", middleware.Auth(handlers.LogOutHandler))
 	

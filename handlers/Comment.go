@@ -39,7 +39,6 @@ func CommentHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Error scanning postID:", errrr)
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
 		return
-
 	}
 
 	stmt := `insert into comments (postID, comment, username ) values(?, ? ,?)`

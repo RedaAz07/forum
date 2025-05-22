@@ -9,11 +9,8 @@ import (
 
 func RegisterShowHandler(w http.ResponseWriter, r *http.Request) {
 	if exists, _ := helpers.SessionChecked(w, r); exists {
-		http.Redirect(w, r, "/", 302)
+		http.Redirect(w, r, "/", 303)
 		return
-	}
-	if r.URL.Path != "/register" {
-		helpers.RanderTemplate(w, "statusPage.html", http.StatusNotFound, utils.ErrorNotFound)
 	}
 
 	if r.Method != "GET" {

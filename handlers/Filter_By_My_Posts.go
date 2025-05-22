@@ -23,21 +23,15 @@ func MyPosts(w http.ResponseWriter, r *http.Request) {
 	utils.Db.QueryRow(query, sessValue).Scan(&userId)
 
 	// get comments
-	commentMap  , errc:= helpers.FetchComments(w, r)
+	commentMap, err := helpers.FetchComments(r)
 
-	
-	categories  , erracat:= helpers.AllCategories(w)
+	categories, errcat := helpers.AllCategories()
 
-	mapp , errfc := helpers.FetchCategories(w)
-
-
-
-if  errc != nil || erracat != nil || errfc != nil {
+	mapp, errall := helpers.FetchCategories()
+	if err != nil || errcat != nil || errall != nil {
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
 		return
 	}
-
-
 
 	stmtId := `select username from users where session = ? `
 	var username string

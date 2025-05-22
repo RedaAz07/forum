@@ -3,7 +3,6 @@ package handlers
 import (
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -19,12 +18,7 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 
 	}
 	// !  check the session that if the user is logged in
-	exists, session := helpers.SessionChecked(w, r)
-	if !exists {
-		fmt.Println("session exists", exists)
-		http.Redirect(w, r, "/", 302)
-		return
-	}
+	_, session := helpers.SessionChecked(w, r)
 
 	err := r.ParseForm()
 	if err != nil {
@@ -93,6 +87,12 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 	description := r.FormValue("description")
 
 	category := r.Form["tags"] //* if he just choose the category
+
+	if title == "" || description == "" || len(category) == 0 || len(title) > 100 || len(description) > 500 {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+
 	var userId int
 	stmt2 := `select  username , id  from users where session = ?`
 	row := utils.Db.QueryRow(stmt2, session)
@@ -101,11 +101,17 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 
 	stmt := `insert into posts (title, description, username,image_path, userID) values(?, ?, ?, ?,?)`
 
-	res, _ := utils.Db.Exec(stmt, title, description, username, photoURL, userId)
+	res, err := utils.Db.Exec(stmt, title, description, username, photoURL, userId)
+	if err != nil {
+		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
+		return
 
+	}
+	//  check if the post is  already    created
 	postID, err := res.LastInsertId()
 	if err != nil {
-		log.Fatal(err)
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
 	}
 
 	//! create categories
@@ -115,7 +121,6 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 	for _, v := range category {
 		_, err := utils.Db.Exec(stmtcat, v, postID)
 		if err != nil {
-			fmt.Println("error in inserting category", err)
 			helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
 			return
 		}
