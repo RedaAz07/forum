@@ -20,6 +20,9 @@ type RateLimitPosts struct {
 	BlockedUntil time.Time
 	UserId       int
 }
-
-
-// var PostRateLimits = make(map[int]*RateLimitPosts)
+type RateLimitLogin struct {
+	count        int
+	FirstTime    time.Time
+	BlockedUntil time.Time
+	UserIP       string
+}

@@ -7,29 +7,26 @@ import (
 	"forum/middleware"
 )
 
-
 func Route() {
 	http.HandleFunc("/", (handlers.HomeHandler))
 	http.HandleFunc("/logout", middleware.Auth(handlers.LogOutHandler))
-	
-	http.HandleFunc("/login", handlers.LoginShowHandler)
+
+	http.HandleFunc("/login",middleware.RateLimitLoginMiddleware(handlers.LoginShowHandler))
 	http.HandleFunc("/register", handlers.RegisterShowHandler)
-	
+
 	http.HandleFunc("/loginAuth", handlers.LoginHandler)
 	http.HandleFunc("/registerAuth", handlers.RegisterHandler)
-	
+
 	http.HandleFunc("/static/", handlers.StyleHandler)
 	http.HandleFunc("/uploads/", handlers.UploadHandler)
 
-	
 	http.HandleFunc("/createPost", middleware.Auth(middleware.RateLimitPostsMiddleware(handlers.CreatePost)))
 
-	http.HandleFunc("/reaction", middleware.Auth(handlers.ReactionHandler))
+	http.HandleFunc("/reaction", middleware.Auth(middleware.RateLimitLikesMiddleware(handlers.ReactionHandler)))
 
 	http.HandleFunc("/comment", middleware.Auth(middleware.RateLimitCommentsMiddleware(handlers.CommentHandler)))
-	// http.HandleFunc("/comment", middleware.Auth(handlers.CommentHandler))
 
-	http.HandleFunc("/CommentsLike", middleware.Auth(handlers.CommentsLikeHandler))
+	http.HandleFunc("/CommentsLike", middleware.Auth(middleware.RateLimitLikesMiddleware(handlers.CommentsLikeHandler)))
 
 	http.HandleFunc("/filter", handlers.Filter_By_Categorie)
 
