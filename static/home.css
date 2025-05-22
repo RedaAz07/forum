@@ -64,7 +64,7 @@ body {
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.18);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  margin: 0 auto 15px auto;
+  margin: 0 auto 20px auto;
 }
 .post-card .image {
   margin-bottom: 5px;
@@ -83,7 +83,6 @@ body {
   border-radius: 10px;
   padding: 12px 0;
   max-height: 350px;
-  display: flex;
   flex-direction: column;
   display: none;
   width: 100%;

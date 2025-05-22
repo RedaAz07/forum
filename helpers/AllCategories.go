@@ -9,7 +9,7 @@ import (
 func AllCategories(w http.ResponseWriter) ([]utils.Categories ,error) {
 	var categories []utils.Categories
 
-	stmt := `SELECT name, id FROM categories`
+	stmt := `SELECT name, id ,icon FROM categories`
 	rows, err := utils.Db.Query(stmt)
 	if err != nil {
 		RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
@@ -19,7 +19,7 @@ func AllCategories(w http.ResponseWriter) ([]utils.Categories ,error) {
 
 	for rows.Next() {
 		var category utils.Categories
-		err := rows.Scan(&category.Name, &category.Id)
+		err := rows.Scan(&category.Name, &category.Id,&category.Icon)
 		if err != nil {
 			RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
 			return nil , err
