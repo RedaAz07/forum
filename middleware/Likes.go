@@ -3,6 +3,9 @@ package middleware
 import (
 	"net/http"
 	"time"
+
+	"forum/helpers"
+	"forum/utils"
 )
 
 var LikesRateLimits = make(map[int]*RateLimitLikes)
@@ -11,7 +14,7 @@ func CheckRateLimitLikes(ratelimit *RateLimitLikes, window time.Duration) bool {
 	if time.Now().Before(ratelimit.BlockedUntil) {
 		return false
 	}
-	if ratelimit.count >= 2 {
+	if ratelimit.count >= 100 {
 		ratelimit.BlockedUntil = time.Now().Add(window)
 		return false
 	}
@@ -42,11 +45,11 @@ func UserInfosLikes(r *http.Request) (*RateLimitLikes, bool) {
 
 func RateLimitLikesMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		userRateLimit, ok := UserInfosLikes(r)
-		if !ok {
-			http.Error(w, "Unauthorized", http.StatusUnauthorized)
-			return
-		}
+		userRateLimit, _ := UserInfosLikes(r)
+		// if !ok {
+		// 	http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		// 	return
+		// }
 
 		ratelimit, exists := LikesRateLimits[userRateLimit.UserId]
 		if !exists {
@@ -55,8 +58,9 @@ func RateLimitLikesMiddleware(next http.HandlerFunc) http.HandlerFunc {
 			ratelimit = userRateLimit
 		}
 
-		if !CheckRateLimitLikes(ratelimit, 1*time.Hour) {
-			http.Error(w, "Rate limit exceeded", http.StatusTooManyRequests)
+		if !CheckRateLimitLikes(ratelimit, 1*time.Minute) {
+			
+			helpers.RanderTemplate(w, "statusPage.html", http.StatusTooManyRequests, utils.ErrorToManyRequests)
 			return
 		}
 		next.ServeHTTP(w, r)

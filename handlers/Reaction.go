@@ -45,8 +45,7 @@ func ReactionHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		http.Redirect(w, r, "/", 302)
-		return
-	} else if err != nil {
+	} else {
 		if reactionValue == reaction {
 			// delete the like
 			stmt := `delete from likes where postID = ? and userID = ?`
@@ -59,8 +58,6 @@ func ReactionHandler(w http.ResponseWriter, r *http.Request) {
 			http.Redirect(w, r, "/", 302)
 			return
 		} else {
-		helpers.RanderTemplate(w, "register.html", http.StatusBadRequest, "Try again")
-
 			// update the like
 			stmt := `update likes set value = ? where postID = ? and userID = ?`
 			_, err := utils.Db.Exec(stmt, reaction, postID, userid)
@@ -72,8 +69,5 @@ func ReactionHandler(w http.ResponseWriter, r *http.Request) {
 			http.Redirect(w, r, "/", 302)
 			return
 		}
-	}else {
-helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
-		return
 	}
 }

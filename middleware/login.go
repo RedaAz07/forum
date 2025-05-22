@@ -4,6 +4,9 @@ import (
 	"net/http"
 	"strings"
 	"time"
+
+	"forum/helpers"
+	"forum/utils"
 )
 
 var LoginRateLimits = make(map[string]*RateLimitLogin)
@@ -52,8 +55,8 @@ func RateLimitLoginMiddleware(next http.HandlerFunc) http.HandlerFunc {
 			ratelimit = userRateLimit
 		}
 
-		if !CheckRateLimitLogin(ratelimit, 1*time.Hour) {
-			http.Error(w, "Rate limit exceeded", http.StatusTooManyRequests)
+		if !CheckRateLimitLogin(ratelimit, 1*time.Minute) {
+			helpers.RanderTemplate(w, "statusPage.html", http.StatusTooManyRequests, utils.ErrorToManyRequests)
 			return
 		}
 		next.ServeHTTP(w, r)

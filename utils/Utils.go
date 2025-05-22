@@ -74,4 +74,8 @@ var (
 		Code:         http.StatusInternalServerError,
 		ErrorMessage: "Something went wrong on our end. We're working on fixing it—please try again later!",
 	}
+	ErrorToManyRequests = ErrorPage{
+		Code:         http.StatusTooManyRequests,
+		ErrorMessage: "Rate limit exceeded",
+	}
 )

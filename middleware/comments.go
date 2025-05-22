@@ -54,7 +54,7 @@ func RateLimitCommentsMiddleware(next http.HandlerFunc) http.HandlerFunc {
 			ratelimit = userRateLimit
 		}
 
-		if !CheckRateLimitComment(ratelimit, 1 * time.Hour) {
+		if !CheckRateLimitComment(ratelimit, 1 * time.Minute) {
 			http.Error(w, "Rate limit exceeded", http.StatusTooManyRequests)
 			return
 		}

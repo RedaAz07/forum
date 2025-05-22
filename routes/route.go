@@ -11,10 +11,10 @@ func Route() {
 	http.HandleFunc("/", (handlers.HomeHandler))
 	http.HandleFunc("/logout", middleware.Auth(handlers.LogOutHandler))
 
-	http.HandleFunc("/login",middleware.RateLimitLoginMiddleware(handlers.LoginShowHandler))
+	http.HandleFunc("/login",handlers.LoginShowHandler)
 	http.HandleFunc("/register", handlers.RegisterShowHandler)
 
-	http.HandleFunc("/loginAuth", handlers.LoginHandler)
+	http.HandleFunc("/loginAuth", middleware.RateLimitLoginMiddleware( handlers.LoginHandler)) 
 	http.HandleFunc("/registerAuth", handlers.RegisterHandler)
 
 	http.HandleFunc("/static/", handlers.StyleHandler)

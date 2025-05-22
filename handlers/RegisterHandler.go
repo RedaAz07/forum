@@ -73,7 +73,6 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	stmt2 := `INSERT INTO users (username, email, password) VALUES (?, ?, ?);`
 	_, err = utils.Db.Exec(stmt2, username, email, string(hashPassword))
 	if err != nil {
-		fmt.Println("error in inserting data", err)
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
 		return
 	}

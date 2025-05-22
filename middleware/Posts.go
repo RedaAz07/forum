@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"forum/helpers"
 	"forum/utils"
 	"net/http"
 	"time"
@@ -45,7 +46,7 @@ func RateLimitPostsMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		userRateLimit, ok := UserInfosPosts(r)
 		if !ok {
-			http.Error(w, "Unauthorized", http.StatusUnauthorized)
+			helpers.RanderTemplate(w, "statusPage.html", http.StatusUnauthorized,"301 Unauthorized")
 			return
 		}
 
