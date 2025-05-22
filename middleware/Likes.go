@@ -7,18 +7,18 @@ import (
 	"time"
 )
 
-var PostRateLimits = make(map[int]*RateLimitPosts)
+var LikesRateLimits = make(map[int]*RateLimitLikes)
 
-func CheckRateLimitPost(ratelimit *RateLimitPosts, window time.Duration) bool {
-	//Posts' limit
+func CheckRateLimitLikes(ratelimit *RateLimitLikes, window time.Duration) bool {
+	//Likess' limit
 	if time.Now().Before(ratelimit.BlockedUntil) {
 		return false
 	}
-	if ratelimit.count >= 10 {
+	if ratelimit.count >= 2 {
 		ratelimit.BlockedUntil = time.Now().Add(window)
-		return false // block l user bach maypostich
+		return false
 	}
-	if time.Since(ratelimit.FirstTime) < window { //check ila dazt sa3a 3la awl post. resetiw lhssab
+	if time.Since(ratelimit.FirstTime) < window {
 		ratelimit.count += 1
 		ratelimit.FirstTime = time.Now()
 		return true
@@ -28,8 +28,8 @@ func CheckRateLimitPost(ratelimit *RateLimitPosts, window time.Duration) bool {
 	return true
 }
 
-func UserInfosPosts(r *http.Request) (*RateLimitPosts, bool) {
-	rateLimit := &RateLimitPosts{
+func UserInfosLikes(r *http.Request) (*RateLimitLikes, bool) {
+	rateLimit := &RateLimitLikes{
 		count:        0,
 		FirstTime:    time.Now(),
 		BlockedUntil: time.Time{},
@@ -43,24 +43,22 @@ func UserInfosPosts(r *http.Request) (*RateLimitPosts, bool) {
 	return rateLimit, true
 }
 
-func RateLimitPostsMiddleware(next http.HandlerFunc) http.HandlerFunc {
+func RateLimitLikesMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		userRateLimit, ok := UserInfosPosts(r)
+		userRateLimit, ok := UserInfosLikes(r)
 		if !ok {
 			http.Error(w, "Unauthorized", http.StatusUnauthorized)
 			return
 		}
 
-		ratelimit, exists := PostRateLimits[userRateLimit.UserId]
+		ratelimit, exists := LikesRateLimits[userRateLimit.UserId]
 		if !exists {
-			// PostRateLimits[ratelimit.UserId] = ratelimit
-			// ratelimit = userRateLimit
 
-			AddUserToTheMap_Post(userRateLimit)
+			AddUserToTheMap_Likes(userRateLimit)
 			ratelimit = userRateLimit
 		}
 
-		if !CheckRateLimitPost(ratelimit,1 * time.Hour) {
+		if !CheckRateLimitLikes(ratelimit, 1*time.Hour) {
 			http.Error(w, "Rate limit exceeded", http.StatusTooManyRequests)
 			return
 		}
@@ -68,7 +66,7 @@ func RateLimitPostsMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	}
 }
 
-func GetUserId(r *http.Request) int {
+func GetUserId_Likes(r *http.Request) int {
 	var userID int
 	cookie, err := r.Cookie("session")
 	if err != nil || cookie.Value == "" {
@@ -84,6 +82,6 @@ func GetUserId(r *http.Request) int {
 	return userID
 }
 
-func AddUserToTheMap_Post(ratelimit *RateLimitPosts) {
-	PostRateLimits[ratelimit.UserId] = ratelimit
+func AddUserToTheMap_Likes(ratelimit *RateLimitLikes) {
+	LikesRateLimits[ratelimit.UserId] = ratelimit
 }

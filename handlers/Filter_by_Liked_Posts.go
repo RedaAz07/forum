@@ -10,6 +10,7 @@ import (
 )
 
 func LikedPosts(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("111")
 	cookie, err := r.Cookie("session")
 	var sessValue string
 	if err != nil {

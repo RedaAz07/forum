@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 )
@@ -14,9 +13,9 @@ func CheckRateLimitComment(ratelimit *RateLimitComments, window time.Duration) b
 	}
 	if ratelimit.count >= 50 {
 		ratelimit.BlockedUntil = time.Now().Add(window)
-		return false // block l user bach maypostich
+		return false 
 	}
-	if time.Since(ratelimit.FirstTime) < window { //check ila dazt sa3a 3la awl post. resetiw lhssab
+	if time.Since(ratelimit.FirstTime) < window { 
 		ratelimit.count += 1
 		ratelimit.FirstTime = time.Now()
 		return true
@@ -55,7 +54,7 @@ func RateLimitCommentsMiddleware(next http.HandlerFunc) http.HandlerFunc {
 			ratelimit = userRateLimit
 		}
 
-		if !CheckRateLimitComment(ratelimit, time.Hour) {
+		if !CheckRateLimitComment(ratelimit, 1 * time.Hour) {
 			http.Error(w, "Rate limit exceeded", http.StatusTooManyRequests)
 			return
 		}
@@ -63,7 +62,6 @@ func RateLimitCommentsMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	}
 }
 
-
-func AddUserToTheMap_comment(ratelimit *RateLimitComments){
+func AddUserToTheMap_comment(ratelimit *RateLimitComments) {
 	CommentRateLimits[ratelimit.UserId] = ratelimit
 }
