@@ -1,20 +1,18 @@
 package middleware
 
 import (
-	"net"
 	"net/http"
-	"strconv"
+	"strings"
 	"time"
 )
 
-var LoginRateLimits = make(map[int]*RateLimitLogin)
+var LoginRateLimits = make(map[string]*RateLimitLogin)
 
 func CheckRateLimitLogin(ratelimit *RateLimitLogin, window time.Duration) bool {
-	//Likess' limit
 	if time.Now().Before(ratelimit.BlockedUntil) {
 		return false
 	}
-	if ratelimit.count >= 3 {
+	if ratelimit.count >= 10 {
 		ratelimit.BlockedUntil = time.Now().Add(window)
 		return false
 	}
@@ -33,12 +31,9 @@ func UserInfosLogin(r *http.Request) (*RateLimitLogin, bool) {
 		count:        0,
 		FirstTime:    time.Now(),
 		BlockedUntil: time.Time{},
-		UserIP:       -1,
+		UserIP:       "",
 	}
 	userIP := GetUserIP(r)
-	if userIP == -1 {
-		return rateLimit, false
-	}
 	rateLimit.UserIP = userIP
 	return rateLimit, true
 }
@@ -53,7 +48,6 @@ func RateLimitLoginMiddleware(next http.HandlerFunc) http.HandlerFunc {
 
 		ratelimit, exists := LoginRateLimits[userRateLimit.UserIP]
 		if !exists {
-
 			AddUserToTheMap_Login(userRateLimit)
 			ratelimit = userRateLimit
 		}
@@ -66,17 +60,9 @@ func RateLimitLoginMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	}
 }
 
-func GetUserIP(r *http.Request) int {
-	var userIP int
-	// Addr := r.RemoteAddr //l output kikoun haka : 127.0.0.1:12345 ghaliban
-	temp, _, err := net.SplitHostPort(r.RemoteAddr)
-	if err != nil {
-		return -1
-	}
-	userIP, err1 := strconv.Atoi(temp)
-	if err1 != nil {
-		return -1
-	}
+func GetUserIP(r *http.Request) string {
+	temp := r.RemoteAddr
+	userIP := strings.Split(temp, ":")[0]
 	return userIP
 }
 

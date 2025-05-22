@@ -24,5 +24,5 @@ type RateLimitLogin struct {
 	count        int
 	FirstTime    time.Time
 	BlockedUntil time.Time
-	UserIP       int
+	UserIP       string
 }
