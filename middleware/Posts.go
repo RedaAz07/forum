@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"forum/utils"
-	// "forum/middleware"
 	"net/http"
 	"time"
 )
@@ -10,7 +9,6 @@ import (
 var PostRateLimits = make(map[int]*RateLimitPosts)
 
 func CheckRateLimitPost(ratelimit *RateLimitPosts, window time.Duration) bool {
-	//Posts' limit
 	if time.Now().Before(ratelimit.BlockedUntil) {
 		return false
 	}
@@ -53,9 +51,6 @@ func RateLimitPostsMiddleware(next http.HandlerFunc) http.HandlerFunc {
 
 		ratelimit, exists := PostRateLimits[userRateLimit.UserId]
 		if !exists {
-			// PostRateLimits[ratelimit.UserId] = ratelimit
-			// ratelimit = userRateLimit
-
 			AddUserToTheMap_Post(userRateLimit)
 			ratelimit = userRateLimit
 		}
