@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"database/sql"
+	"fmt"
 	"net/http"
 	"regexp"
 
@@ -43,7 +44,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		ErrorMessage = "Passwords do not match"
 	} else if len(username) < 3 || len(username) > 15 {
 		ErrorMessage = "Username must be at least 3 characters"
-	} else if len(password) <= 8 || len(password) > 15 {
+	} else if len(password) <= 6 || len(password) > 15 {
 		ErrorMessage = "Password must be at least 6 characters"
 	}
 	// check the username if is already used
@@ -55,9 +56,6 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	if err != sql.ErrNoRows {
 		ErrorMessage = "The username or email is already used"
 		helpers.RanderTemplate(w, "register.html", http.StatusBadRequest, ErrorMessage)
-		return
-	}else if err != nil {
-		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
 		return
 	}
 	// if there is  an error
@@ -75,6 +73,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	stmt2 := `INSERT INTO users (username, email, password) VALUES (?, ?, ?);`
 	_, err = utils.Db.Exec(stmt2, username, email, string(hashPassword))
 	if err != nil {
+		fmt.Println("error in inserting data", err)
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
 		return
 	}
@@ -83,6 +82,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	stmt3 := `UPDATE users SET session = ? WHERE username = ?`
 	_, err = utils.Db.Exec(stmt3, sessionID, username)
 	if err != nil {
+		fmt.Println("error in session creation", err)
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
 		return
 	}

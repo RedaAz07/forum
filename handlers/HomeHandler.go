@@ -25,16 +25,11 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	query := `select id ,  session from users where session = ?`
 	var userId int
 	sess := ""
-	err = utils.Db.QueryRow(query, sessValue).Scan(&userId, &sess)
-	// if err != nil {
-	// 	helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
-	// 	return
-
-	// }
+	utils.Db.QueryRow(query, sessValue).Scan(&userId, &sess)
 
 	sessValue = sess
 	// get comments
-	commentMap, err := helpers.FetchComments( r)
+	commentMap, err := helpers.FetchComments(r)
 	categorMap, errcat := helpers.FetchCategories()
 	categories, errall := helpers.AllCategories()
 	if err != nil || errcat != nil || errall != nil {
