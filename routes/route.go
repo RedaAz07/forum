@@ -7,6 +7,7 @@ import (
 	"forum/middleware"
 )
 
+
 func Route() {
 	http.HandleFunc("/", (handlers.HomeHandler))
 	http.HandleFunc("/logout", middleware.Auth(handlers.LogOutHandler))
@@ -20,11 +21,13 @@ func Route() {
 	http.HandleFunc("/static/", handlers.StyleHandler)
 	http.HandleFunc("/uploads/", handlers.UploadHandler)
 
-	http.HandleFunc("/createPost", middleware.Auth(handlers.CreatePost))
+	
+	http.HandleFunc("/createPost", middleware.Auth(middleware.RateLimitPostsMiddleware(handlers.CreatePost)))
 
 	http.HandleFunc("/reaction", middleware.Auth(handlers.ReactionHandler))
 
-	http.HandleFunc("/comment", middleware.Auth(handlers.CommentHandler))
+	http.HandleFunc("/comment", middleware.Auth(middleware.RateLimitCommentsMiddleware(handlers.CommentHandler)))
+	// http.HandleFunc("/comment", middleware.Auth(handlers.CommentHandler))
 
 	http.HandleFunc("/CommentsLike", middleware.Auth(handlers.CommentsLikeHandler))
 
