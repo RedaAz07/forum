@@ -22,7 +22,6 @@ func Route() {
 	http.HandleFunc("/static/", handlers.StyleHandler)
 	http.HandleFunc("/uploads/", handlers.UploadHandler)
 
-	
 	http.HandleFunc("/createPost", middleware.Auth(middleware.RateLimitPostsMiddleware(handlers.CreatePost)))
 
 	http.HandleFunc("/reaction", middleware.Auth(middleware.RateLimitLikesMiddleware(handlers.ReactionHandler)))

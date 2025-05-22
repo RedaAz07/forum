@@ -20,3 +20,9 @@ type RateLimitPosts struct {
 	BlockedUntil time.Time
 	UserId       int
 }
+type RateLimitLogin struct {
+	count        int
+	FirstTime    time.Time
+	BlockedUntil time.Time
+	UserIP       int
+}

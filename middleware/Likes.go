@@ -1,8 +1,6 @@
 package middleware
 
 import (
-	"forum/utils"
-	// "forum/middleware"
 	"net/http"
 	"time"
 )
@@ -66,21 +64,21 @@ func RateLimitLikesMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	}
 }
 
-func GetUserId_Likes(r *http.Request) int {
-	var userID int
-	cookie, err := r.Cookie("session")
-	if err != nil || cookie.Value == "" {
-		return -1
-	} else {
-		// Check if the session is valid
-		stmt := "SELECT id FROM users WHERE session = ?"
-		err = utils.Db.QueryRow(stmt, cookie.Value).Scan(&userID)
-		if err != nil {
-			return -1
-		}
-	}
-	return userID
-}
+// func GetUserId_Likes(r *http.Request) int {
+// 	var userID int
+// 	cookie, err := r.Cookie("session")
+// 	if err != nil || cookie.Value == "" {
+// 		return -1
+// 	} else {
+// 		// Check if the session is valid
+// 		stmt := "SELECT id FROM users WHERE session = ?"
+// 		err = utils.Db.QueryRow(stmt, cookie.Value).Scan(&userID)
+// 		if err != nil {
+// 			return -1
+// 		}
+// 	}
+// 	return userID
+// }
 
 func AddUserToTheMap_Likes(ratelimit *RateLimitLikes) {
 	LikesRateLimits[ratelimit.UserId] = ratelimit
