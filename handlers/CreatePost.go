@@ -87,9 +87,11 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 	description := r.FormValue("description")
 
 	category := r.Form["tags"] //* if he just choose the category
-
-	if title == "" || description == "" || len(category) == 0 || len(title) > 100 || len(description) > 500 {
-		http.Redirect(w, r, "/", http.StatusSeeOther)
+	fmt.Println("category", len(category))
+	fmt.Println("title", len(title))
+	fmt.Println("description", len(description))
+	if title == "" || description == "" || len(category) == 0 || len(title) < 3 || len(title) > 30|| len(description) < 10 || len(description) > 100 {
+		helpers.RanderTemplate(w, "statusPage.html", http.StatusBadRequest, utils.ErrorBadReq)
 		return
 	}
 
