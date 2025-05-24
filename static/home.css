@@ -278,7 +278,8 @@ body:has(#commentshow:checked) .second-part {
 
 .like-btn,
 .dislike-btn,
-.comment-icon {
+.comment-icon,
+.delete-btn {
   background: transparent;
   border: none;
   cursor: pointer;

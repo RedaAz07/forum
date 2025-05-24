@@ -33,7 +33,7 @@
               </path>
             </svg>
           </button>
-        </form> 
+        </form>
         <div class="postform">
           <h2>Create Post</h2>
           <form action="/createPost" method="post" enctype="multipart/form-data">
@@ -150,13 +150,31 @@
                 <input type="checkbox" class="hidd" id="commentshow-{{.Id}}" />
                 <label for="commentshow-{{.Id}}" class="comment-icon"><i class="fa-solid fa-comment"></i></label>
                 <style>
-                #post-{{.Id}}:has(#commentshow-{{.Id}}:checked) .second-part {
-                  display: flex;
-                }
+                  #post- {
+                      {
+                      .Id
+                    }
+                  }
+
+                  :has(#commentshow- {
+                        {
+                        .Id
+                      }
+                    }
+
+                    :checked) .second-part {
+                    display: flex;
+                  }
                 </style>
               </div>
+              {{if eq $.UserActive .Username}}
+              <button type="submit" formaction="/deletePost" formmethod="post" name="postID" value="{{.Id}}" class="delete-btn" title="Delete post" onclick="return confirm('Are you sure you want to delete this post?');">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+              {{end}}
               <input type="hidden" name="postID" value="{{.Id}}" />
             </form>
+        
           </div>
         </div>
         <div class="second-part" id="post-{{.Id}}">
@@ -218,7 +236,7 @@
     {{end}}
     <!-- end post card section -->
   </div>
-  </div> 
+  </div>
   {{else}}
   <h1 class="notfound">No posts yet 🤷‍♂️</h1>
   {{end}}
@@ -240,4 +258,5 @@
   });
 
 </script>
+
 </html>
