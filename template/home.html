@@ -150,22 +150,10 @@
                 <input type="checkbox" class="hidd" id="commentshow-{{.Id}}" />
                 <label for="commentshow-{{.Id}}" class="comment-icon"><i class="fa-solid fa-comment"></i></label>
                 <style>
-                  #post- {
-                      {
-                      .Id
-                    }
-                  }
-
-                  :has(#commentshow- {
-                        {
-                        .Id
-                      }
-                    }
-
-                    :checked) .second-part {
+                  #post-{{.Id}}:has(#commentshow-{{.Id}}:checked) .second-part {
                     display: flex;
                   }
-                </style>
+                 </style>
               </div>
               {{if eq $.UserActive .Username}}
               <button type="submit" formaction="/deletePost" formmethod="post" name="postID" value="{{.Id}}" class="delete-btn" title="Delete post" onclick="return confirm('Are you sure you want to delete this post?');">
