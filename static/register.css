@@ -326,6 +326,7 @@ form {
     height: 35px;
   }
   .error .message {
+    font-size: 11px;
   }
   a i {
     font-size: 27px;
