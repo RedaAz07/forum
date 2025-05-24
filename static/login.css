@@ -9,22 +9,22 @@
   --akhdar: #0afb26;
   --red: #0ef;
 }
-a{
+a {
   position: fixed;
   left: 40px;
   top: 20px;
   padding: 10px;
 }
-a i{
+a i {
   color: #04aa6d;
   font-size: 35px;
 }
 .input-box input:-webkit-autofill,
-.input-box input:-webkit-autofill:hover, 
+.input-box input:-webkit-autofill:hover,
 .input-box input:-webkit-autofill:focus,
 .input-box input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
-  -webkit-text-fill-color: white ;
+  -webkit-text-fill-color: white;
   transition: background-color 5000s ease-in-out 0s;
 }
 
@@ -34,8 +34,9 @@ a i{
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
-.error{
-  animation: err .8s ease-in-out;
+.error {
+  white-space: nowrap;
+  animation: err 0.8s ease-in-out;
   padding: 0 10px;
   width: 350px;
   height: 50px;
@@ -45,6 +46,7 @@ a i{
   border: 2px solid #de747f;
   display: flex;
   align-items: center;
+  font-weight: bold;
   background-color: #f4838d;
   color: #000000;
   border-radius: 5px;
@@ -56,10 +58,12 @@ a i{
   margin-right: 10px;
   font-size: 20px;
 }
-.error .message{
+.error .message {
   font-size: 14px;
 }
 .error .close-btn {
+  position: absolute;
+  right: 10px;
   cursor: pointer;
   font-weight: bold;
   font-size: 20px;
@@ -71,7 +75,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #222831, #393E46);
+  background: linear-gradient(135deg, #222831, #393e46);
 }
 
 .container {
@@ -135,23 +139,23 @@ form {
   font-size: 16px;
   color: #fff;
   font-weight: 500;
-  transition: .5s;
+  transition: 0.5s;
 }
 .input-box input:focus,
-.input-box input:valid{
-    border-bottom-color: #04aa6d;
+.input-box input:valid {
+  border-bottom-color: #04aa6d;
 }
-.input-box label{
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-    font-size: 16px;
-    color: #fff;
-    pointer-events: none;
-    transition: .5s;
+.input-box label {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #fff;
+  pointer-events: none;
+  transition: 0.5s;
 }
-.input-box i{
+.input-box i {
   position: absolute;
   top: 50%;
   right: 0;
@@ -161,10 +165,10 @@ form {
   cursor: pointer;
 }
 
-.input-box input:focus~label,
-.input-box input:valid~label{
-    top: -3px;
-    color: #04aa6d;
+.input-box input:focus ~ label,
+.input-box input:valid ~ label {
+  top: -3px;
+  color: #04aa6d;
 }
 
 .btn {
@@ -240,8 +244,16 @@ form {
   box-shadow: none;
 }
 @media screen and (max-width: 650px) {
+  a {
+    left: 15px;
+    top: 23px;
+  }
+  .error {
+    height: 40px;
+  }
   .container {
-    height: calc(100vh - 40px);
+    margin-top: 100px;
+    height: calc(100vh - 150px);
   }
   .form-box {
     bottom: 0;
@@ -282,8 +294,40 @@ form {
     bottom: -30%;
   }
 }
+@media screen and (max-width: 450px) {
+  .error {
+    font-size: 12px;
+    width: 300px;
+    height: 35px;
+    white-space: wrap;
+  }
+  a i {
+    font-size: 27px;
+    left: 0;
+  }
+  a {
+    left: 0;
+    top: 15px;
+  }
+}
 
 @media screen and (max-width: 400px) {
+    .error {
+    font-size: 12px;
+    width: 250px;
+    height: 35px;
+  }
+  .error .message {
+    font-size: 12px;
+  }
+  a i {
+    font-size: 27px;
+    left: 0;
+  }
+  a {
+    left: 0;
+    top: 15px;
+  }
   .form-box {
     padding: 20px;
   }
