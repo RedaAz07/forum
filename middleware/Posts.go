@@ -13,17 +13,16 @@ func CheckRateLimitPost(ratelimit *RateLimitPosts, window time.Duration) bool {
 	if time.Now().Before(ratelimit.BlockedUntil) {
 		return false
 	}
-	if ratelimit.count >= 10 {
-		ratelimit.BlockedUntil = time.Now().Add(window)
-		return false // block l user bach maypostich
-	}
-	if time.Since(ratelimit.FirstTime) < window { //check ila dazt sa3a 3la awl post. resetiw lhssab
-		ratelimit.count += 1
+	if time.Now().After(ratelimit.BlockedUntil) && ratelimit.count > 10 {
 		ratelimit.FirstTime = time.Now()
-		return true
+		ratelimit.BlockedUntil = time.Time{}
+		ratelimit.count = 0
 	}
-
 	ratelimit.count++
+	if ratelimit.count > 10 {
+		ratelimit.BlockedUntil = time.Now().Add(window)
+		return false
+	}
 	return true
 }
 
@@ -57,7 +56,7 @@ func RateLimitPostsMiddleware(next http.HandlerFunc) http.HandlerFunc {
 		}
 
 		if !CheckRateLimitPost(ratelimit,1 * time.Hour) {
-			http.Error(w, "Rate limit exceeded", http.StatusTooManyRequests)
+			helpers.RanderTemplate(w, "statusPage.html", http.StatusTooManyRequests, utils.ErrorToManyRequests)
 			return
 		}
 		next.ServeHTTP(w, r)

@@ -15,17 +15,16 @@ func CheckRateLimitLogin(ratelimit *RateLimitLogin, window time.Duration) bool {
 	if time.Now().Before(ratelimit.BlockedUntil) {
 		return false
 	}
-	if ratelimit.count >= 10 {
+	if time.Now().After(ratelimit.BlockedUntil) && ratelimit.count > 10 {
+		ratelimit.FirstTime = time.Now()
+		ratelimit.BlockedUntil = time.Time{}
+		ratelimit.count = 0
+	}
+	ratelimit.count++
+	if ratelimit.count > 10 {
 		ratelimit.BlockedUntil = time.Now().Add(window)
 		return false
 	}
-	if time.Since(ratelimit.FirstTime) < window {
-		ratelimit.count += 1
-		ratelimit.FirstTime = time.Now()
-		return true
-	}
-
-	ratelimit.count++
 	return true
 }
 

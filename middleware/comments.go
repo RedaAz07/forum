@@ -1,6 +1,8 @@
 package middleware
 
 import (
+	"forum/helpers"
+	"forum/utils"
 	"net/http"
 	"time"
 )
@@ -11,17 +13,16 @@ func CheckRateLimitComment(ratelimit *RateLimitComments, window time.Duration) b
 	if time.Now().Before(ratelimit.BlockedUntil) {
 		return false
 	}
-	if ratelimit.count >= 50 {
-		ratelimit.BlockedUntil = time.Now().Add(window)
-		return false 
-	}
-	if time.Since(ratelimit.FirstTime) < window { 
-		ratelimit.count += 1
+	if time.Now().After(ratelimit.BlockedUntil) && ratelimit.count > 50 {
 		ratelimit.FirstTime = time.Now()
-		return true
+		ratelimit.BlockedUntil = time.Time{}
+		ratelimit.count = 0
 	}
-
 	ratelimit.count++
+	if ratelimit.count > 50 {
+		ratelimit.BlockedUntil = time.Now().Add(window)
+		return false
+	}
 	return true
 }
 
@@ -54,8 +55,8 @@ func RateLimitCommentsMiddleware(next http.HandlerFunc) http.HandlerFunc {
 			ratelimit = userRateLimit
 		}
 
-		if !CheckRateLimitComment(ratelimit, 1 * time.Minute) {
-			http.Error(w, "Rate limit exceeded", http.StatusTooManyRequests)
+		if !CheckRateLimitComment(ratelimit, 1*time.Minute) {
+			helpers.RanderTemplate(w, "statusPage.html", http.StatusTooManyRequests, utils.ErrorToManyRequests)
 			return
 		}
 		next.ServeHTTP(w, r)

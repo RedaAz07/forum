@@ -14,17 +14,19 @@ func CheckRateLimitLikes(ratelimit *RateLimitLikes, window time.Duration) bool {
 	if time.Now().Before(ratelimit.BlockedUntil) {
 		return false
 	}
-	if ratelimit.count >= 100 {
+	if time.Now().After(ratelimit.BlockedUntil) && ratelimit.count > 100 {
+		ratelimit.FirstTime = time.Now()
+		ratelimit.BlockedUntil = time.Time{}
+		ratelimit.count = 0
+	}
+	//ila drna had star 9bl return dyal l func,
+	// dima ayb9a ykun like zayd
+	//ms hna kikhalina nzidouh fl count wntchekiw wach dakchi mzian 3ad nzidouh f db
+	ratelimit.count++
+	if ratelimit.count > 100 {
 		ratelimit.BlockedUntil = time.Now().Add(window)
 		return false
 	}
-	if time.Since(ratelimit.FirstTime) < window {
-		ratelimit.count += 1
-		ratelimit.FirstTime = time.Now()
-		return true
-	}
-
-	ratelimit.count++
 	return true
 }
 
@@ -59,7 +61,6 @@ func RateLimitLikesMiddleware(next http.HandlerFunc) http.HandlerFunc {
 		}
 
 		if !CheckRateLimitLikes(ratelimit, 1*time.Minute) {
-			
 			helpers.RanderTemplate(w, "statusPage.html", http.StatusTooManyRequests, utils.ErrorToManyRequests)
 			return
 		}
