@@ -78,4 +78,8 @@ var (
 		Code:         http.StatusTooManyRequests,
 		ErrorMessage: "Rate limit exceeded",
 	}
+	ErrorUnauthorized = ErrorPage{
+		Code:         http.StatusUnauthorized,
+		ErrorMessage: "Unauthorized access. Please log in to continue.",
+	}
 )

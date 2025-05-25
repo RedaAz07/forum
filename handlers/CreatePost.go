@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -27,17 +26,13 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	r.ParseMultipartForm(10 << 20)
-
 	file, header, err := r.FormFile("myFile")
 	if file != nil {
-		zize := header.Size
+		size := header.Size
 
-		// fmt.Println(zize)
-		maxzize := int64(10485760)
-		if zize >= maxzize {
-			fmt.Println("walooooo")
-			helpers.RanderTemplate(w, "statusPage.html", 400, utils.ErrorBadReq)
+		maxsize := int64(10485760)
+		if size >= maxsize {
+			helpers.RanderTemplate(w, "statusPage.html", http.StatusBadRequest, utils.ErrorBadReq)
 			return
 
 		}
@@ -50,20 +45,17 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 
 		photoDir := "uploads/"
 
-		if _, err := os.Stat(photoDir); os.IsNotExist(err) {
-			err := os.MkdirAll(photoDir, 0o755)
-			if err != nil {
-				http.Error(w, "Error creating upload directory", http.StatusInternalServerError)
-				return
-			}
+		err := os.MkdirAll(photoDir, 0o755)
+		if err != nil {
+			helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
+			return
 		}
 
 		photoPath := photoDir + header.Filename
 
 		dst, err := os.Create(photoPath)
 		if err != nil {
-			fmt.Println("Error saving file:", err)
-			http.Error(w, "Error saving photo", http.StatusInternalServerError)
+			helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
 			return
 		}
 		defer dst.Close()
@@ -76,7 +68,7 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 
 	if photoURL != "" {
 		if !strings.HasSuffix(photoURL, ".jpg") && !strings.HasSuffix(photoURL, ".png") && !strings.HasSuffix(photoURL, ".jpeg") {
-			helpers.RanderTemplate(w, "statusPage.html", 400, utils.ErrorBadReq)
+			helpers.RanderTemplate(w, "statusPage.html", http.StatusBadRequest, utils.ErrorBadReq)
 			return
 		}
 	}
@@ -87,10 +79,8 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 	description := r.FormValue("description")
 
 	category := r.Form["tags"] //* if he just choose the category
-	fmt.Println("category", len(category))
-	fmt.Println("title", len(title))
-	fmt.Println("description", len(description))
-	if title == "" || description == "" || len(category) == 0 || len(title) < 3 || len(title) > 30|| len(description) < 10 || len(description) > 100 {
+
+	if title == "" || description == "" || len(category) == 0 || len(title) < 1 || len(title) > 30 || len(description) < 1 || len(description) > 100 {
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusBadRequest, utils.ErrorBadReq)
 		return
 	}
@@ -109,7 +99,7 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 		return
 
 	}
-	//  check if the post is  already    created
+	//  check if the post is  already created
 	postID, err := res.LastInsertId()
 	if err != nil {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
@@ -129,5 +119,5 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	http.Redirect(w, r, "/", 302)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }

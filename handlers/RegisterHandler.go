@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"database/sql"
-	"fmt"
 	"net/http"
 	"regexp"
 
@@ -15,14 +14,14 @@ import (
 
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	if exists, _ := helpers.SessionChecked(w, r); exists {
-		http.Redirect(w, r, "/", 302)
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
-
 	if r.Method != "POST" {
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusMethodNotAllowed, utils.ErrorMethodnotAll)
 		return
 	}
+
 	// get the data
 	password := r.FormValue("password")
 	email := r.FormValue("email")
@@ -81,7 +80,6 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	stmt3 := `UPDATE users SET session = ? WHERE username = ?`
 	_, err = utils.Db.Exec(stmt3, sessionID, username)
 	if err != nil {
-		fmt.Println("error in session creation", err)
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
 		return
 	}
@@ -94,5 +92,5 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		MaxAge:   3600,
 	})
 
-	http.Redirect(w, r, "/", 302)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }

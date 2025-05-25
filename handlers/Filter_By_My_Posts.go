@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 
@@ -13,7 +12,6 @@ func MyPosts(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("session")
 	var sessValue string
 	if err != nil {
-		fmt.Println("Session cookie error:", err)
 		sessValue = ""
 	} else {
 		sessValue = cookie.Value
@@ -38,7 +36,6 @@ func MyPosts(w http.ResponseWriter, r *http.Request) {
 	queryId := utils.Db.QueryRow(stmtId, cookie.Value)
 	errr := queryId.Scan(&username)
 	if errr != nil {
-		fmt.Println("query error", errr)
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
 		return
 	}
@@ -63,7 +60,6 @@ func MyPosts(w http.ResponseWriter, r *http.Request) {
 				`
 	rows, err := utils.Db.Query(stmtPosts, userId, username)
 	if err != nil {
-		fmt.Println("query error", err)
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
 		return
 	}
@@ -75,7 +71,6 @@ func MyPosts(w http.ResponseWriter, r *http.Request) {
 		var post utils.Posts
 		err = rows.Scan(&post.Id, &post.Username, &post.Title, &post.Description, &post.Time, &post.ImagePath, &totalLikes, &totalDislikes, &user_reaction_pub)
 		if err != nil {
-			fmt.Println("query error", err)
 			helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
 			return
 		}
@@ -99,7 +94,6 @@ func MyPosts(w http.ResponseWriter, r *http.Request) {
 		UserActive string
 		Posts      []utils.Posts
 		Categories []utils.Categories
-		PostCatgs  []string
 	}{
 		Session:    sessValue,
 		UserActive: helpers.GetUsernameFromSession(sessValue),

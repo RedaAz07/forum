@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 
@@ -10,11 +9,9 @@ import (
 )
 
 func LikedPosts(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("111")
 	cookie, err := r.Cookie("session")
 	var sessValue string
 	if err != nil {
-		fmt.Println("Session cookie error:", err)
 		sessValue = ""
 	} else {
 		sessValue = cookie.Value
@@ -56,7 +53,6 @@ func LikedPosts(w http.ResponseWriter, r *http.Request) {
 `
 	rows, err := utils.Db.Query(stmtPosts, userId, userId)
 	if err != nil {
-		fmt.Println("query error", err)
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
 		return
 	}
@@ -68,7 +64,6 @@ func LikedPosts(w http.ResponseWriter, r *http.Request) {
 		var post utils.Posts
 		err = rows.Scan(&post.Id, &post.Username, &post.Title, &post.Description, &post.Time, &post.ImagePath, &totalLikes, &totalDislikes, &user_reaction_pub)
 		if err != nil {
-			fmt.Println("query error", err)
 			helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
 			return
 		}
@@ -92,7 +87,6 @@ func LikedPosts(w http.ResponseWriter, r *http.Request) {
 		UserActive string
 		Posts      []utils.Posts
 		Categories []utils.Categories
-		PostCatgs  []string
 	}{
 		Session:    sessValue,
 		UserActive: helpers.GetUsernameFromSession(sessValue),

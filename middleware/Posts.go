@@ -45,7 +45,7 @@ func RateLimitPostsMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		userRateLimit, ok := UserInfosPosts(r)
 		if !ok {
-			helpers.RanderTemplate(w, "statusPage.html", http.StatusUnauthorized,"301 Unauthorized")
+			helpers.RanderTemplate(w, "statusPage.html", http.StatusUnauthorized,utils.ErrorUnauthorized)
 			return
 		}
 

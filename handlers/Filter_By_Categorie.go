@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 
@@ -33,7 +32,6 @@ func Filter_By_Categorie(w http.ResponseWriter, r *http.Request) {
 	cookie, errr := r.Cookie("session")
 	var sessValue string
 	if errr != nil {
-		fmt.Println("Session cookie error:", errr)
 		sessValue = ""
 	} else {
 		sessValue = cookie.Value
@@ -69,14 +67,12 @@ func Filter_By_Categorie(w http.ResponseWriter, r *http.Request) {
 	for _, categorie := range categ {
 		rows, err := utils.Db.Query(query, categorie)
 		if err != nil {
-			fmt.Println("query error", err)
 			helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
 			return
 		}
 		for rows.Next() {
 			err = rows.Scan(&post.Id, &post.Username, &post.Title, &post.Description, &post.Time, &post.ImagePath, &totalLikes, &totalDislikes)
 			if err != nil {
-				fmt.Println(" error", err)
 				helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
 				return
 			}
@@ -101,7 +97,6 @@ func Filter_By_Categorie(w http.ResponseWriter, r *http.Request) {
 		UserActive string
 		Posts      []utils.Posts
 		Categories []utils.Categories
-		PostCatgs  []string
 	}{
 		Session:    sessValue,
 		UserActive: helpers.GetUsernameFromSession(sessValue),

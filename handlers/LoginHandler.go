@@ -17,7 +17,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	//  check if the user is alrady logged in 
 	if exists , _ :=helpers.SessionChecked(w,r) ; exists{
-		http.Redirect(w,r,"/", 303)
+		http.Redirect(w,r,"/", http.StatusSeeOther)
 		return
 	}
 	
@@ -63,5 +63,5 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		MaxAge:   3600,
 	})
 
-	http.Redirect(w, r, "/", 302)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }

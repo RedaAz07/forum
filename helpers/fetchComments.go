@@ -1,18 +1,16 @@
 package helpers
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 
 	"forum/utils"
 )
 
-func FetchComments(r *http.Request) (map[int][]utils.Comments ,  error) {
+func FetchComments(r *http.Request) (map[int][]utils.Comments, error) {
 	session, err := r.Cookie("session")
 	var sessValue string
 	if err != nil {
-		// fmt.Println("Session cookie error:", err)
 		sessValue = ""
 	} else {
 		sessValue = session.Value
@@ -47,7 +45,7 @@ func FetchComments(r *http.Request) (map[int][]utils.Comments ,  error) {
 
 	rows2, err2 := utils.Db.Query(stmtcommnts, userId)
 	if err2 != nil {
-		return nil , err2
+		return nil, err2
 	}
 
 	var comments []utils.Comments
@@ -56,8 +54,7 @@ func FetchComments(r *http.Request) (map[int][]utils.Comments ,  error) {
 		var comment utils.Comments
 		err2 = rows2.Scan(&comment.Id, &comment.Comment, &comment.Time, &comment.Username, &comment.PostID, &comment.TotalLikes, &comment.TotalDislikes, &comment.UserReactionComment)
 		if err2 != nil {
-			fmt.Println("Scan error:", err2)
-			return nil  , err2
+			return nil, err2
 		}
 
 		now := time.Now()
@@ -75,5 +72,5 @@ func FetchComments(r *http.Request) (map[int][]utils.Comments ,  error) {
 		commentMap[c.PostID] = append(commentMap[c.PostID], c)
 	}
 
-	return commentMap , nil
+	return commentMap, nil
 }

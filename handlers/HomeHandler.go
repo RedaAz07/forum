@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 
@@ -17,7 +16,6 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	session, err := r.Cookie("session")
 	var sessValue string
 	if err != nil {
-		// fmt.Println("Session cookie error:", err)
 		sessValue = ""
 	} else {
 		sessValue = session.Value
@@ -57,8 +55,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	`
 	rows, err := utils.Db.Query(stmt, userId)
 	if err != nil {
-		fmt.Println("DB Query nfgbnfgbgfbgfbgfb:", err)
-		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, nil)
+		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
 		return
 	}
 
@@ -69,8 +66,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 		err = rows.Scan(&post.Id, &post.Username, &post.Title, &post.Description, &post.Time, &post.ImagePath, &totalLikes, &totalDislikes, &user_reaction_pub)
 		if err != nil {
-			fmt.Println("Scan error:", err)
-			helpers.RanderTemplate(w, "home.html", http.StatusInternalServerError, nil)
+			helpers.RanderTemplate(w, "home.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
 			return
 		}
 		post.Categories = categorMap[post.Id]
@@ -95,7 +91,6 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		UserActive string
 		Posts      []utils.Posts
 		Categories []utils.Categories
-		PostCatgs  []string
 	}{
 		Session:    sessValue,
 		UserActive: helpers.GetUsernameFromSession(sessValue),
@@ -103,11 +98,5 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		Categories: categories,
 	}
 
-	helpers.RanderTemplate(w, "home.html", 200, variables)
-
-	/* !  bnisba l ay relation many to many endi hna kaykhnsi njbdha bohdha 7it adir lya mochkil f posts f like w dislikes
-	so ghatl9ani jbedt l categories w l comments f bohdhom w7tithom fwa7d lmap bach key hya post id w value hya struct
-	mn b3d kan7thom fstruct post li fiha kolchi
-	*/
-	//!  i add the clike on comments + add table  +add the form in home html but its not working + handler without fixing
+	helpers.RanderTemplate(w, "home.html", http.StatusOK, variables)
 }

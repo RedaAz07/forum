@@ -28,7 +28,6 @@ func ReactionHandler(w http.ResponseWriter, r *http.Request) {
 
 	if errr != nil {
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
-
 		return
 	}
 
@@ -44,7 +43,7 @@ func ReactionHandler(w http.ResponseWriter, r *http.Request) {
 			helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
 			return
 		}
-		http.Redirect(w, r, "/", 302)
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 	} else {
 		if reactionValue == reaction {
 			// delete the like
@@ -52,10 +51,9 @@ func ReactionHandler(w http.ResponseWriter, r *http.Request) {
 			_, err := utils.Db.Exec(stmt, postID, userid)
 			if err != nil {
 				helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
-
 				return
 			}
-			http.Redirect(w, r, "/", 302)
+			http.Redirect(w, r, "/", http.StatusSeeOther)
 			return
 		} else {
 			// update the like
@@ -66,7 +64,7 @@ func ReactionHandler(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 
-			http.Redirect(w, r, "/", 302)
+			http.Redirect(w, r, "/", http.StatusSeeOther)
 			return
 		}
 	}

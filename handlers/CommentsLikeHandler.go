@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"database/sql"
 	"net/http"
 
 	"forum/helpers"
@@ -32,24 +33,25 @@ func CommentsLikeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	stmt := `select value from commentsLikes
-	
-	inner join comments on comments.id = commentslikes.commentID
-	inner join  posts on posts.id = comments.postID
-	where commentID = ? and  userID = ?`
+	where commentsLikes.commentID = ? and commentsLikes.userID = ?`
+
 	row := utils.Db.QueryRow(stmt, commentId, userid)
 	var reactionValue string
 	err := row.Scan(&reactionValue)
 	if err != nil {
-
-		// make the like
-
-		stmt := `insert into commentsLikes (commentID, userID, value) values(?, ?, ?)`
-		_, err := utils.Db.Exec(stmt, commentId, userid, reaction)
-		if err != nil {
+		if err == sql.ErrNoRows {
+			stmt := `insert into commentsLikes (commentID, userID, value) values(?, ?, ?)`
+			_, err := utils.Db.Exec(stmt, commentId, userid, reaction)
+			if err != nil {
+				helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
+				return
+			}
+			http.Redirect(w, r, "/", http.StatusSeeOther)
+			return
+		} else {
 			helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
 			return
 		}
-		http.Redirect(w, r, "/", 302)
 	} else {
 		if reactionValue == reaction {
 			// delete the like
@@ -60,7 +62,7 @@ func CommentsLikeHandler(w http.ResponseWriter, r *http.Request) {
 				return
 
 			}
-			http.Redirect(w, r, "/", 302)
+			http.Redirect(w, r, "/", http.StatusSeeOther)
 			return
 		} else {
 
@@ -73,7 +75,7 @@ func CommentsLikeHandler(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 
-			http.Redirect(w, r, "/", 302)
+			http.Redirect(w, r, "/", http.StatusSeeOther)
 			return
 		}
 	}

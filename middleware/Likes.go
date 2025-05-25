@@ -19,9 +19,7 @@ func CheckRateLimitLikes(ratelimit *RateLimitLikes, window time.Duration) bool {
 		ratelimit.BlockedUntil = time.Time{}
 		ratelimit.count = 0
 	}
-	//ila drna had star 9bl return dyal l func,
-	// dima ayb9a ykun like zayd
-	//ms hna kikhalina nzidouh fl count wntchekiw wach dakchi mzian 3ad nzidouh f db
+
 	ratelimit.count++
 	if ratelimit.count > 100 {
 		ratelimit.BlockedUntil = time.Now().Add(window)
@@ -48,10 +46,6 @@ func UserInfosLikes(r *http.Request) (*RateLimitLikes, bool) {
 func RateLimitLikesMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		userRateLimit, _ := UserInfosLikes(r)
-		// if !ok {
-		// 	http.Error(w, "Unauthorized", http.StatusUnauthorized)
-		// 	return
-		// }
 
 		ratelimit, exists := LikesRateLimits[userRateLimit.UserId]
 		if !exists {

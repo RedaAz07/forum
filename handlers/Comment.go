@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 
 	"forum/helpers"
@@ -36,7 +35,6 @@ func CommentHandler(w http.ResponseWriter, r *http.Request) {
 	var postID2 int
 	errrr := query3.Scan(&postID2)
 	if errrr != nil {
-		fmt.Println("Error scanning postID:", errrr)
 		helpers.RanderTemplate(w, "statusPage.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
 		return
 	}
@@ -47,5 +45,5 @@ func CommentHandler(w http.ResponseWriter, r *http.Request) {
 		helpers.RanderTemplate(w, "home.html", http.StatusInternalServerError, utils.ErrorInternalServerErr)
 		return
 	}
-	http.Redirect(w, r, "/", 302)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
