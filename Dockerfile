@@ -4,12 +4,12 @@ WORKDIR /app
 
 COPY go.mod go.sum ./
 RUN go mod download
-COPY ./cmd ./cmd
-COPY ./handlers ./handlers
-COPY ./helpers ./helpers
-COPY ./middleware ./middleware
-COPY ./routes ./routes
-COPY ./utils ./utils
+COPY cmd ./cmd
+COPY handlers ./handlers
+COPY helpers ./helpers
+COPY middleware ./middleware
+COPY routes ./routes
+COPY utils ./utils
 
 RUN go build -o main ./cmd
 
@@ -20,7 +20,6 @@ WORKDIR /app
 COPY --from=builder /app/main ./main
 COPY template/ ./template/
 COPY static/ ./static/
-COPY uploads/ ./uploads/
 COPY db/ ./db/
 # metadata,
 LABEL maintainer="mennaas | abalouri | abaid | ranniz | ychatoua"

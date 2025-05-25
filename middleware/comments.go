@@ -31,7 +31,7 @@ func UserInfosComments(r *http.Request) (*RateLimitComments, bool) {
 		count:        0,
 		FirstTime:    time.Now(),
 		BlockedUntil: time.Time{},
-		UserId:       -1,
+		UserId:       -1, 
 	}
 	UserID := GetUserId(r)
 	if UserID == -1 {
